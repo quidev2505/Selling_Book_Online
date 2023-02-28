@@ -12,4 +12,6 @@ export default (baseURL, auth=false) => {
         baseURL,
         ...commonConfig
     });
+
+    return http;
 };

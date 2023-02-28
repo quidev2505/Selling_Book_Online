@@ -2,7 +2,7 @@ import createHttp from "./http.service";
 
 class ProductService{
     constructor(){
-        this.http = createHttp("/api/products");
+        this.http = createHttp("/api/products", true);
     }
 
     async getAllProduct(){
