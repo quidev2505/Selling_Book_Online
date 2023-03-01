@@ -3,15 +3,15 @@
         <div class="left_info d-flex flex-column col-lg-5" style="margin-left:61px;">
             <img src="@/assets/img/logo_ZBooks.png" class="img-fluid" alt="..." width="200" height="200" style="    margin-bottom: -63px;
         margin-left: -61px;">
-            <div class="d-flex">
+            <div class="d-flex align-items-center">
                 <h6 class="fw-bold">Địa chỉ: </h6>
                 <span style="margin-bottom:8px;">&nbsp;Khu II, Đ. 3/2, Xuân Khánh, Ninh Kiều, Cần Thơ, Việt Nam</span>
             </div>
-            <div class="d-flex">
+            <div class="d-flex align-items-center">
                 <h6 class="fw-bold">Số điện thoại: </h6>
                 <span style="margin-bottom:8px;">&nbsp;+84 907532754</span>
             </div>
-            <div class="d-flex">
+            <div class="d-flex align-items-center">
                 <h6 class="fw-bold">Email: </h6>
                 <span style="margin-bottom:8px;">&nbsp;quib1909796@student.ctu.edu.vn</span>
             </div>

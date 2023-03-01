@@ -31,7 +31,7 @@ export default {
         <SliderIProduct></SliderIProduct>
 
         <!-- Main_Content_Product-->
-        <div class="row mt-5 text-center item_product">
+        <div class="row mt-5 item_product">
             <h4> <i class="fa-solid fa-fire"></i> XU HƯỚNG MUA SẮM</h4>
             <div class="col-lg-3" v-for="item in ProductData" v-show="item.categories === 'Văn Học'">
                 <div class="card" style="width: 18rem;">
@@ -69,7 +69,7 @@ export default {
         <div class="row">
             <div class="col">
                 <div class="row mt-5 item_product" style="margin-right:10px;">
-                    <h4> <i class="fa-solid fa-fire"></i>TÂM LÝ - KỸ NĂNG SỐNG</h4>
+                    <h4><i class="fa-solid fa-kitchen-set"></i> TÂM LÝ - KỸ NĂNG SỐNG</h4>
                     <div class="col-lg-6 mt-3" v-for="item in ProductData" v-show="item.categories === 'Tâm Lý - Kỹ Năng Sống'">
                         <div class="card" style="width: 18rem;">
                             <img :src="item.img_url" class="card-img-top" alt="..." width="190" height="190" style="object-fit: contain;">
@@ -90,7 +90,7 @@ export default {
             </div>
             <div class="col">
                 <div class="row mt-5 item_product">
-                    <h4> <i class="fa-solid fa-fire"></i>TIẾU SỬ HỒI KÝ</h4>
+                    <h4><i class="fa-solid fa-landmark"></i> TIẾU SỬ HỒI KÝ</h4>
                     <div class="col-lg-6 mt-3" v-for="item in ProductData" v-show="item.categories === 'Tiểu Sử Hồi Ký'">
                         <div class="card" style="width: 18rem;">
                             <img :src="item.img_url" class="card-img-top" alt="..." width="190" height="190" style="object-fit: contain;">

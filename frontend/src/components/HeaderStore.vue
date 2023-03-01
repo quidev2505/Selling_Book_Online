@@ -44,7 +44,7 @@
     <nav class="navbar navbar-expand-lg navbar-light" id="nav_bottom">
         <div class="container" style="height: 82px;">
             <div class="navbar-brand" href="#" style="    margin-right: 50px;
-            margin-left: 61px;">
+                            margin-left: 61px;">
                 <div class="dropdown">
                     <button class="btn dropdown-toggle text-light fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
                         style="border:2px solid white;padding:10px;z-index:10">
@@ -65,7 +65,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="input-group mb-3 text-light" style="    align-items: center;
-                                margin-bottom: 0 !important;">
+                                                margin-bottom: 0 !important;">
                     <div class="col-lg-1" style="font-size:35px ;margin-right: -23px;">
                         <i class="fa-solid fa-headphones-simple"></i>
                     </div>
@@ -81,17 +81,25 @@
 
                 <div style="    margin-left: -592px;z-index:10">
                     <ul class="nav d-flex">
-                        <li class="nav-item">
-                            <a class="nav-link text-decoration-none text-white " aria-current="page" href="#">TRANG CHỦ</a>
+                        <li class="nav-item" style="margin-right:15px;">
+                            <router-link to="/" class="text-decoration-none text-white">
+                                TRANG CHỦ
+                            </router-link>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-decoration-none text-white " href="#">HỆ THỐNG NHÀ SÁCH</a>
+                        <li class="nav-item" style="margin-right:15px;">
+                            <router-link to="/storesystem" class="text-decoration-none text-white">
+                                HỆ THỐNG NHÀ SÁCH
+                            </router-link>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-decoration-none text-white " href="#">GIỚI THIỆU</a>
+                        <li class="nav-item" style="margin-right:15px;">
+                            <router-link to="/introduce" class="text-decoration-none text-white">
+                                GIỚI THIỆU
+                            </router-link>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-decoration-none text-white " href="#">LIÊN HỆ</a>
+                        <li class="nav-item" style="margin-right:15px;">
+                            <router-link to="/contact" class="text-decoration-none text-white">
+                                LIÊN HỆ
+                            </router-link>
                         </li>
                     </ul>
                 </div>
@@ -124,4 +132,25 @@
     background-color: #62ab00;
     height: 76px;
 }
+
+#myBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: #62ab00;
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+#myBtn:hover {
+    background-color: #555;
+}
 </style>
+
