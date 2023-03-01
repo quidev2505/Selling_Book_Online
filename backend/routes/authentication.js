@@ -8,7 +8,7 @@ router.post("/register", API_authentication.registerAccount);
 
 
 //Login
-router.get("/login", API_authentication.loginAccount);
+router.post("/login", API_authentication.loginAccount);
 
 
 module.exports = router;

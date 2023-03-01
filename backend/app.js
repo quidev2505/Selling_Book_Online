@@ -5,6 +5,7 @@ const cors = require("cors");
 const authRoute = require("./routes/authentication");
 const productRoute = require("./routes/product");
 const ApiError = require("./routes/api-error");
+var session = require("express-session");
 require("dotenv").config();
 
 const app = express();
@@ -22,6 +23,14 @@ mongoose
 //Middleware
 app.use(cors());
 app.use(express.json());
+app.use(
+  session({
+    secret: "password_secret",
+    resave: true,
+    saveUninitialized: true,
+    cookie: { maxAge: 60000 },
+  })
+);
 
 //Router
 app.use("/api/auth", authRoute);

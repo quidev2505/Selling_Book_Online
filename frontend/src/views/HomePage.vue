@@ -21,7 +21,8 @@ export default {
     },
     mounted() {
         this.getDataProduct();
-    }
+    },
+
 }
 </script>
 
@@ -147,4 +148,6 @@ export default {
     width: 100%;
     font-weight: bold;
     color: white;
-}</style>
+}
+
+</style>

@@ -1,3 +1,39 @@
+<script>
+export default {
+    data() {
+        return {
+            inputSearch: '',
+            email: '',
+        }
+    },
+    methods: {
+        async checkLogin() {
+            const alreadyLogin = await JSON.parse(localStorage.getItem('dadangnhap'));
+            if (alreadyLogin !== null) { //Trường hợp đã đăng nhập
+                document.querySelector("#login_complete").style.display = 'block';
+                document.querySelector("#not_login").style.display = 'none';
+            }
+
+            if (alreadyLogin === null) {
+                //Trường hợp chưa đăng nhập
+                document.querySelector("#not_login").style.display = 'block';
+                document.querySelector("#login_complete").style.display = 'none';
+            }
+        },
+        logout() {
+            localStorage.removeItem("dadangnhap");
+            window.location.reload();
+        },
+        async searchProduct() {
+            await this.$router.push({ name: "FindProduct", params: "okcongatay" })
+        }
+    },
+    mounted() {
+        this.checkLogin();
+    }
+}
+</script>
+
 <template>
     <!-- Header1 -->
     <nav class="navbar navbar-expand-lg navbar-light" id="top_nav">
@@ -11,30 +47,69 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="input-group mb-3">
-                    <form action="" class="d-flex" style="width:500px;">
-                        <input type="text" class="form-control" placeholder="Tìm sản phẩm..." aria-label="Recipient's username" aria-describedby="basic-addon2" style="border-radius:6px 0 0 6px;">
-                        <button id="btn_search" type="submit" style="width:120px;height:50px;border-radius:0 6px 6px 0">Tìm Kiếm</button>
+                    <form action="/" class="d-flex" style="width:500px;" @submit.prevent>
+                        <input type="text" class="form-control" placeholder="Tìm sản phẩm..." aria-label="Recipient's username" aria-describedby="basic-addon2" style="border-radius:6px 0 0 6px;"
+                            v-model="inputSearch" required>
+
+                        
+                        <router-link :to="{
+                            name: 'FindProduct',
+                            params: { name:  JSON.stringify(inputSearch)},
+                        }">
+                            <button id="btn_search" type="submit" style="width:120px;height:50px;border-radius:0 6px 6px 0">Tìm Kiếm</button>
+                        </router-link>
+
+                        
+
                     </form>
                 </div>
 
-                <div class="d-flex flex-column" style="width:120px;margin-left:-30%;margin-top:-20px;margin-right:20px;z-index:10">
-                    <span class="fw-bold mb-1">
-                        <a href="#" class="text-decoration-none text-dark">
-                            <router-link to="/login" class="text-decoration-none text-dark"> Đăng Nhập</router-link>
-                        </a>
-                    </span>
+                <!-- Đã đăng nhập -->
+                <div id="login_complete" style="display:none;z-index:100">
+                    <div class="d-flex flex-column" style="width:120px;margin-left:-30%;margin-top:-20px;margin-right:20px;z-index:10">
+                        <span class="fw-bold mb-1">
+                            <a href="#" class="text-decoration-none text-dark">
+                                <router-link to="/" class="text-decoration-none text-dark">Trang cá nhân</router-link>
+                            </a>
+                        </span>
 
-                    <span>
-                        <a href="www.google.com" class="text-decoration-none text-dark">
-                            <router-link to="/register" class="text-decoration-none text-dark"> Đăng Ký</router-link>
-                        </a>
-                    </span>
+                        <span>
+                            <button @click="logout()" class="btn btn-danger text-white text-decoration-none text-dark" style="    width: fit-content;
+                                                        height: 24px;
+                                                        display: flex;
+                                                        align-items: center;
+                                                        margin-top: 3px;
+                                                        justify-content: center;
+                                                    }">Đăng xuất</button>
+
+                        </span>
+                    </div>
                 </div>
 
+
+
+                <!-- Chưa đăng nhập -->
+                <div id="not_login" style="display:none;z-index:100;">
+                    <div class="d-flex flex-column" style="width:120px;margin-left:-30%;margin-top:-20px;margin-right:20px;z-index:10">
+                        <span class="fw-bold mb-1">
+                            <a href="#" class="text-decoration-none text-dark">
+                                <router-link to="/login" class="text-decoration-none text-dark"> Đăng Nhập</router-link>
+                            </a>
+                        </span>
+
+                        <span>
+                            <a href="#" class="text-decoration-none text-dark">
+                                <router-link to="/register" class="text-decoration-none text-dark"> Đăng Ký</router-link>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+
                 <!-- cart_icon -->
-                <div id="icon_cart">
+                <div id="icon_cart" style="margin-right:141px">
                     <i class="fa-solid fa-cart-shopping"></i>
-                    <p style="font-size:10px;">Giỏ hàng</p>
+                    <p style="font-size:8px;">Giỏ hàng</p>
                 </div>
             </div>
         </div>
@@ -44,7 +119,7 @@
     <nav class="navbar navbar-expand-lg navbar-light" id="nav_bottom">
         <div class="container" style="height: 82px;">
             <div class="navbar-brand" href="#" style="    margin-right: 50px;
-                            margin-left: 61px;">
+                                                                margin-left: 61px;">
                 <div class="dropdown">
                     <button class="btn dropdown-toggle text-light fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
                         style="border:2px solid white;padding:10px;z-index:10">
@@ -65,7 +140,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="input-group mb-3 text-light" style="    align-items: center;
-                                                margin-bottom: 0 !important;">
+                                                                                    margin-bottom: 0 !important;">
                     <div class="col-lg-1" style="font-size:35px ;margin-right: -23px;">
                         <i class="fa-solid fa-headphones-simple"></i>
                     </div>
@@ -151,6 +226,10 @@
 
 #myBtn:hover {
     background-color: #555;
+}
+
+.nav-item a:hover {
+    color: black !important;
 }
 </style>
 

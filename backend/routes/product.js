@@ -16,6 +16,9 @@ router.delete("/:id", API_product.deleteProduct);
 //Get One Product
 router.get("/find/:id", API_product.findoneProduct);
 
+//Find Product With Name Product
+router.get("/findProduct/:nameproduct", API_product.findproductwithName);
+
 //Get All Product
 router.get("/", API_product.getAllProduct);
 

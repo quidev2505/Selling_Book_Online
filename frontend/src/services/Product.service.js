@@ -17,6 +17,10 @@ class ProductService{
         return (await this.http.get(`/find/${id}`)).data;
     }
 
+    async findproductwithName(name){
+        return (await this.http.get(`/findProduct/${name}`)).data;
+    }
+
     async update(id, data){
         return (await this.http.put(`/${id}`, data)).data;
     }
