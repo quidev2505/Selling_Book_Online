@@ -2,6 +2,7 @@
 const UserModel = require("../models/User");
 const CryptoJS = require("crypto-js");
 
+
 module.exports = class API {
   //Register Account
   static async registerAccount(req, res) {
@@ -10,7 +11,7 @@ module.exports = class API {
     });
 
     if (userData) {
-      res.status(401).json("Đã tồn tại tài khoản");
+      res.status(401).json("Đã tồn tại tài khoản !");
     } else {
       const newUser = new UserModel({
         username: req.body.username,
@@ -55,8 +56,7 @@ module.exports = class API {
         if (originalPassword !== inputPassword) {
           res.status(401).json("Sai mật khẩu");
         } else {
-          res.status(200).json("Đăng nhập thành công !")
-         
+          res.status(200).json(userData);
         }
       }
     } catch (err) {

@@ -2,6 +2,7 @@
 import AuthService from '../services/Auth.service';
 import ToastVue from './Toast.vue';
 import toast from '../assets/js/toasts';
+
 export default {
     components:{
         ToastVue

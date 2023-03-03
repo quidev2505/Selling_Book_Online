@@ -1,5 +1,4 @@
 import axios from "axios";
-const user = JSON.parse(localStorage.getItem("user"))
 const commonConfig = {
     headers:{
         "Content-Type": "application/json",
@@ -7,10 +6,10 @@ const commonConfig = {
     },
 };
 
-export default (baseURL, auth=false) => {
+export default (baseURL) => {
     const http = axios.create({
         baseURL,
-        ...commonConfig
+        ...commonConfig,
     });
 
     return http;

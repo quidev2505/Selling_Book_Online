@@ -2,6 +2,8 @@
 import AuthService from '../services/Auth.service';
 import ToastVue from './Toast.vue';
 import toast from '../assets/js/toasts';
+
+
 export default {
     components: {
         ToastVue
@@ -22,10 +24,10 @@ export default {
     },
     methods: {
         toast,
-        async loginUser() {
+        async handleLoginUser() {
             try {
-                await AuthService.createlogin(this.userDataInput);
-                localStorage.setItem('dadangnhap', JSON.stringify(this.userDataInput.email))
+                const userDataLogin = await AuthService.createlogin(this.userDataInput);
+                localStorage.setItem('isloggin',JSON.stringify(userDataLogin));
                 this.toasts.title = "Success",
                 this.toasts.msg = "Đăng Nhập Thành Công !"
                 this.toasts.type = "success",
@@ -36,12 +38,16 @@ export default {
                     document.querySelector("#toast").style.display = 'none'
                     this.$router.push({ name: "HomePage" });
                 }, 2000)
-            } catch (err) {
+                setTimeout(()=>{
+                    window.location.reload();
+                },2100)
+            }
+            catch (err) {
                 console.log(err)
                 this.toasts.title = "Failed",
-                    this.toasts.msg = "Sai tên tài khoản hoặc mật khẩu !"
+                this.toasts.msg = "Sai tên tài khoản hoặc mật khẩu !"
                 this.toasts.type = "error",
-                    this.toasts.duration = 2000
+                this.toasts.duration = 2000
                 document.querySelector("#toast").style.display = 'block'
                 this.toast()
                 setTimeout(() => {
@@ -49,7 +55,7 @@ export default {
                 }, 700)
             }
         }
-    }
+    },
 }
 </script>
 
@@ -72,14 +78,13 @@ export default {
 
         <!-- Ghi nhớ đăng nhập -->
         <!-- <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input fw-bold" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Ghi nhớ đăng nhập</label>
-        </div> -->
+                    <input type="checkbox" class="form-check-input fw-bold" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Ghi nhớ đăng nhập</label>
+                </div> -->
 
-        <button type="submit" class="btn btn-light fw-bold" style="padding: 10px;;border:1px solid #ccc" @click="loginUser()">Xác Nhận</button>
-        <p class="mt-4">Nếu chưa có tài khoản. Hãy nhấn vào 
-            <router-link to="/register"
-                class="link-danger">Đăng Ký
+        <button @click="handleLoginUser()" type="submit" class="btn btn-light fw-bold" style="padding: 10px;;border:1px solid #ccc">Xác Nhận</button>
+        <p class="mt-4">Nếu chưa có tài khoản. Hãy nhấn vào
+            <router-link to="/register" class="link-danger">Đăng Ký
             </router-link>
         </p>
     </form>

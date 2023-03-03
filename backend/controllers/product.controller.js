@@ -57,7 +57,12 @@ module.exports = class API{
     static async findproductwithName(req, res){
         try{
             const name_product = await req.params.nameproduct;
-            const ProductData = await ProductModel.find({ title: { $regex: `${name_product}`}});
+            const ProductData = await ProductModel.find({
+              $or: [
+                { title: { $regex: `${name_product}`, $options: "i" } },
+                { description: { $regex: `${name_product}`, $options: "i" } },
+              ],
+            });
 
             res.status(201).json(ProductData);
         }catch(err){

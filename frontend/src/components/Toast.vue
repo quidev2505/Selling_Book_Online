@@ -6,13 +6,14 @@
 <style scoped>
 #toast {
     position: fixed;
-    top: 150px;
+    top: 180px;
     right: 195px;
     z-index: 999999;
     font-weight: bold;
     padding: 10px;
     background-color: white;
     border:2px solid #62ab00;
+    border-radius: 10px;
     display: none;
 }
 </style>

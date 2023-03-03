@@ -8,13 +8,37 @@ export default {
             DetailProductData: [],
             quantity_item: 1,
             RelatedProduct: [],
+            img_click: '',
+            current_index: 0
         }
     },
     methods: {
-        reloadPage(){
-            setTimeout(()=>{
+        reloadPage() {
+            setTimeout(() => {
                 window.location.reload();
-            },100)
+            }, 100)
+        },
+        openImg(variable, index) {
+            this.img_click = variable;
+            this.current_index = index;
+            document.querySelector("#img_show").style.display = 'flex'
+        },
+        previousImg() {
+            this.current_index--;
+            if (this.current_index < 0) {
+                this.current_index = 2
+            }
+            document.querySelector("#img_center").setAttribute('src', this.DetailProductData.img_url[this.current_index]);
+        },
+        nextImg() {
+            this.current_index++;
+            if (this.current_index > 2) {
+                this.current_index = 0
+            }
+            document.querySelector("#img_center").setAttribute('src', this.DetailProductData.img_url[this.current_index]);
+        },
+        exit(){
+            document.querySelector("#img_show").style.display = 'none'
         },
         async getDetailDataProduct() {
             try {
@@ -39,7 +63,7 @@ export default {
         }
         ,
         async DecreaseNumber() {
-            if (this.quantity_item < 1) {
+            if (this.quantity_item == 1) {
                 this.quantity_item = 1;
             } else {
                 this.quantity_item -= 1
@@ -70,17 +94,57 @@ export default {
             </ol>
         </nav>
 
+
+        <div id="img_show" style="position:fixed;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;background-color:black;z-index:9999999;display:none;">
+            <img :src="img_click" class="img-fluid" alt="..." width="500" height="500" id="img_center">
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span @click="previousImg()" class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span @click="nextImg()" class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+            <i @click="exit()" class="fa-solid fa-xmark" style="position: absolute;
+        top: 11px;
+        right: 25px;
+        color: white;
+        font-size: 50px;
+        opacity: 0.6;
+        z-index:999999999999;
+        cursor:pointer;"></i>
+        </div>
+
+
         <!-- Detail_Product -->
         <div class="row">
-            <div class="col-4">
-                <img :src="DetailProductData.img_url" class="img-fluid" alt="..." width="319" height="444" style="    border: 1px solid #ccc;
-                                border-radius: 10px;
-                                padding: 10px;box-shadow: 1px 2px 13px 0px;">
+            <div class="col-6">
+                <img :src="DetailProductData.img_url[0]" class="img-fluid" alt="..." width="319" height="444" style="    border: 1px solid #ccc;
+                                                border-radius: 10px;
+                                                padding: 10px;box-shadow: 1px 2px 13px 0px;margin-left:130px;">
+                <div class="row d-flex mt-5 text-center">
+                    <div class="col">
+                        <img @click="openImg(DetailProductData.img_url[0], 0)" :src="DetailProductData.img_url[0]" class="img-thumbnail img_introduce" alt="..." width="319" height="444" style="    border: 1px solid #ccc;
+                                                    border-radius: 10px;
+                                                    padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
+                    </div>
+                    <div class="col">
+                        <img @click="openImg(DetailProductData.img_url[1], 1)" :src="DetailProductData.img_url[1]" class="img-thumbnail img_introduce" alt="..." width="319" height="444" style="    border: 1px solid #ccc;
+                                                    border-radius: 10px;
+                                                    padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
+                    </div>
+                    <div class="col">
+                        <img @click="openImg(DetailProductData.img_url[2], 2)" :src="DetailProductData.img_url[2]" class="img-thumbnail img_introduce" alt="..." width="319" height="444" style="    border: 1px solid #ccc;
+                                                    border-radius: 10px;
+                                                    padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
+                    </div>
+                </div>
             </div>
             <div class="col-6">
                 <div class="row">
-                    <h2>{{ DetailProductData.title }}</h2>
+                    <h4>{{ DetailProductData.title }}</h4>
                 </div>
+                <br>
                 <div class="row">
                     <p>Danh mục: <span class="fw-bold">{{ DetailProductData.categories }}</span></p>
                     <p>Tác giả: <span class="fw-bold">{{ DetailProductData.author }}</span></p>
@@ -100,7 +164,7 @@ export default {
                     <br>
                     <div class="d-flex">
                         <button id="btn_decrease" @click="DecreaseNumber">-</button>
-                        <input type="text" v-model="quantity_item" id="input_quantity">
+                        <input type="text" class="fw-bold" v-model="quantity_item" id="input_quantity">
                         <button id="btn_increase" @click="IncreaseNumber">+</button>
                     </div>
                 </div>
@@ -131,12 +195,10 @@ export default {
             <div class="d-flex">
                 <div class="col" v-for="item in RelatedProduct">
                     <div class="card" style="width: 18rem;">
-                        <img :src="item.img_url" class="card-img-top" alt="..." width="190" height="190" style="object-fit: contain;">
+                        <img :src="item.img_url[0]" class="card-img-top" alt="..." width="190" height="190" style="object-fit: contain;">
                         <div class="card-body">
                             <span class="card-title" style="height:48px">{{ item.title }}</span>
-                            <p class="card-text"><span class="fw-bold"> Giá bán:</span> <span class="text-danger fw-bold"> {{ item.price.toLocaleString('vi-VN', {
-                                style: 'currency', currency: 'VND'
-                            }) }}</span></p>
+                            <p class="card-text"><span class="fw-bold"> Giá bán:</span> <span class="text-danger fw-bold"> {{ item.price.toLocaleString()}} đ</span></p>
                             <router-link :to="{
                                 name: 'Details',
                                 params: { id: item._id },
@@ -222,5 +284,10 @@ export default {
     -webkit-line-clamp: 2;
     line-clamp: 2;
     -webkit-box-orient: vertical;
+}
+
+.img_introduce:hover {
+    border: 4px solid #62ab00 !important;
+    cursor: pointer;
 }
 </style>

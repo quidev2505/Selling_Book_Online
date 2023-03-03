@@ -3,34 +3,36 @@ export default {
     data() {
         return {
             inputSearch: '',
-            email: '',
         }
     },
     methods: {
-        async checkLogin() {
-            const alreadyLogin = await JSON.parse(localStorage.getItem('dadangnhap'));
-            if (alreadyLogin !== null) { //Trường hợp đã đăng nhập
-                document.querySelector("#login_complete").style.display = 'block';
-                document.querySelector("#not_login").style.display = 'none';
-            }
-
-            if (alreadyLogin === null) {
+        showUserAlreadyLogin() {
+            if (!localStorage.getItem('isloggin')) {
                 //Trường hợp chưa đăng nhập
                 document.querySelector("#not_login").style.display = 'block';
                 document.querySelector("#login_complete").style.display = 'none';
+            } else {
+                //Trường hợp đã đăng nhập      
+                document.querySelector("#login_complete").style.display = 'block';
+                document.querySelector("#not_login").style.display = 'none';
+                document.querySelector(".userLogin").innerHTML = JSON.parse(localStorage.getItem("isloggin")).username;
             }
         },
-        logout() {
-            localStorage.removeItem("dadangnhap");
+        logout_Btn() {
+            localStorage.removeItem("isloggin");
+            this.$router.push({ name: "Login" })
             window.location.reload();
         },
-        async searchProduct() {
-            await this.$router.push({ name: "FindProduct", params: "okcongatay" })
+        loadPage() {
+            setTimeout(() => {
+                window.location.reload();
+            }, 100)
         }
     },
     mounted() {
-        this.checkLogin();
-    }
+        this.showUserAlreadyLogin()
+    },
+
 }
 </script>
 
@@ -48,19 +50,14 @@ export default {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="input-group mb-3">
                     <form action="/" class="d-flex" style="width:500px;" @submit.prevent>
-                        <input type="text" class="form-control" placeholder="Tìm sản phẩm..." aria-label="Recipient's username" aria-describedby="basic-addon2" style="border-radius:6px 0 0 6px;"
-                            v-model="inputSearch" required>
-
-                        
-                        <router-link :to="{
+                        <input type="text" class="form-control" placeholder="Nhập vào tên sách hoặc mô tả..." aria-label="Recipient's username" aria-describedby="basic-addon2" style="border-radius:6px;"
+                            v-model="inputSearch">
+                        <router-link v-if="inputSearch !== ''" :to="{
                             name: 'FindProduct',
-                            params: { name:  JSON.stringify(inputSearch)},
+                            params: { name: JSON.stringify(inputSearch) },
                         }">
-                            <button id="btn_search" type="submit" style="width:120px;height:50px;border-radius:0 6px 6px 0">Tìm Kiếm</button>
+                            <button id="btn_search" type="submit" style="width:120px;height:50px;border-radius:0 6px 6px 0" @click="loadPage()">Tìm Kiếm</button>
                         </router-link>
-
-                        
-
                     </form>
                 </div>
 
@@ -69,18 +66,18 @@ export default {
                     <div class="d-flex flex-column" style="width:120px;margin-left:-30%;margin-top:-20px;margin-right:20px;z-index:10">
                         <span class="fw-bold mb-1">
                             <a href="#" class="text-decoration-none text-dark">
-                                <router-link to="/" class="text-decoration-none text-dark">Trang cá nhân</router-link>
+                                <router-link to="/" class="text-decoration-none text-dark userLogin"></router-link>
                             </a>
                         </span>
 
                         <span>
-                            <button @click="logout()" class="btn btn-danger text-white text-decoration-none text-dark" style="    width: fit-content;
-                                                        height: 24px;
-                                                        display: flex;
-                                                        align-items: center;
-                                                        margin-top: 3px;
-                                                        justify-content: center;
-                                                    }">Đăng xuất</button>
+                            <button @click="logout_Btn()" class="btn btn-danger text-white text-decoration-none text-dark" style="    width: fit-content;
+                                                            height: 24px;
+                                                            display: flex;
+                                                            align-items: center;
+                                                            margin-top: 3px;
+                                                            justify-content: center;
+                                                        }">Đăng xuất</button>
 
                         </span>
                     </div>
@@ -108,7 +105,10 @@ export default {
 
                 <!-- cart_icon -->
                 <div id="icon_cart" style="margin-right:141px">
-                    <i class="fa-solid fa-cart-shopping"></i>
+                    <router-link to="/cartStore">
+                        <i class="fa-solid fa-cart-shopping" style="color:#62ab00;"></i>
+                    </router-link>
+
                     <p style="font-size:8px;">Giỏ hàng</p>
                 </div>
             </div>
@@ -119,7 +119,7 @@ export default {
     <nav class="navbar navbar-expand-lg navbar-light" id="nav_bottom">
         <div class="container" style="height: 82px;">
             <div class="navbar-brand" href="#" style="    margin-right: 50px;
-                                                                margin-left: 61px;">
+                                                                    margin-left: 61px;">
                 <div class="dropdown">
                     <button class="btn dropdown-toggle text-light fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
                         style="border:2px solid white;padding:10px;z-index:10">
@@ -127,10 +127,43 @@ export default {
                         &nbsp;
                         DANH MỤC SẢN PHẨM
                     </button>
+                    
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="www.google.com">SÁCH TRINH THÁM</a></li>
-                        <li><a class="dropdown-item" href="#">SÁCH KHOA HỌC</a></li>
-                        <li><a class="dropdown-item" href="#">SÁCH NGOẠI NGỮ</a></li>
+                        <router-link :to="{
+                            name: 'categoryBook',
+                            params: { name: 'VanHoc' }}">
+                            <li>VĂN HỌC</li>
+                        </router-link>
+<!-- 
+                        <router-link :to="{
+                                name: 'categoryBook',
+                                params: { name: 'Kinh Tế' }}">
+                            <li>KINH TẾ</li>
+                        </router-link>
+
+                        <router-link :to="{
+                            name: 'categoryBook',
+                            params: { name: 'Tâm Lý - Kỹ Năng Sống' }}">
+                            <li>TÂM LÝ - KỸ NĂNG SỐNG</li>
+                        </router-link>
+
+                        <router-link :to="{
+                                name: 'categoryBook',
+                                params: { name: 'Sách Thiếu Nhi' }}">
+                            <li>SÁCH THIẾU NHI</li>
+                        </router-link>
+
+                        <router-link :to="{
+                            name: 'categoryBook',
+                            params: { name: 'Sách Giáo Khoa' }}">
+                            <li>GIÁO KHOA - THAM KHẢO</li>
+                        </router-link>
+
+                        <router-link :to="{
+                                name: 'categoryBook',
+                                params: { name: 'Tiểu Sử Hồi Ký' }}">
+                            <li>TIỂU SỬ - HỒI KÝ</li>
+                        </router-link> -->
                     </ul>
                 </div>
             </div>
@@ -140,7 +173,7 @@ export default {
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="input-group mb-3 text-light" style="    align-items: center;
-                                                                                    margin-bottom: 0 !important;">
+                                                                                        margin-bottom: 0 !important;">
                     <div class="col-lg-1" style="font-size:35px ;margin-right: -23px;">
                         <i class="fa-solid fa-headphones-simple"></i>
                     </div>

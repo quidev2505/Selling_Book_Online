@@ -36,12 +36,10 @@ export default {
             <h4> <i class="fa-solid fa-fire"></i> XU HƯỚNG MUA SẮM</h4>
             <div class="col-lg-3" v-for="item in ProductData" v-show="item.categories === 'Văn Học'">
                 <div class="card" style="width: 18rem;">
-                    <img :src="item.img_url" class="card-img-top" alt="..." width="190" height="190" style="object-fit: contain;">
+                    <img :src="item.img_url[0]" class="card-img-top" alt="..." width="190" height="190" style="object-fit: contain;">
                     <div class="card-body">
                         <span class="card-title" style="height:48px">{{ item.title }}</span>
-                        <p class="card-text"><span class="fw-bold"> Giá bán:</span> <span class="text-danger fw-bold"> {{ item.price.toLocaleString('vi-VN', {
-                            style: 'currency', currency: 'VND'
-                        }) }}</span></p>
+                        <p class="card-text"><span class="fw-bold"> Giá bán:</span> <span class="text-danger fw-bold"> {{ item.price.toLocaleString()}} đ</span></p>
                         <router-link :to="{
                             name: 'Details',
                             params: { id: item._id },
@@ -73,11 +71,11 @@ export default {
                     <h4><i class="fa-solid fa-kitchen-set"></i> TÂM LÝ - KỸ NĂNG SỐNG</h4>
                     <div class="col-lg-6 mt-3" v-for="item in ProductData" v-show="item.categories === 'Tâm Lý - Kỹ Năng Sống'">
                         <div class="card" style="width: 18rem;">
-                            <img :src="item.img_url" class="card-img-top" alt="..." width="190" height="190" style="object-fit: contain;">
+                            <img :src="item.img_url[0]" class="card-img-top" alt="..." width="190" height="190" style="object-fit: contain;">
                             <div class="card-body">
                                 <span class="card-title" style="height:48px">{{ item.title }}</span>
-                                <p class="card-text"><span class="fw-bold"> Giá bán:</span> <span class="text-danger fw-bold"> {{ item.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
-                                }}</span></p>
+                                <p class="card-text"><span class="fw-bold"> Giá bán:</span> <span class="text-danger fw-bold"> {{ item.price.toLocaleString()}} đ
+                                </span></p>
                                 <router-link :to="{
                                     name: 'Details',
                                     params: { id: item._id },
@@ -94,11 +92,10 @@ export default {
                     <h4><i class="fa-solid fa-landmark"></i> TIẾU SỬ HỒI KÝ</h4>
                     <div class="col-lg-6 mt-3" v-for="item in ProductData" v-show="item.categories === 'Tiểu Sử Hồi Ký'">
                         <div class="card" style="width: 18rem;">
-                            <img :src="item.img_url" class="card-img-top" alt="..." width="190" height="190" style="object-fit: contain;">
+                            <img :src="item.img_url[0]" class="card-img-top" alt="..." width="190" height="190" style="object-fit: contain;">
                             <div class="card-body">
                                 <span class="card-title" style="height:48px">{{ item.title }}</span>
-                                <p class="card-text"><span class="fw-bold"> Giá bán:</span> <span class="text-danger fw-bold"> {{ item.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
-                                }}</span></p>
+                                <p class="card-text"><span class="fw-bold"> Giá bán:</span> <span class="text-danger fw-bold"> {{ item.price.toLocaleString()}} đ</span></p>
                                 <router-link :to="{
                                     name: 'Details',
                                     params: { id: item._id },
