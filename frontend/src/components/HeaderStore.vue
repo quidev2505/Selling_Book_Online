@@ -72,12 +72,12 @@ export default {
 
                         <span>
                             <button @click="logout_Btn()" class="btn btn-danger text-white text-decoration-none text-dark" style="    width: fit-content;
-                                                            height: 24px;
-                                                            display: flex;
-                                                            align-items: center;
-                                                            margin-top: 3px;
-                                                            justify-content: center;
-                                                        }">Đăng xuất</button>
+                                                                height: 24px;
+                                                                display: flex;
+                                                                align-items: center;
+                                                                margin-top: 3px;
+                                                                justify-content: center;
+                                                            }">Đăng xuất</button>
 
                         </span>
                     </div>
@@ -119,7 +119,7 @@ export default {
     <nav class="navbar navbar-expand-lg navbar-light" id="nav_bottom">
         <div class="container" style="height: 82px;">
             <div class="navbar-brand" href="#" style="    margin-right: 50px;
-                                                                    margin-left: 61px;">
+                                                                        margin-left: 61px;">
                 <div class="dropdown">
                     <button class="btn dropdown-toggle text-light fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
                         style="border:2px solid white;padding:10px;z-index:10">
@@ -127,43 +127,32 @@ export default {
                         &nbsp;
                         DANH MỤC SẢN PHẨM
                     </button>
-                    
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <router-link :to="{
-                            name: 'categoryBook',
-                            params: { name: 'VanHoc' }}">
-                            <li>VĂN HỌC</li>
-                        </router-link>
-<!-- 
-                        <router-link :to="{
-                                name: 'categoryBook',
-                                params: { name: 'Kinh Tế' }}">
-                            <li>KINH TẾ</li>
-                        </router-link>
 
-                        <router-link :to="{
-                            name: 'categoryBook',
-                            params: { name: 'Tâm Lý - Kỹ Năng Sống' }}">
-                            <li>TÂM LÝ - KỸ NĂNG SỐNG</li>
-                        </router-link>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="list-style:none;color:black">
+                        <div class="container d-flex flex-column">
+                            <router-link to="categoryBook/Tất cả sách">
+                                <li>Tất cả sách</li>  
+                            </router-link>
+                            <router-link to="categoryBook/Văn Học">
+                                <li>Văn Học</li>  
+                            </router-link>
+                            <router-link to="categoryBook/Kinh Tế">
+                                <li> Kinh Tế</li>
+                            </router-link>
+                            <router-link to="categoryBook/Tiểu Sử Hồi Ký">
+                                <li>Tiểu Sử Hồi Ký</li>
+                            </router-link>
+                            <router-link to="categoryBook/Tâm Lí - Kỹ Năng Sống">
+                                <li>Tâm Lí - Kỹ Năng Sống</li>
+                            </router-link>
+                            <router-link to="categoryBook/Sách Thiếu Nhi">
+                                <li> Sách Thiếu Nhi</li>
+                            </router-link>
+                            <router-link to="categoryBook/Sách Giáo Khoa">
+                                <li>Sách Giáo Khoa</li>
+                            </router-link>
+                        </div>
 
-                        <router-link :to="{
-                                name: 'categoryBook',
-                                params: { name: 'Sách Thiếu Nhi' }}">
-                            <li>SÁCH THIẾU NHI</li>
-                        </router-link>
-
-                        <router-link :to="{
-                            name: 'categoryBook',
-                            params: { name: 'Sách Giáo Khoa' }}">
-                            <li>GIÁO KHOA - THAM KHẢO</li>
-                        </router-link>
-
-                        <router-link :to="{
-                                name: 'categoryBook',
-                                params: { name: 'Tiểu Sử Hồi Ký' }}">
-                            <li>TIỂU SỬ - HỒI KÝ</li>
-                        </router-link> -->
                     </ul>
                 </div>
             </div>
@@ -173,7 +162,7 @@ export default {
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="input-group mb-3 text-light" style="    align-items: center;
-                                                                                        margin-bottom: 0 !important;">
+                                                                                            margin-bottom: 0 !important;">
                     <div class="col-lg-1" style="font-size:35px ;margin-right: -23px;">
                         <i class="fa-solid fa-headphones-simple"></i>
                     </div>
@@ -218,6 +207,26 @@ export default {
 </template>
 
 <style>
+ul{
+    text-decoration: none;
+    width: 100%;
+}
+a{
+    text-decoration: none !important;
+    line-height: 2.5rem;
+    color: black;
+}
+.dropdown-menu li{
+    text-decoration: none !important;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 1px;
+}
+
+.dropdown-menu li:hover{
+    color:#62ab00;
+}
 #btn_search {
     background-color: #62ab00;
     color: white;

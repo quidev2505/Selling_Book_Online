@@ -46,6 +46,11 @@ const routes = [
     name: "FindProduct",
     component: () => import("@/views/FindProduct.vue"),
   },
+  {
+    path: "/categoryBook/:name",
+    name: "CategoryBook",
+    component: () => import("@/views/CategoryBook.vue"),
+  },
 ];
 
 const router = createRouter({

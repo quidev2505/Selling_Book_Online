@@ -37,7 +37,7 @@ export default {
             }
             document.querySelector("#img_center").setAttribute('src', this.DetailProductData.img_url[this.current_index]);
         },
-        exit(){
+        exit() {
             document.querySelector("#img_show").style.display = 'none'
         },
         async getDetailDataProduct() {
@@ -71,6 +71,11 @@ export default {
         },
         async IncreaseNumber() {
             this.quantity_item += 1
+        },
+        addtoCart() {
+            if (!localStorage.getItem('isloggin')) {
+                alert('Bạn cần phải đăng nhập trước khi thêm vào giỏ hàng !')
+            }
         }
     },
     created() {
@@ -86,7 +91,7 @@ export default {
     <div class="container" id="main_page_detail_product">
         <!-- BreadCrumb -->
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
+            <ol class="breadcrumb" style="align-items: center;">
                 <li class="breadcrumb-item">
                     <router-link to="/" style="color:#62ab00">Trang chủ</router-link>
                 </li>
@@ -106,13 +111,13 @@ export default {
                 <span class="visually-hidden">Next</span>
             </button>
             <i @click="exit()" class="fa-solid fa-xmark" style="position: absolute;
-        top: 11px;
-        right: 25px;
-        color: white;
-        font-size: 50px;
-        opacity: 0.6;
-        z-index:999999999999;
-        cursor:pointer;"></i>
+            top: 11px;
+            right: 25px;
+            color: white;
+            font-size: 50px;
+            opacity: 0.6;
+            z-index:999999999999;
+            cursor:pointer;"></i>
         </div>
 
 
@@ -120,23 +125,23 @@ export default {
         <div class="row">
             <div class="col-6">
                 <img :src="DetailProductData.img_url[0]" class="img-fluid" alt="..." width="319" height="444" style="    border: 1px solid #ccc;
-                                                border-radius: 10px;
-                                                padding: 10px;box-shadow: 1px 2px 13px 0px;margin-left:130px;">
+                                                    border-radius: 10px;
+                                                    padding: 10px;box-shadow: 1px 2px 13px 0px;margin-left:130px;">
                 <div class="row d-flex mt-5 text-center">
                     <div class="col">
                         <img @click="openImg(DetailProductData.img_url[0], 0)" :src="DetailProductData.img_url[0]" class="img-thumbnail img_introduce" alt="..." width="319" height="444" style="    border: 1px solid #ccc;
-                                                    border-radius: 10px;
-                                                    padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
+                                                        border-radius: 10px;
+                                                        padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
                     </div>
                     <div class="col">
                         <img @click="openImg(DetailProductData.img_url[1], 1)" :src="DetailProductData.img_url[1]" class="img-thumbnail img_introduce" alt="..." width="319" height="444" style="    border: 1px solid #ccc;
-                                                    border-radius: 10px;
-                                                    padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
+                                                        border-radius: 10px;
+                                                        padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
                     </div>
                     <div class="col">
                         <img @click="openImg(DetailProductData.img_url[2], 2)" :src="DetailProductData.img_url[2]" class="img-thumbnail img_introduce" alt="..." width="319" height="444" style="    border: 1px solid #ccc;
-                                                    border-radius: 10px;
-                                                    padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
+                                                        border-radius: 10px;
+                                                        padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
                     </div>
                 </div>
             </div>
@@ -170,7 +175,7 @@ export default {
                 </div>
 
                 <div class="row">
-                    <p id="cart_btn"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ hàng</p>
+                    <p @click="addtoCart()" id="cart_btn" style="cursor:pointer"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ hàng</p>
                 </div>
             </div>
         </div>
@@ -198,7 +203,7 @@ export default {
                         <img :src="item.img_url[0]" class="card-img-top" alt="..." width="190" height="190" style="object-fit: contain;">
                         <div class="card-body">
                             <span class="card-title" style="height:48px">{{ item.title }}</span>
-                            <p class="card-text"><span class="fw-bold"> Giá bán:</span> <span class="text-danger fw-bold"> {{ item.price.toLocaleString()}} đ</span></p>
+                            <p class="card-text"><span class="fw-bold"> Giá bán:</span> <span class="text-danger fw-bold"> {{ item.price.toLocaleString() }} đ</span></p>
                             <router-link :to="{
                                 name: 'Details',
                                 params: { id: item._id },
