@@ -1,33 +1,41 @@
 import createHttp from "./http.service";
 
-class ProductService{
-    constructor(){
-        this.http = createHttp("/api/products", true);
-    }
+class ProductService {
+  constructor() {
+    this.http = createHttp("/api/products", true);
+  }
 
-    async getAllProduct(){
-        return (await this.http.get("/")).data;
-    }
+  async getAllProduct() {
+    return (await this.http.get("/")).data;
+  }
 
-    async create(data){
-        return (await this.http.post("/"), data).data;
-    }
+  async getProductLimit() {
+    return (await this.http.get("/limit")).data;
+  }
 
-    async get(id){
-        return (await this.http.get(`/find/${id}`)).data;
-    }
+  async create(data) {
+    return (await this.http.post("/"), data).data;
+  }
 
-    async findproductwithName(name){
-        return (await this.http.get(`/findProduct/${name}`)).data;
-    }
+  async get(id) {
+    return (await this.http.get(`/find/${id}`)).data;
+  }
 
-    async update(id, data){
-        return (await this.http.put(`/${id}`, data)).data;
-    }
+  async findproductwithName(name) {
+    return (await this.http.get(`/findProduct/${name}`)).data;
+  }
 
-    async delete(id){
-        return (await this.http.delete(`/${id}`)).data;
-    }
+  async update(id, data) {
+    return (await this.http.put(`/${id}`, data)).data;
+  }
+
+  async delete(id) {
+    return (await this.http.delete(`/${id}`)).data;
+  }
+
+  async getcategoryProduct(name){
+    return (await this.http.get(`/categoryBook/${name}`)).data;
+  }
 }
 
 export default new ProductService();

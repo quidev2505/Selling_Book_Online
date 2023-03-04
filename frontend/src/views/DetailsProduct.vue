@@ -197,8 +197,8 @@ export default {
         <div class="row mt-5" id="description">
             <h5>SẢN PHẨM LIÊN QUAN</h5>
             <hr>
-            <div class="d-flex">
-                <div class="col" v-for="item in RelatedProduct">
+            <div class="d-flex flex-wrap">
+                <div class="col-lg-4 mt-4" v-for="item in RelatedProduct">
                     <div class="card" style="width: 18rem;">
                         <img :src="item.img_url[0]" class="card-img-top" alt="..." width="190" height="190" style="object-fit: contain;">
                         <div class="card-body">

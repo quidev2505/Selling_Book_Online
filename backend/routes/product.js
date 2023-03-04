@@ -22,4 +22,10 @@ router.get("/findProduct/:nameproduct", API_product.findproductwithName);
 //Get All Product
 router.get("/", API_product.getAllProduct);
 
+//Get Product With Limit Document
+router.get("/limit", API_product.getProductLimit);
+
+//Get Category Product with name
+router.get("/categoryBook/:name", API_product.getcategoryProduct);
+
 module.exports = router;

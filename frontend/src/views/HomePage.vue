@@ -13,7 +13,7 @@ export default {
     methods: {
         async getDataProduct() {
             try {
-                this.ProductData = await ProductService.getAllProduct();
+                this.ProductData = await ProductService.getProductLimit();
             } catch (error) {
                 console.log(error)
             }
@@ -34,7 +34,7 @@ export default {
         <!-- Main_Content_Product-->
         <div class="row mt-5 item_product">
             <h4> <i class="fa-solid fa-fire"></i> XU HƯỚNG MUA SẮM</h4>
-            <div class="col-lg-3" v-for="item in ProductData" v-show="item.categories === 'Văn Học'">
+            <div class="col-lg-3" v-for="item in ProductData"  v-show="item.categories === 'Văn Học'">
                 <div class="card" style="width: 18rem;">
                     <img :src="item.img_url[0]" class="card-img-top" alt="..." width="190" height="190" style="object-fit: contain;">
                     <div class="card-body">
