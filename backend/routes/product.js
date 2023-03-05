@@ -28,4 +28,7 @@ router.get("/limit", API_product.getProductLimit);
 //Get Category Product with name
 router.get("/categoryBook/:name", API_product.getcategoryProduct);
 
+//Get Product with ID
+router.get("/editBook/:id", API_product.getproductwithID);
+
 module.exports = router;

@@ -129,17 +129,17 @@ export default {
                                                     padding: 10px;box-shadow: 1px 2px 13px 0px;margin-left:130px;">
                 <div class="row d-flex mt-5 text-center">
                     <div class="col">
-                        <img @click="openImg(DetailProductData.img_url[0], 0)" :src="DetailProductData.img_url[0]" class="img-thumbnail img_introduce" alt="..." width="319" height="444" style="    border: 1px solid #ccc;
+                        <img @click="openImg(DetailProductData.img_url[0], 0)" :src="DetailProductData.img_url[0]" class="img-thumbnail img_introduce" alt="..." width="319" height="444" style="    border: 1px solid #ccc;object-fit:contain;
                                                         border-radius: 10px;
                                                         padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
                     </div>
                     <div class="col">
-                        <img @click="openImg(DetailProductData.img_url[1], 1)" :src="DetailProductData.img_url[1]" class="img-thumbnail img_introduce" alt="..." width="319" height="444" style="    border: 1px solid #ccc;
+                        <img @click="openImg(DetailProductData.img_url[1], 1)" :src="DetailProductData.img_url[1]" class="img-thumbnail img_introduce" alt="..." width="319" height="444" style="    border: 1px solid #ccc;object-fit:contain;
                                                         border-radius: 10px;
                                                         padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
                     </div>
                     <div class="col">
-                        <img @click="openImg(DetailProductData.img_url[2], 2)" :src="DetailProductData.img_url[2]" class="img-thumbnail img_introduce" alt="..." width="319" height="444" style="    border: 1px solid #ccc;
+                        <img @click="openImg(DetailProductData.img_url[2], 2)" :src="DetailProductData.img_url[2]" class="img-thumbnail img_introduce" alt="..." width="319" height="444" style="    border: 1px solid #ccc;object-fit:contain;
                                                         border-radius: 10px;
                                                         padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
                     </div>

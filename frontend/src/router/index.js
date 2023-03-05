@@ -56,6 +56,11 @@ const routes = [
     name: "CategoryBook",
     component: () => import("@/views/CategoryBook.vue"),
   },
+  {
+    path: "/editBook/:id",
+    name: "EditBook",
+    component: () => import("@/views/EditBook.vue"),
+  }
 ];
 
 const router = createRouter({

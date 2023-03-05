@@ -3,12 +3,20 @@ const ProductModel = require("../models/Product");
 module.exports = class API {
   //Create Product
   static async createProduct(req, res) {
-    const productInput = new ProductModel(req.body);
-
+    const productInput = new ProductModel({
+      title: req.body.title,
+      img_url: req.body.img_url,
+      author: req.body.author,
+      categories: req.body.categories,
+      bookType: req.body.bookType,
+      price: req.body.price,
+      description: req.body.description,
+    });
     try {
       const createNewProduct = await productInput.save();
       res.status(200).json(createNewProduct);
     } catch (err) {
+      // console.log(err)
       res.status(501).json(err);
     }
   }
@@ -93,14 +101,26 @@ module.exports = class API {
   static async getcategoryProduct(req, res) {
     try {
       var arrayProduct;
-      if(req.params.name === 'Tất Cả Sách'){
+      if (req.params.name === "Tất Cả Sách") {
         arrayProduct = await ProductModel.find({});
-      }else{
-        arrayProduct = await ProductModel.find({categories: req.params.name });
+      } else {
+        arrayProduct = await ProductModel.find({ categories: req.params.name });
       }
       res.status(200).json(arrayProduct);
     } catch (err) {
       res.status(501).json(err);
     }
   }
+
+  //Get Product With id
+  static async getproductwithID(req, res){
+    try{
+      const result = await ProductModel.findOne({_id: req.params.id});
+      res.status(201).json(result)
+    }catch(err){
+      res.status(501).json(err)
+    }
+  }
 };
+
+

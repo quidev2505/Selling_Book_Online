@@ -2,11 +2,15 @@ import createHttp from "./http.service";
 
 class ProductService {
   constructor() {
-    this.http = createHttp("/api/products", true);
+    this.http = createHttp("/api/products");
   }
 
   async getAllProduct() {
     return (await this.http.get("/")).data;
+  }
+
+  async getproductwithID(id) {
+    return (await this.http.get(`/editBook/${id}`)).data;
   }
 
   async getProductLimit() {
@@ -14,7 +18,7 @@ class ProductService {
   }
 
   async create(data) {
-    return (await this.http.post("/"), data).data;
+    return (await this.http.post("/", data)).data;
   }
 
   async get(id) {
@@ -33,7 +37,7 @@ class ProductService {
     return (await this.http.delete(`/${id}`)).data;
   }
 
-  async getcategoryProduct(name){
+  async getcategoryProduct(name) {
     return (await this.http.get(`/categoryBook/${name}`)).data;
   }
 }

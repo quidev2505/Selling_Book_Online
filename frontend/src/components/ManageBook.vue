@@ -1,19 +1,36 @@
 <script>
 import ProductService from '../services/Product.service';
+import ToastVue from './Toast.vue';
+import toast from '../assets/js/toasts';
+
 export default {
+    components: {
+        ToastVue
+    },
     data() {
         return {
             ManageBooks: [],
-            title:'',
-            img_url:[],
-            author:'',
-            categories:'',
-            description:'',
-            price:'',
-            bookType: '',
+            BookDataInput: {
+                img_url: [],
+                title: "",
+                author: "",
+                categories: "",
+                description: "",
+                price: "",
+                bookType: "",
+            },
+            toasts: {
+                title: "",
+                msg: "",
+                type: "",
+                duration: 0
+            },
+            id_book: '',
+            data_edit: ''
         }
     },
     methods: {
+        toast,
         async getBookData() {
             try {
                 this.ManageBooks = await ProductService.getAllProduct();
@@ -22,8 +39,45 @@ export default {
             }
         },
         addBook() {
-            document.querySelector()
-        }
+            document.querySelector("#table_manageBook").style.display = 'none'
+            document.querySelector("#form_addBook").style.display = 'block'
+            document.querySelector("#btn_addBook").style.display = 'none'
+            document.querySelector("#pills-tabContent").style.margin = '0 auto'
+            document.querySelector("#pills-tabContent").style.width = '100%'
+            document.querySelector("#pills-tabContent").style.padding = '40px'
+        },
+        backPage() {
+            setTimeout(() => {
+                window.location.reload();
+            }, 100)
+        },
+        async handleAddBook() {
+            try {
+                await ProductService.create(this.BookDataInput)
+                this.toasts.title = "Success",
+                    this.toasts.msg = "Thêm sách mới thành công !"
+                this.toasts.type = "success",
+                    this.toasts.duration = 2000
+                document.querySelector("#toast").style.display = 'block'
+                this.toast();
+                setTimeout(() => {
+                    document.querySelector("#toast").style.display = 'none'
+                    window.location.reload();
+                }, 2000)
+            }
+            catch (err) {
+                console.log(this.BookDataInput)
+                this.toasts.title = "Failed",
+                    this.toasts.msg = "Thêm sách thất bại!"
+                this.toasts.type = "error",
+                    this.toasts.duration = 2000
+                document.querySelector("#toast").style.display = 'block'
+                this.toast()
+                setTimeout(() => {
+                    document.querySelector("#toast").style.display = 'none'
+                }, 700)
+            }
+        },
     },
     mounted() {
         this.getBookData();
@@ -32,39 +86,69 @@ export default {
 }
 </script>
 <template>
-    <button type="button" class="btn btn-success" @click="addBook()"><i class="fa-solid fa-plus"></i> Thêm Sách </button>
+    <button type="button" id="btn_addBook" class="btn btn-success" @click="addBook()"><i class="fa-solid fa-plus"></i> Thêm Sách </button>
     <br>
     <br>
     <!-- Giao diện thêm sách -->
-    <form @submit.prevent>
-        <!-- Email Input -->
+    <ToastVue></ToastVue>
+    <form @submit.prevent id="form_addBook" style="display:none;width:100%;">
+
+        <button @click="backPage()" type="button" class="btn btn-primary"><i class="fa-solid fa-arrow-left"></i> Trở về</button>
+
+        <br>
+        <h2 class="text-center" style="color:#62ab00">Thêm vào sách mới</h2>
+        <!-- Title Input -->
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label fw-bold">Tên Sách: </label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Vui lòng nhập vào email..." v-model="userDataInput.email" required>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Vui lòng nhập vào tên sách..." v-model="BookDataInput.title" required>
         </div>
 
-        <!-- Password Input -->
+        <!-- Img Input -->
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label fw-bold">Mật khẩu: </label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Nhập vào mật khẩu..." v-model="userDataInput.password" required>
+            <label for="exampleInputPassword1" class="form-label fw-bold">Hình Ảnh Sách:(3 ảnh)</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Đưa vào Link hình ảnh sách..." v-model="BookDataInput.img_url[0]" required>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Đưa vào Link hình ảnh sách..." v-model="BookDataInput.img_url[1]" required>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Đưa vào Link hình ảnh sách..." v-model="BookDataInput.img_url[2]" required>
         </div>
 
-        <!-- Ghi nhớ đăng nhập -->
-        <!-- <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input fw-bold" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Ghi nhớ đăng nhập</label>
-                            </div> -->
+        <!-- Author Input -->
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label fw-bold">Tên tác giả: </label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập vào tên tác giả..." v-model="BookDataInput.author" required>
+        </div>
 
-        <button @click="handleLoginUser()" type="submit" class="btn btn-light fw-bold" style="padding: 10px;;border:1px solid #ccc">Xác Nhận</button>
-        <p class="mt-4">Nếu chưa có tài khoản. Hãy nhấn vào
-            <router-link to="/register" class="link-danger">Đăng Ký
-            </router-link>
-        </p>
+        <!-- Categories Input -->
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label fw-bold">Danh Mục: </label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập vào tên danh mục..." v-model="BookDataInput.categories" required>
+        </div>
+
+        <!-- BookType Input -->
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label fw-bold">Thể loại: </label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập vào thể loại sách..." v-model="BookDataInput.bookType" required>
+        </div>
+
+        <!-- Price Input -->
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label fw-bold">Giá bán: </label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập vào giá cuốn sách..." v-model="BookDataInput.price" required>
+        </div>
+
+
+        <!-- Description Input -->
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label fw-bold">Mô tả: </label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập vào mô tả sách..." v-model="BookDataInput.description" required>
+        </div>
+
+
+        <button @click="handleAddBook()" type="submit" class="btn btn-light fw-bold" style="padding: 10px;;border:1px solid #ccc">Xác Nhận</button>
     </form>
 
 
-
-    <table class="table" border="1px" style="with:90vw;">
+    <!-- Giao diện bảng Show Sách -->
+    <table class="table" border="1px" style="with:90vw;" id="table_manageBook">
         <thead>
             <tr class="table-info text-center">
                 <th scope="col">STT</th>
@@ -86,7 +170,9 @@ export default {
                 <td>{{ item.title }}</td>
                 <td class="d-flex flex-column" id="img_book">
                     <img :src="item.img_url[0]" class="img-fluid" alt="..." style="width:70px;height:70px;border:1px solid #ccc;border-radius:5px;">
+                    <br>
                     <img :src="item.img_url[1]" class="img-fluid" alt="..." style="width:70px;height:70px;border:1px solid #ccc;border-radius:5px;">
+                    <br>
                     <img :src="item.img_url[2]" class="img-fluid" alt="..." style="width:70px;height:70px;border:1px solid #ccc;border-radius:5px;">
                 </td>
                 <td>{{ item.author }}</td>
@@ -95,7 +181,13 @@ export default {
                 <td>{{ item.bookType }}</td>
                 <td>{{ item.price.toLocaleString() }} đ</td>
                 <td>
-                    <button type="button" class="btn btn-warning"><i class="fa-regular fa-pen-to-square"></i> Sửa</button>
+                    <router-link :to="{
+                        name: 'EditBook',
+                        params: {id: item._id},
+                    }">
+                        <button type="button" class="btn btn-warning"><i class="fa-regular fa-pen-to-square"></i> Sửa</button>
+                    </router-link>
+                    
                     <br>
                     <br>
                     <button type="button" class="btn btn-danger"> <i class="fa-solid fa-trash"></i> Xóa</button>

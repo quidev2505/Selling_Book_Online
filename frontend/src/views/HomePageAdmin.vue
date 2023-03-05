@@ -1,10 +1,16 @@
 <script>
-    import ManageBook from '../components/ManageBook.vue';
-    export default{
-        components: {
-            ManageBook
+import ManageBook from '../components/ManageBook.vue';
+export default {
+    components: {
+        ManageBook
+    },
+    beforeRouteEnter: (to) => {
+        if (!localStorage.getItem('isloggin') && to.name !== 'HomePage') {
+            alert("Bạn cần phải đăng nhập để vào trang quản trị !")
+            return '/'
         }
     }
+}
 </script>
 
 <template>
