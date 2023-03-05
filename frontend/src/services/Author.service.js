@@ -2,14 +2,14 @@ import createHttp from "./http.service";
 
 class AuthorService {
   constructor() {
-    this.http = createHttp("/api/category");
+    this.http = createHttp("/api/author");
   }
 
   async getAllAuthor() {
     return (await this.http.get("/")).data;
   }
 
-  async getauthorytwithID(id) {
+  async getauthorwithID(id) {
     return (await this.http.get(`/editAuthor/${id}`)).data;
   }
 

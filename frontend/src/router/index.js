@@ -66,6 +66,11 @@ const routes = [
     name: "EditCategory",
     component: () => import("@/views/EditCategory.vue"),
   },
+  {
+    path: "/editAuthor/:id",
+    name: "EditAuthor",
+    component: () => import("@/views/EditAuthor.vue"),
+  },
 ];
 
 const router = createRouter({

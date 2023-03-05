@@ -82,7 +82,7 @@ export default {
         },
         async FindAuthor(inputKeyWord) {
             if (inputKeyWord === '') {
-                this.ManageAuthor = await AuthorServiceService.getAllAuthor();
+                this.ManageAuthor = await AuthorService.getAllAuthor();
             } else {
                 try {
                     this.ManageAuthor = await AuthorService.findauthorwithName(inputKeyWord);
@@ -104,7 +104,7 @@ export default {
 
 
     <form action="/" class="d-flex" style="width:500px;margin:0 auto" id="inputSearchKeyWord" @submit.prevent>
-        <input type="text" class="form-control" placeholder="Nhập vào tên danh mục..." aria-label="Recipient's username" aria-describedby="basic-addon2" style="border-radius:6px;" v-model="inputSearch">
+        <input type="text" class="form-control" placeholder="Nhập vào tên tác giả..." aria-label="Recipient's username" aria-describedby="basic-addon2" style="border-radius:6px;" v-model="inputSearch">
         <button id="btn_search" type="submit" style="width:120px;height:50px;border-radius:0 6px 6px 0" @click="FindAuthor(inputSearch)">Tìm Kiếm</button>
     </form>
     <br>
@@ -136,14 +136,14 @@ export default {
             </tr>
         </thead>
         <tbody>
-            <tr v-for="(item, index) in ManageCategory">
+            <tr v-for="(item, index) in ManageAuthor">
                 <td>
                     {{ index + 1 }}
                 </td>
-                <td>{{ item.category_name }}</td>
+                <td>{{ item.author_name }}</td>
                 <td>
                     <router-link :to="{
-                        name: 'EditCategory',
+                        name: 'EditAuthor',
                         params: { id: item._id },
                     }">
                         <button type="button" class="btn btn-warning"><i class="fa-regular fa-pen-to-square"></i> Sửa</button>
