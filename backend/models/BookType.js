@@ -2,7 +2,12 @@ const mongoose = require("mongoose");
 
 const BookTypeSchema = new mongoose.Schema(
   {
-    BookType_name: {
+    booktype_name: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    category_name: {
       type: String,
       required: true,
       unique: true,

@@ -6,6 +6,8 @@ const authRoute = require("./routes/authentication");
 const productRoute = require("./routes/product");
 const categoryRoute = require("./routes/category");
 const authorRoute = require("./routes/author");
+const userRoute = require("./routes/user");
+const booktypeRoute = require("./routes/booktype");
 
 const ApiError = require("./routes/api-error");
 require("dotenv").config();
@@ -31,6 +33,8 @@ app.use("/api/auth", authRoute);
 app.use("/api/products", productRoute);
 app.use("/api/category", categoryRoute);
 app.use("/api/author", authorRoute);
+app.use("/api/user", userRoute);
+app.use("/api/booktype", booktypeRoute);
 // app.use("/api/carts", cartRoute);
 
 //Xử lí lỗi sai 

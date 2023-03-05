@@ -2,11 +2,15 @@
 import ManageBook from '../components/ManageBook.vue';
 import Category from '../components/Category.vue';
 import Author from '../components/Author.vue';
+import Account from '../components/Account.vue';
+import BookType from '../components/BookType.vue';
 export default {
     components: {
         ManageBook,
         Category,
-        Author
+        Author,
+        Account,
+        BookType
     },
     beforeRouteEnter: (to) => {
         if (!localStorage.getItem('isloggin') && to.name !== 'HomePage') {
@@ -29,19 +33,19 @@ export default {
                         Sách </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Quản
+                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fa-solid fa-tag"></i> Quản
                         Lý Danh Mục</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Quản
+                    <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false"><i class="fa-solid fa-book-open-reader"></i> Quản
                         Lý Tác Giả</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-test-2" data-bs-toggle="pill" data-bs-target="#pills-test" type="button" role="tab" aria-controls="pills-test" aria-selected="false">Quản Lý Thể
+                    <button class="nav-link" id="pills-test-2" data-bs-toggle="pill" data-bs-target="#pills-test" type="button" role="tab" aria-controls="pills-test" aria-selected="false"><i class="fa-regular fa-font-awesome"></i> Quản Lý Thể
                         Loại</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-chon-2" data-bs-toggle="pill" data-bs-target="#pills-chon" type="button" role="tab" aria-controls="pills-chon" aria-selected="false">Quản Lý Tài Khoản</button>
+                    <button class="nav-link" id="pills-chon-2" data-bs-toggle="pill" data-bs-target="#pills-chon" type="button" role="tab" aria-controls="pills-chon" aria-selected="false"><i class="fa-solid fa-users"></i> Quản Lý Tài Khoản</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-chinh-2" data-bs-toggle="pill" data-bs-target="#pills-chinh" type="button" role="tab" aria-controls="pills-chinh" aria-selected="false">Quản Lý Đơn
@@ -61,8 +65,14 @@ export default {
                     <!-- Quản lý tác giả -->
                     <Author></Author>
                 </div>
-                <div class="tab-pane fade" id="pills-test" role="tabpanel" aria-labelledby="pills-test-2">sotest</div>
-                <div class="tab-pane fade" id="pills-chon" role="tabpanel" aria-labelledby="pills-chon-2">sotest 2</div>
+                <div class="tab-pane fade" id="pills-test" role="tabpanel" aria-labelledby="pills-test-2">
+                    <!-- Quản lý thể loại -->
+                    <BookType></BookType>
+                </div>
+                <div class="tab-pane fade" id="pills-chon" role="tabpanel" aria-labelledby="pills-chon-2">
+                    <!-- Quản lý tài khoản -->
+                    <Account></Account>
+                </div>
                 <div class="tab-pane fade" id="pills-chinh" role="tabpanel" aria-labelledby="pills-chinh-2">sotest 3</div>
             </div>
         </div>
