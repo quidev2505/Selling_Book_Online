@@ -1,8 +1,12 @@
 <script>
 import ManageBook from '../components/ManageBook.vue';
+import Category from '../components/Category.vue';
+import Author from '../components/Author.vue';
 export default {
     components: {
-        ManageBook
+        ManageBook,
+        Category,
+        Author
     },
     beforeRouteEnter: (to) => {
         if (!localStorage.getItem('isloggin') && to.name !== 'HomePage') {
@@ -49,8 +53,14 @@ export default {
                     <!-- Quản Lý Sách -->
                     <ManageBook></ManageBook>
                 </div>
-                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">so2</div>
-                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">so3</div>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <!-- Quản lý danh mục -->
+                    <Category></Category>
+                </div>
+                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                    <!-- Quản lý tác giả -->
+                    <Author></Author>
+                </div>
                 <div class="tab-pane fade" id="pills-test" role="tabpanel" aria-labelledby="pills-test-2">sotest</div>
                 <div class="tab-pane fade" id="pills-chon" role="tabpanel" aria-labelledby="pills-chon-2">sotest 2</div>
                 <div class="tab-pane fade" id="pills-chinh" role="tabpanel" aria-labelledby="pills-chinh-2">sotest 3</div>

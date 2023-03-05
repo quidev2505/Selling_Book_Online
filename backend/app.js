@@ -4,7 +4,9 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const authRoute = require("./routes/authentication");
 const productRoute = require("./routes/product");
-// const cartRoute = require("./routes/cart");
+const categoryRoute = require("./routes/category");
+const authorRoute = require("./routes/author");
+
 const ApiError = require("./routes/api-error");
 require("dotenv").config();
 
@@ -27,6 +29,8 @@ app.use(express.json());
 //Router
 app.use("/api/auth", authRoute);
 app.use("/api/products", productRoute);
+app.use("/api/category", categoryRoute);
+app.use("/api/author", authorRoute);
 // app.use("/api/carts", cartRoute);
 
 //Xử lí lỗi sai 

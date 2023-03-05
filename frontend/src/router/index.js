@@ -60,7 +60,12 @@ const routes = [
     path: "/editBook/:id",
     name: "EditBook",
     component: () => import("@/views/EditBook.vue"),
-  }
+  },
+  {
+    path: "/editCategory/:id",
+    name: "EditCategory",
+    component: () => import("@/views/EditCategory.vue"),
+  },
 ];
 
 const router = createRouter({

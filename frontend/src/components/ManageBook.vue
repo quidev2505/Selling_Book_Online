@@ -26,7 +26,8 @@ export default {
                 duration: 0
             },
             id_book: '',
-            data_edit: ''
+            data_edit: '',
+            inputSearch: "",
         }
     },
     methods: {
@@ -78,6 +79,49 @@ export default {
                 }, 700)
             }
         },
+        async deleteBook(Id_Book) {
+            let check_delete = confirm("Chắc chắn muốn xóa chứ ?");
+            if (check_delete) {
+                try {
+                    await ProductService.delete(Id_Book);
+                    this.toasts.title = "Success",
+                        this.toasts.msg = "Xóa sách thành công !"
+                    this.toasts.type = "success",
+                        this.toasts.duration = 2000
+                    document.querySelector("#toast").style.display = 'block'
+                    this.toast();
+                    setTimeout(() => {
+                        document.querySelector("#toast").style.display = 'none'
+                        window.location.reload();
+                    }, 2000)
+                } catch (err) {
+                    console.log(this.BookDataInput)
+                    this.toasts.title = "Failed",
+                        this.toasts.msg = "Xóa sách thất bại!"
+                    this.toasts.type = "error",
+                        this.toasts.duration = 2000
+                    document.querySelector("#toast").style.display = 'block'
+                    this.toast()
+                    setTimeout(() => {
+                        document.querySelector("#toast").style.display = 'none'
+                    }, 700)
+                }
+            } else {
+                return
+            }
+        },
+        async FindBook(inputKeyWord) {
+            if (inputKeyWord === '') {
+                this.ManageBooks = await ProductService.getAllProduct();
+            } else {
+                try {
+                    this.ManageBooks = await ProductService.findproductwithName(inputKeyWord);
+                } catch (err) {
+                    console.log(err)
+                }
+            }
+
+        }
     },
     mounted() {
         this.getBookData();
@@ -87,6 +131,13 @@ export default {
 </script>
 <template>
     <button type="button" id="btn_addBook" class="btn btn-success" @click="addBook()"><i class="fa-solid fa-plus"></i> Thêm Sách </button>
+
+
+    <form action="/" class="d-flex" style="width:500px;margin:0 auto" id="inputSearchKeyWord" @submit.prevent>
+        <input type="text" class="form-control" placeholder="Nhập vào tên sách hoặc mô tả..." aria-label="Recipient's username" aria-describedby="basic-addon2" style="border-radius:6px;"
+            v-model="inputSearch">
+        <button id="btn_search" type="submit" style="width:120px;height:50px;border-radius:0 6px 6px 0" @click="FindBook(inputSearch)">Tìm Kiếm</button>
+    </form>
     <br>
     <br>
     <!-- Giao diện thêm sách -->
@@ -153,12 +204,12 @@ export default {
             <tr class="table-info text-center">
                 <th scope="col">STT</th>
                 <th scope="col">Tên Sách</th>
-                <th scope="col">Hình Ảnh</th>
+                <th scope="col" style="width:88px;">Hình Ảnh</th>
                 <th scope="col">Tác Giả</th>
                 <th scope="col">Mô Tả</th>
                 <th scope="col">Danh Mục</th>
                 <th scope="col">Thể Loại</th>
-                <th scope="col">Giá</th>
+                <th scope="col" style="width:80px;">Giá</th>
                 <th scope="col">Hành động</th>
             </tr>
         </thead>
@@ -183,14 +234,15 @@ export default {
                 <td>
                     <router-link :to="{
                         name: 'EditBook',
-                        params: {id: item._id},
+                        params: { id: item._id },
                     }">
                         <button type="button" class="btn btn-warning"><i class="fa-regular fa-pen-to-square"></i> Sửa</button>
                     </router-link>
-                    
+
                     <br>
                     <br>
-                    <button type="button" class="btn btn-danger"> <i class="fa-solid fa-trash"></i> Xóa</button>
+
+                    <button @click="deleteBook(item._id)" type="button" class="btn btn-danger"> <i class="fa-solid fa-trash"></i> Xóa</button>
                 </td>
             </tr>
         </tbody>

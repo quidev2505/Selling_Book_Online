@@ -219,7 +219,7 @@ export default {
     </div>
 </template>
 
-<style>
+<style scoped>
 #main_page_detail_product {
     height: 100%;
     margin-left: 165px;

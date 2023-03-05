@@ -30,7 +30,7 @@ export default {
                     const userDataLogin = await AuthService.createlogin(this.userDataInput);
                     localStorage.setItem('isloggin', JSON.stringify(userDataLogin));
                     this.toasts.title = "Success",
-                        this.toasts.msg = "Đăng Nhập Thành Công !"
+                    this.toasts.msg = "Đăng Nhập Thành Công !"
                     this.toasts.type = "success",
                         this.toasts.duration = 2000
                     document.querySelector("#toast").style.display = 'block'
