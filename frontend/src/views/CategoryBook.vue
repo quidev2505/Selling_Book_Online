@@ -1,13 +1,38 @@
 <script>
 import ProductService from '../services/Product.service';
+import CategoryService from '../services/Category.service';
+import BookTypeService from '../services/BookType.service';
 export default {
     data() {
         return {
             categoryProduct: [],
+            booktypeProduct:[],
+            ManageCategory: [],
+            ManageBookType: [],
             nameCategory: '',
+            nameBooktype: '',
         }
     },
     methods: {
+        navigationCategory(vara) {
+            setTimeout(()=>{
+                window.location.reload();
+            },100)
+        },
+        async showCategory() {
+            try {
+                this.ManageCategory = await CategoryService.getAllCategory();
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        async showBookType() {
+            try {
+                this.ManageBookType = await BookTypeService.getAllBookType();
+            } catch (error) {
+                console.log(error)
+            }
+        },
         async getDetailDataProduct() {
             try {
                 this.categoryProduct = await ProductService.getcategoryProduct(JSON.parse(this.$route.params.name));
@@ -16,14 +41,13 @@ export default {
                 console.log(error)
             }
         },
-        navigationCategory() {
-            setTimeout(() => {
-                window.location.reload();
-            }, 100)
-        }
     },
     created() {
-        this.getDetailDataProduct();
+        this.getDetailDataProduct()
+    },
+    mounted(){
+        this.showCategory();
+        this.showBookType();
     }
 }
 
@@ -32,67 +56,85 @@ export default {
 
 <template>
     <div class="container" id="category_book">
-        <!-- BreadCrumb -->
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb" style="align-items: center;">
-                <li class="breadcrumb-item">
-                    <router-link to="/" style="color:#62ab00">Trang chủ</router-link>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">{{ nameCategory }}</li>
-            </ol>
-        </nav>
+    <!-- BreadCrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" style="align-items: center;">
+            <li class="breadcrumb-item">
+                <router-link to="/" style="color:#62ab00">Trang chủ</router-link>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{{ nameCategory }}</li>
+        </ol>
+    </nav>
 
-        <!-- Navbar and content category -->
-        <div class="row">
-            <!-- Left_nav -->
-            <div class="col-lg-3" id="left_nav" style="height:fit-content;">
-                <ul>
-                    <router-link @click="navigationCategory()" :to="{
-                        name: 'CategoryBook',
-                        params: { name: JSON.stringify('Tất Cả Sách') },
-                    }">
-                        <li>Tất cả sách</li>
-                    </router-link>
-                    <router-link @click="navigationCategory()" :to="{
+    <!-- Navbar and content category -->
+    <div class="row">
+        <!-- Left_nav -->
+        <div class="col-lg-3" id="left_nav" style="height:fit-content;">
+            <ul>
+                <router-link @click="navigationCategory('Tất Cả Sách')" :to="{
+                    name: 'CategoryBook',
+                    params: { name: JSON.stringify('Tất Cả Sách') },
+                }">
+                    <li>Tất cả sách</li>
+                </router-link>
+
+
+                <router-link @click="navigationCategory()" :to="{
+                    name: 'CategoryBook',
+                    params: { name: JSON.stringify(`${item1.category_name}`) },
+                }" v-for="item1 in ManageCategory"> 
+                    <li>{{ item1.category_name }}
+                        <ul>
+                            <router-link @click="navigationCategory()" :to="{
+                                name: 'CategoryBook',
+                                params: { name: JSON.stringify(`${item.booktype_name}`) },
+                            }" v-for="item in ManageBookType">
+                                <li v-if="item.category_name === item1.category_name">{{ item.booktype_name }}</li>
+                            </router-link>
+                        </ul>
+                    </li>
+                </router-link>
+                <!-- <router-link @click="navigationCategory()" :to="{
                         name: 'CategoryBook',
                         params: { name: JSON.stringify('Văn Học') },
                     }">
-                        <li>Văn Học</li>
-                    </router-link>
-                    <router-link @click="navigationCategory()" :to="{
-                        name: 'CategoryBook',
-                        params: { name: JSON.stringify('Kinh Tế') },
-                    }">
-                        <li>Kinh Tế</li>
-                    </router-link>
-                    <router-link @click="navigationCategory()" :to="{
-                        name: 'CategoryBook',
-                        params: { name: JSON.stringify('Tiểu Sử Hồi Ký') },
-                    }">
-                        <li>Tiểu Sử Hồi Ký</li>
-                    </router-link>
-                    <router-link @click="navigationCategory()" :to="{
-                        name: 'CategoryBook',
-                        params: { name: JSON.stringify('Tâm Lý - Kỹ Năng Sống') },
-                    }">
-                        <li>Tâm Lý - Kỹ Năng Sống</li>
-                    </router-link>
-                    <router-link @click="navigationCategory()" :to="{
-                        name: 'CategoryBook',
-                        params: { name: JSON.stringify('Sách Thiếu Nhi') },
-                    }">
-                        <li>Sách Thiếu Nhi</li>
-                    </router-link>
-                    <router-link @click="navigationCategory()" :to="{
-                        name: 'CategoryBook',
-                        params: { name: JSON.stringify('Sách Giáo Khoa - Tham Khảo') },
-                    }">
-                        <li>Sách Giáo Khoa</li>
-                    </router-link>
+                            <li>Văn Học</li>
+                        </router-link>
+                        <router-link @click="navigationCategory()" :to="{
+                            name: 'CategoryBook',
+                            params: { name: JSON.stringify('Kinh Tế') },
+                        }">
+                            <li>Kinh Tế</li>
+                        </router-link>
+                        <router-link @click="navigationCategory()" :to="{
+                            name: 'CategoryBook',
+                            params: { name: JSON.stringify('Tiểu Sử Hồi Ký') },
+                        }">
+                            <li>Tiểu Sử Hồi Ký</li>
+                        </router-link>
+                        <router-link @click="navigationCategory()" :to="{
+                            name: 'CategoryBook',
+                            params: { name: JSON.stringify('Tâm Lý - Kỹ Năng Sống') },
+                        }">
+                            <li>Tâm Lý - Kỹ Năng Sống</li>
+                        </router-link>
+                        <router-link @click="navigationCategory()" :to="{
+                            name: 'CategoryBook',
+                            params: { name: JSON.stringify('Sách Thiếu Nhi') },
+                        }">
+                            <li>Sách Thiếu Nhi</li>
+                        </router-link>
+                        <router-link @click="navigationCategory()" :to="{
+                            name: 'CategoryBook',
+                            params: { name: JSON.stringify('Sách Giáo Khoa - Tham Khảo') },
+                        }">
+                            <li>Sách Giáo Khoa</li>
+                        </router-link> -->
                 </ul>
             </div>
             <!-- Right_content -->
-            <div class="col-lg" id="right_content">
+            <!-- Danh Mục & Thể Loại-->
+            <div class="col-lg right_content" id="danhmuc">
                 <h3 style="color:#62ab00;margin:10px;">{{ nameCategory }}</h3>
                 <div class="container row">
                     <div class="col-lg-4 mt-3 mb-3" v-for="item in categoryProduct">
@@ -111,8 +153,9 @@ export default {
                         </div>
                     </div>
                 </div>
-
             </div>
+
+
         </div>
     </div>
 </template>
@@ -124,7 +167,7 @@ export default {
 }
 
 #left_nav,
-#right_content {
+.right_content {
     border: 1px solid #ccc;
     border-radius: 10px;
 }

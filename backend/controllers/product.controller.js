@@ -1,4 +1,5 @@
 const ProductModel = require("../models/Product");
+const CategoryModel = require("../models/Category");
 
 module.exports = class API {
   //Create Product
@@ -104,8 +105,23 @@ module.exports = class API {
       if (req.params.name === "Tất Cả Sách") {
         arrayProduct = await ProductModel.find({});
       } else {
-        arrayProduct = await ProductModel.find({ categories: req.params.name });
+        let arrayResultCategory = await CategoryModel.find();
+        var check_duplicated = 0;
+        arrayResultCategory.forEach((item, index) => {
+          if (item.category_name === req.params.name) {
+            check_duplicated++;
+          }
+        });
+
+        if (check_duplicated == 0) {
+          arrayProduct = await ProductModel.find({ bookType: req.params.name });
+        } else {
+          arrayProduct = await ProductModel.find({
+            categories: req.params.name,
+          });
+        }
       }
+
       res.status(200).json(arrayProduct);
     } catch (err) {
       res.status(501).json(err);
@@ -113,14 +129,12 @@ module.exports = class API {
   }
 
   //Get Product With id
-  static async getproductwithID(req, res){
-    try{
-      const result = await ProductModel.findOne({_id: req.params.id});
-      res.status(201).json(result)
-    }catch(err){
-      res.status(501).json(err)
+  static async getproductwithID(req, res) {
+    try {
+      const result = await ProductModel.findOne({ _id: req.params.id });
+      res.status(201).json(result);
+    } catch (err) {
+      res.status(501).json(err);
     }
   }
 };
-
-

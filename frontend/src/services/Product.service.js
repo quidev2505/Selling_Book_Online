@@ -40,6 +40,8 @@ class ProductService {
   async getcategoryProduct(name) {
     return (await this.http.get(`/categoryBook/${name}`)).data;
   }
+
+
 }
 
 export default new ProductService();

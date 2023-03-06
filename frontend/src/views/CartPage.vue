@@ -10,7 +10,14 @@ export default{
 </script>
 
 <template>
-    <div>
-        Đây là trang giỏ hàng
+    <div class="container" id="cartPage">
+        <h4>GIỎ HÀNG</h4>
     </div>
 </template>
+
+<style>
+#cartPage{
+    margin-left: 160px;
+    margin-top: 50px;
+}
+</style>
