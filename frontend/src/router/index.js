@@ -71,6 +71,11 @@ const routes = [
     name: "EditAuthor",
     component: () => import("@/views/EditAuthor.vue"),
   },
+  {
+    path: "/editBookType/:id",
+    name: "EditBookType",
+    component: () => import("@/views/EditBookType.vue"),
+  },
 ];
 
 const router = createRouter({

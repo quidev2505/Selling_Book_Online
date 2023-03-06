@@ -1,12 +1,21 @@
 <script>
+import CategoryService from '../services/Category.service';
 export default {
     data() {
         return {
             inputSearch: '',
-            checkLogAdmin: ''
+            checkLogAdmin: '',
+            ManageCategory: []
         }
     },
     methods: {
+        async showCategory(){
+            try {
+                this.ManageCategory = await CategoryService.getAllCategory();
+            } catch (error) {
+                console.log(error)
+            }
+        },
         showUserAlreadyLogin() {
             if (!localStorage.getItem('isloggin')) {
                 //Trường hợp chưa đăng nhập
@@ -39,7 +48,8 @@ export default {
         }
     },
     mounted() {
-        this.showUserAlreadyLogin()
+        this.showUserAlreadyLogin(),
+        this.showCategory()
     },
 
 }
@@ -137,7 +147,7 @@ export default {
                         DANH MỤC SẢN PHẨM
                     </button>
 
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="list-style:none;color:black">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="list-style:none;color:black;font-size:15px">
                         <div class="container d-flex flex-column">
                             <router-link @click="navigationCategory()" :to="{
                                 name: 'CategoryBook',
@@ -145,6 +155,15 @@ export default {
                             }">
                                 <li>Tất cả sách</li>
                             </router-link>
+
+                            <router-link @click="navigationCategory()" :to="{
+                                name: 'CategoryBook',
+                                params: { name: JSON.stringify(`${item.category_name}`) },
+                            }" v-for="item in ManageCategory">
+                                <li>{{ item.category_name }}</li>
+                            </router-link>
+
+<!-- 
                             <router-link @click="navigationCategory()" :to="{
                                 name: 'CategoryBook',
                                 params: { name: JSON.stringify('Văn Học') },
@@ -180,7 +199,7 @@ export default {
                                 params: { name: JSON.stringify('Sách Giáo Khoa - Tham Khảo') },
                             }">
                                 <li>Sách Giáo Khoa</li>
-                            </router-link>
+                            </router-link> -->
 
                         </div>
 

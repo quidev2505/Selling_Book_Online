@@ -26,10 +26,14 @@ export default {
             id_book: '',
             data_edit: '',
             inputSearch: "",
+            selected: "Choose Province"
         }
     },
     methods: {
         toast,
+        async changeOption(){
+            this.BookTypeInput.category_name = document.querySelector("#chooseDM").value;
+        },
         async getbooktypeData() {
             try {
                 this.ManageBookType = await BookTypeService.getAllBookType();
@@ -51,28 +55,28 @@ export default {
                 window.location.reload();
             }, 100)
         },
-        async handleAddAuthor() {
+        async handleAddBookType() {
             try {
-                console.log(this.AuthorInput)
-                await AuthorService.create(this.AuthorInput)
-                alert('Thêm tác giả thành công !')
+                await BookTypeService.create(this.BookTypeInput)
+                alert('Thêm thể loại thành công !')
                 setTimeout(() => {
                     document.querySelector("#toast").style.display = 'none'
                     window.location.reload();
                 }, 1000)
             }
             catch (err) {
-                alert('Thêm tác giả thất bại ! ')
+                console.log(err)
+                alert('Thêm thể loại thất bại ! ')
                 setTimeout(() => {
                     document.querySelector("#toast").style.display = 'none'
                 }, 700)
             }
         },
-        async deleteAuthor(Id_Author) {
+        async deleteBookType(Id_BookType) {
             let check_delete = confirm("Chắc chắn muốn xóa chứ ?");
             if (check_delete) {
                 try {
-                    await AuthorService.delete(Id_Author);
+                    await BookTypeService.delete(Id_BookType);
                     alert('Xóa thành công !');
                     setTimeout(() => {
                         window.location.reload();
@@ -86,10 +90,10 @@ export default {
         },
         async FindAuthor(inputKeyWord) {
             if (inputKeyWord === '') {
-                this.ManageAuthor = await AuthorService.getAllAuthor();
+                this.ManageBookType = await BookTypeService.getAllBookType();
             } else {
                 try {
-                    this.ManageAuthor = await AuthorService.findauthorwithName(inputKeyWord);
+                    this.ManageBookType = await BookTypeService.findbooktypewithName(inputKeyWord);
                 } catch (err) {
                     console.log(err)
                 }
@@ -123,17 +127,18 @@ export default {
         <!-- Title Input -->
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label fw-bold">Tên thể loại: </label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Vui lòng nhập vào tên tác giả..." v-model="BookTypeInput.booktype_name" required>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Vui lòng nhập vào thể loại..." v-model="BookTypeInput.booktype_name" required>
 
+            <br>
             <label for="exampleInputEmail1" class="form-label fw-bold">Chọn danh mục: </label>
-            <select name="" id="">
-                <option value="" v-for="item in ManageCategory" >
-                    <input type="text" v-model="BookTypeInput.category_name"> {{ item.category_name }}
-                </option>
+            <br>
+            <select class="form-control" :required="true" @change="changeOption" id="chooseDM">
+                <option :selected="true">Chưa chọn danh mục</option>
+                <option v-for="item in ManageCategory" v-bind:value="item.category_name">{{ item.category_name }}</option>
             </select>
         </div>
 
-        <button @click="handleAddAuthor()" type="submit" class="btn btn-light fw-bold" style="padding: 10px;;border:1px solid #ccc">Xác Nhận</button>
+        <button @click="handleAddBookType()" type="submit" class="btn btn-light fw-bold" style="padding: 10px;;border:1px solid #ccc">Xác Nhận</button>
     </form>
 
 
@@ -142,19 +147,21 @@ export default {
         <thead>
             <tr class="table-info text-center">
                 <th scope="col">STT</th>
-                <th scope="col">Tên Tác Giả</th>
+                <th scope="col">Thể Loại</th>
+                <th scope="col">Thuộc Danh Mục</th>
                 <th scope="col">Hành Động</th>
             </tr>
         </thead>
         <tbody>
-            <tr v-for="(item, index) in ManageAuthor">
+            <tr v-for="(item, index) in ManageBookType">
                 <td>
                     {{ index + 1 }}
                 </td>
-                <td>{{ item.author_name }}</td>
+                <td>{{ item.booktype_name }}</td>
+                <td>{{ item.category_name }}</td>
                 <td>
                     <router-link :to="{
-                        name: 'EditAuthor',
+                        name: 'EditBookType',
                         params: { id: item._id },
                     }">
                         <button type="button" class="btn btn-warning"><i class="fa-regular fa-pen-to-square"></i> Sửa</button>
@@ -163,7 +170,7 @@ export default {
                     <br>
                     <br>
 
-                    <button @click="deleteAuthor(item._id)" type="button" class="btn btn-danger"> <i class="fa-solid fa-trash"></i> Xóa</button>
+                    <button @click="deleteBookType(item._id)" type="button" class="btn btn-danger"> <i class="fa-solid fa-trash"></i> Xóa</button>
                 </td>
             </tr>
         </tbody>

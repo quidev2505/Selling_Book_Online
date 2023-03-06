@@ -5,7 +5,6 @@ const BookTypeSchema = new mongoose.Schema(
     booktype_name: {
       type: String,
       required: true,
-      unique: true,
     },
     category_name: {
       type: String,

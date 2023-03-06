@@ -1,5 +1,8 @@
 <script>
 import ProductService from '../services/Product.service';
+import CategoryService from '../services/Category.service';
+import BookTypeService from '../services/BookType.service';
+import AuthorService from '../services/Author.service';
 import ToastVue from './Toast.vue';
 import toast from '../assets/js/toasts';
 
@@ -10,6 +13,9 @@ export default {
     data() {
         return {
             ManageBooks: [],
+            ManageBookType :[],
+            ManageAuthor: [],
+            ManageCategory: [],
             BookDataInput: {
                 img_url: [],
                 title: "",
@@ -32,9 +38,21 @@ export default {
     },
     methods: {
         toast,
+        async changeOptionDM() {
+            this.BookDataInput.categories = document.querySelector("#chooseDM").value;
+        },
+        async changeOptionTL() {
+            this.BookDataInput.bookType = document.querySelector("#chooseTL").value;
+        },
+        async changeOptionTG() {
+            this.BookDataInput.author = document.querySelector("#chooseTG").value;
+        },
         async getBookData() {
             try {
                 this.ManageBooks = await ProductService.getAllProduct();
+                this.ManageBookType = await BookTypeService.getAllBookType();
+                this.ManageCategory = await CategoryService.getAllCategory();
+                this.ManageAuthor= await AuthorService.getAllAuthor();
             } catch (error) {
                 console.log(error)
             }
@@ -164,20 +182,27 @@ export default {
 
         <!-- Author Input -->
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label fw-bold">Tên tác giả: </label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập vào tên tác giả..." v-model="BookDataInput.author" required>
+            <label for="exampleInputEmail1" class="form-label fw-bold">Tác giả: </label>
+            <select class="form-control" :required="true" @change="changeOptionTG" id="chooseTG">
+                <option v-for="item in ManageAuthor" v-bind:value="item.author_name">{{ item.author_name }}</option>
+            </select>
         </div>
+
 
         <!-- Categories Input -->
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label fw-bold">Danh Mục: </label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập vào tên danh mục..." v-model="BookDataInput.categories" required>
+            <label for="exampleInputEmail1" class="form-label fw-bold">Tên danh mục: </label>
+            <select class="form-control" :required="true" @change="changeOptionDM" id="chooseDM">
+                <option v-for="item in ManageCategory" v-bind:value="item.category_name">{{ item.category_name }}</option>
+            </select>
         </div>
 
         <!-- BookType Input -->
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label fw-bold">Thể loại: </label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập vào thể loại sách..." v-model="BookDataInput.bookType" required>
+            <select class="form-control" :required="true" @change="changeOptionTL" id="chooseTL">
+                <option v-for="item in ManageBookType" v-bind:value="item.booktype_name">{{ item.booktype_name }}</option>
+            </select>
         </div>
 
         <!-- Price Input -->

@@ -11,6 +11,7 @@ module.exports = class API {
       const createNewBookType = await bookTypeInput.save();
       res.status(200).json(createNewBookType);
     } catch (err) {
+      console.log(err)
       res.status(501).json(err);
     }
   }
@@ -36,7 +37,7 @@ module.exports = class API {
   static async deleteBookType(req, res) {
     const id_booktype = req.params.id;
     try {
-      await BookTypeModelModel.findByIdAndDelete(id_booktype);
+      await BookTypeModel.findByIdAndDelete(id_booktype);
       res.status(200).json("Đã xóa thành công thể loại sách!");
     } catch (err) {
       res.status(501).json(err);
@@ -46,7 +47,7 @@ module.exports = class API {
   //Get Category With id
   static async getbooktypewithID(req, res) {
     try {
-      const result = await BookTypeModelModel.findOne({ _id: req.params.id });
+      const result = await BookTypeModel.findOne({ _id: req.params.id });
       res.status(201).json(result);
     } catch (err) {
       res.status(501).json(err);
@@ -56,7 +57,7 @@ module.exports = class API {
   //Find Category with name
   static async findbooktypewithName(req, res) {
     try {
-      const name_booktype = await req.params.booktype;
+      const name_booktype = await req.params.namebooktype;
       const BookTypeData = await BookTypeModel.find({
         booktype_name: { $regex: `${name_booktype}`, $options: "i" },
       });
