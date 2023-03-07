@@ -12,6 +12,7 @@ export default {
             userDataInput:{
                 username:"",
                 email: "",
+                phonenumber: "",
                 password: ""
             },
             toasts:{
@@ -26,6 +27,7 @@ export default {
         toast,
         async createUser() {
             try {
+                console.log(this.userDataInput)
                 await AuthService.createregister(this.userDataInput);
                 this.toasts.title = "Success",
                 this.toasts.msg = "Đăng Ký Thành Công !"
@@ -59,9 +61,9 @@ export default {
     
     <ToastVue></ToastVue>
     <form @submit.prevent>
-    <!-- UserName Input -->
-    <div class="mb-3">
-            <label for="inputUserName" class="form-label fw-bold">Tên người dùng: </label>
+        <!-- UserName Input -->
+        <div class="mb-3">
+            <label for="inputUserName" class="form-label fw-bold">Tên đầy đủ: </label>
             <input type="text" class="form-control" id="inputUserName" placeholder="Vui lòng nhập vào tên người dùng..." v-model="userDataInput.username" required>
         </div>
 
@@ -70,6 +72,13 @@ export default {
             <label for="exampleInputEmail1" class="form-label fw-bold">Email: </label>
             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Vui lòng nhập vào email..." v-model="userDataInput.email" required>
         </div>
+
+        <!-- PhoneNumber Input -->
+        <div class="mb-3">
+            <label for="inputphonenumber" class="form-label fw-bold">Số điện thoại: </label>
+            <input type="text" class="form-control" id="inputphonenumber" minlength="10" maxlength="11" placeholder="Vui lòng nhập vào số điện thoại..." v-model="userDataInput.phonenumber" required>
+        </div>
+
 
         <!-- Password Input -->
         <div class="mb-3">

@@ -76,6 +76,11 @@ const routes = [
     name: "EditBookType",
     component: () => import("@/views/EditBookType.vue"),
   },
+  {
+    path: "/order",
+    name: "OrderPage",
+    component: () => import("@/views/OrderPage.vue"),
+  }
 ];
 
 const router = createRouter({

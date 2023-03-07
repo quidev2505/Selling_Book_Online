@@ -7,6 +7,7 @@ const productRoute = require("./routes/product");
 const categoryRoute = require("./routes/category");
 const authorRoute = require("./routes/author");
 const userRoute = require("./routes/user");
+const orderRoute = require("./routes/order");
 const booktypeRoute = require("./routes/booktype");
 
 const ApiError = require("./routes/api-error");
@@ -35,6 +36,7 @@ app.use("/api/category", categoryRoute);
 app.use("/api/author", authorRoute);
 app.use("/api/user", userRoute);
 app.use("/api/booktype", booktypeRoute);
+app.use("/api/order", orderRoute);
 // app.use("/api/carts", cartRoute);
 
 //Xử lí lỗi sai 

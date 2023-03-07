@@ -117,6 +117,9 @@ export default {
                 }
             }
             alert('Thêm vào giỏ hàng thành công !')
+            setTimeout(()=>{
+                window.location.reload();
+            },100)
         }
     },
     created() {

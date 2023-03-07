@@ -28,6 +28,7 @@ export default {
                 if (cartLocalStorage[i].title_product === titleProduct) {
                     if (cartLocalStorage[i].quantity_product == 1) {
                         cartLocalStorage[i].quantity_product = 1;
+                        alert('Số lượng sản phẩm thấp nhất là 1.')
                         break;
                     } else {
                         cartLocalStorage[i].quantity_product = cartLocalStorage[i].quantity_product - 1;
@@ -125,7 +126,9 @@ export default {
                     </div>
                     <br>
                     <br>
-                    <button type="button" class="btn btn-info text-white fw-bold" style="width:100%;">THANH TOÁN</button>
+                    <router-link to="/order">
+                        <button type="button" class="btn btn-info text-white fw-bold" style="width:100%;background-color:#62ab00;">THANH TOÁN</button>
+                    </router-link>
                 </div>
             </div>
         </div>

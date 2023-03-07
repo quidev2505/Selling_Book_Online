@@ -7,11 +7,13 @@ module.exports = class API {
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
+      phonenumber: req.body.phonenumber
     });
     try {
       const createNewUser = await userInput.save();
       res.status(200).json(createNewUser);
     } catch (err) {
+      console.log(err)
       res.status(501).json(err);
     }
   }

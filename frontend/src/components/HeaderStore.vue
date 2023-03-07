@@ -5,13 +5,16 @@ export default {
         return {
             inputSearch: '',
             checkLogAdmin: '',
-            ManageCategory: []
+            ManageCategory: [],
+            countCart: 0
         }
     },
     methods: {
         async showCategory() {
             try {
                 this.ManageCategory = await CategoryService.getAllCategory();
+                let cart_localStorage = JSON.parse(localStorage.getItem("productCart"));
+                this.countCart = cart_localStorage.length;
             } catch (error) {
                 console.log(error)
             }
@@ -91,12 +94,12 @@ export default {
 
                         <span>
                             <button @click="logout_Btn()" class="btn btn-danger text-white text-decoration-none text-dark" style="    width: fit-content;
-                                                                                    height: 35px;
-                                                                                    display: flex;
-                                                                                    align-items: center;
-                                                                                    margin-top: 3px;
-                                                                                    justify-content: center;
-                                                                                }">Đăng xuất</button>
+                                                                                                height: 35px;
+                                                                                                display: flex;
+                                                                                                align-items: center;
+                                                                                                margin-top: 3px;
+                                                                                                justify-content: center;
+                                                                                            }">Đăng xuất</button>
 
                         </span>
                     </div>
@@ -106,26 +109,42 @@ export default {
 
                 <!-- Chưa đăng nhập -->
                 <div id="not_login" style="display:none;z-index:100;">
-                <div class="d-flex flex-column" style="width:120px;margin-left:-30%;margin-top:-20px;margin-right:20px;z-index:10">
-                    <span class="fw-bold mb-1">
-                        <a href="#" class="text-decoration-none text-dark">
-                            <router-link to="/login" class="text-decoration-none text-dark"> Đăng Nhập</router-link>
-                        </a>
-                    </span>
+                    <div class="d-flex flex-column" style="width:120px;margin-left:-30%;margin-top:-20px;margin-right:20px;z-index:10">
+                        <span class="fw-bold mb-1">
+                            <a href="#" class="text-decoration-none text-dark">
+                                <router-link to="/login" class="text-decoration-none text-dark"> Đăng Nhập</router-link>
+                            </a>
+                        </span>
 
-                    <span>
-                        <a href="#" class="text-decoration-none text-dark">
-                            <router-link to="/register" class="text-decoration-none text-dark"> Đăng Ký</router-link>
-                        </a>
-                    </span>
-                </div>
+                        <span>
+                            <a href="#" class="text-decoration-none text-dark">
+                                <router-link to="/register" class="text-decoration-none text-dark"> Đăng Ký</router-link>
+                            </a>
+                        </span>
+                    </div>
             </div>
 
 
             <!-- cart_icon -->
             <div id="icon_cart" style="margin-right:141px" v-if="checkLogAdmin !== 'TK Admin'">
                 <router-link to="/cartStore">
-                    <i class="fa-solid fa-cart-shopping" style="color:#62ab00;"></i>
+                    <i class="fa-solid fa-cart-shopping" style="color:#62ab00;position:relative">
+                        <span style="    position: absolute;
+    border-radius: 50%;
+    background-color: black;
+    color: white;
+    top: -8px;
+    right: -6px;
+    border-radius: 50%;
+    padding: 2px;
+    font-size: 15px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;">{{ countCart }}</span>
+                    </i>
+
                 </router-link>
                 <p style="font-size:8px;">Giỏ hàng</p>
             </div>
@@ -139,9 +158,9 @@ export default {
         <div class="navbar-brand" href="#" style="    margin-right: 50px;
                                                                                         margin-left: 61px;">
             <div class="dropdown">
-                <button class="btn dropdown-toggle text-light fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
-                    style="border:2px solid white;padding:10px;z-index:10">
-                    <i class="fa-solid fa-bars"></i>
+                    <button class="btn dropdown-toggle text-light fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
+                        style="border:2px solid white;padding:10px;z-index:10">
+                        <i class="fa-solid fa-bars"></i>
                         &nbsp;
                         DANH MỤC SẢN PHẨM
                     </button>
@@ -163,42 +182,42 @@ export default {
                             </router-link>
 
                             <!-- 
-                                <router-link @click="navigationCategory()" :to="{
-                                    name: 'CategoryBook',
-                                    params: { name: JSON.stringify('Văn Học') },
-                                }">
-                                    <li>Văn Học</li>
-                                </router-link>
-                                <router-link @click="navigationCategory()" :to="{
-                                    name: 'CategoryBook',
-                                    params: { name: JSON.stringify('Kinh Tế') },
-                                }">
-                                    <li>Kinh Tế</li>
-                                </router-link>
-                                <router-link @click="navigationCategory()" :to="{
-                                    name: 'CategoryBook',
-                                    params: { name: JSON.stringify('Tiểu Sử Hồi Ký') },
-                                }">
-                                    <li>Tiểu Sử Hồi Ký</li>
-                                </router-link>
-                                <router-link @click="navigationCategory()" :to="{
-                                    name: 'CategoryBook',
-                                    params: { name: JSON.stringify('Tâm Lý - Kỹ Năng Sống') },
-                                }">
-                                    <li>Tâm Lý - Kỹ Năng Sống</li>
-                                </router-link>
-                                <router-link @click="navigationCategory()" :to="{
-                                    name: 'CategoryBook',
-                                    params: { name: JSON.stringify('Sách Thiếu Nhi') },
-                                }">
-                                    <li>Sách Thiếu Nhi</li>
-                                </router-link>
-                                <router-link @click="navigationCategory()" :to="{
-                                    name: 'CategoryBook',
-                                    params: { name: JSON.stringify('Sách Giáo Khoa - Tham Khảo') },
-                                }">
-                                    <li>Sách Giáo Khoa</li>
-                                </router-link> -->
+                                            <router-link @click="navigationCategory()" :to="{
+                                                name: 'CategoryBook',
+                                                params: { name: JSON.stringify('Văn Học') },
+                                            }">
+                                                <li>Văn Học</li>
+                                            </router-link>
+                                            <router-link @click="navigationCategory()" :to="{
+                                                name: 'CategoryBook',
+                                                params: { name: JSON.stringify('Kinh Tế') },
+                                            }">
+                                                <li>Kinh Tế</li>
+                                            </router-link>
+                                            <router-link @click="navigationCategory()" :to="{
+                                                name: 'CategoryBook',
+                                                params: { name: JSON.stringify('Tiểu Sử Hồi Ký') },
+                                            }">
+                                                <li>Tiểu Sử Hồi Ký</li>
+                                            </router-link>
+                                            <router-link @click="navigationCategory()" :to="{
+                                                name: 'CategoryBook',
+                                                params: { name: JSON.stringify('Tâm Lý - Kỹ Năng Sống') },
+                                            }">
+                                                <li>Tâm Lý - Kỹ Năng Sống</li>
+                                            </router-link>
+                                            <router-link @click="navigationCategory()" :to="{
+                                                name: 'CategoryBook',
+                                                params: { name: JSON.stringify('Sách Thiếu Nhi') },
+                                            }">
+                                                <li>Sách Thiếu Nhi</li>
+                                            </router-link>
+                                            <router-link @click="navigationCategory()" :to="{
+                                                name: 'CategoryBook',
+                                                params: { name: JSON.stringify('Sách Giáo Khoa - Tham Khảo') },
+                                            }">
+                                                <li>Sách Giáo Khoa</li>
+                                            </router-link> -->
 
                         </div>
 
@@ -211,7 +230,7 @@ export default {
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="input-group mb-3 text-light" style="    align-items: center;
-                                                                                                                margin-bottom: 0 !important;">
+                                                                                                                            margin-bottom: 0 !important;">
                     <div class="col-lg-1" style="font-size:35px ;margin-right: -23px;">
                         <i class="fa-solid fa-headphones-simple"></i>
                     </div>

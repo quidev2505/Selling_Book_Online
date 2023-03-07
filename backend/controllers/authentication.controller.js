@@ -20,6 +20,7 @@ module.exports = class API {
           req.body.password,
           process.env.PASS_SECRET
         ).toString(),
+        phonenumber: req.body.phonenumber
       });
 
       try {
