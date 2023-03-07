@@ -137,4 +137,14 @@ module.exports = class API {
       res.status(501).json(err);
     }
   }
+
+  //Get product with id
+  static async getwithID(req, res) {
+    try {
+      const result = await ProductModel.findOne({ _id: req.params.id });
+      res.status(201).json(result);
+    } catch (err) {
+      res.status(501).json(err);
+    }
+  }
 };

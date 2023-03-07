@@ -31,4 +31,7 @@ router.get("/categoryBook/:name", API_product.getcategoryProduct);
 //Get Product with ID
 router.get("/editBook/:id", API_product.getproductwithID);
 
+//Get product withd id anywhere
+router.get("/:id", API_product.getwithID);
+
 module.exports = router;

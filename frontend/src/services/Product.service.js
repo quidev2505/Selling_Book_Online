@@ -25,6 +25,10 @@ class ProductService {
     return (await this.http.get(`/find/${id}`)).data;
   }
 
+  async getwithID(id) {
+    return (await this.http.get(`/${id}`)).data;
+  }
+
   async findproductwithName(name) {
     return (await this.http.get(`/findProduct/${name}`)).data;
   }
@@ -40,8 +44,6 @@ class ProductService {
   async getcategoryProduct(name) {
     return (await this.http.get(`/categoryBook/${name}`)).data;
   }
-
-
 }
 
 export default new ProductService();

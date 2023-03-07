@@ -73,46 +73,48 @@ export default {
         async IncreaseNumber() {
             this.quantity_item += 1
         },
-        addtoCart(id_product_input) {
+        addtoCart(title_product_input) {
             if (!localStorage.getItem('isloggin')) {
                 alert('Bạn cần phải đăng nhập trước khi thêm vào giỏ hàng !')
             } else {
-                let cart_local_save = localStorage.getItem('cartSave');
 
-                if (!cart_local_save) {
-                    let ArrayCart = [
+                var checkExitCart = JSON.parse(localStorage.getItem('productCart'));
+
+                if (!checkExitCart) {
+                    checkExitCart = [
                         {
-                            id_product: id_product_input,
-                            quantity: this.quantity_item
+                            img_product: this.DetailProductData.img_url[0],
+                            title_product: this.DetailProductData.title,
+                            price_product: this.DetailProductData.price,
+                            quantity_product: this.quantity_item
                         }
-                    ];
-                    localStorage.setItem('cartSave', JSON.stringify(ArrayCart));
+                    ]
+
+                    localStorage.setItem('productCart', JSON.stringify(checkExitCart));
                 } else {
-                    let old_array_cart = JSON.parse(localStorage.getItem('cartSave'));
-                    old_array_cart.forEach((item, index) => {
-                        if (item.id_product === id_product_input) {
-                            let new_quantity = item.quantity + this.quantity_item;
-
-                            let CartObject = {
-                                id_product: id_product_input,
-                                quantity: new_quantity
-                            };
-
-                            old_array_cart[index] = CartObject;
-                            localStorage.setItem('cartSave', JSON.stringify(old_array_cart));
-                        } else {
-                            let CartObject = {
-                                id_product: id_product_input,
-                                quantity: this.quantity_item
-                            }
-                            old_array_cart.push(CartObject);
-                            localStorage.setItem('cartSave', JSON.stringify(old_array_cart));
+                    for (let i = 0; i < checkExitCart.length; i++) {
+                        if (title_product_input === checkExitCart[i].title_product) {
+                            checkExitCart[i].quantity_product = checkExitCart[i].quantity_product + this.quantity_item;
+                            localStorage.setItem('productCart', JSON.stringify(checkExitCart))
+                            alert('Thêm vào giỏ hàng thành công !')
+                            return;
                         }
-                    })
-                }
+                    }
 
-                alert('Thêm vào giỏ hàng thành công !')
+                    let new_object = {
+                        img_product: this.DetailProductData.img_url[0],
+                        title_product: this.DetailProductData.title,
+                        price_product: this.DetailProductData.price,
+                        quantity_product: this.quantity_item
+                    }
+
+                    checkExitCart.push(new_object)
+
+                    localStorage.setItem('productCart', JSON.stringify(checkExitCart))
+
+                }
             }
+            alert('Thêm vào giỏ hàng thành công !')
         }
     },
     created() {
@@ -148,13 +150,13 @@ export default {
                 <span class="visually-hidden">Next</span>
             </button>
             <i @click="exit()" class="fa-solid fa-xmark" style="position: absolute;
-                                top: 11px;
-                                right: 25px;
-                                color: white;
-                                font-size: 50px;
-                                opacity: 0.6;
-                                z-index:999999999999;
-                                cursor:pointer;"></i>
+                                                        top: 11px;
+                                                        right: 25px;
+                                                        color: white;
+                                                        font-size: 50px;
+                                                        opacity: 0.6;
+                                                        z-index:999999999999;
+                                                        cursor:pointer;"></i>
         </div>
 
 
@@ -162,23 +164,23 @@ export default {
         <div class="row">
             <div class="col-6">
                 <img :src="DetailProductData.img_url[0]" class="img-fluid" alt="..." width="319" height="444" style="    border: 1px solid #ccc;
-                                                                        border-radius: 10px;
-                                                                        padding: 10px;box-shadow: 1px 2px 13px 0px;margin-left:130px;">
+                                                                                                border-radius: 10px;
+                                                                                                padding: 10px;box-shadow: 1px 2px 13px 0px;margin-left:130px;">
                 <div class="row d-flex mt-5 text-center">
                     <div class="col">
                         <img @click="openImg(DetailProductData.img_url[0], 0)" :src="DetailProductData.img_url[0]" class="img-thumbnail img_introduce" alt="..." width="319" height="444" style="    border: 1px solid #ccc;object-fit:contain;
-                                                                            border-radius: 10px;
-                                                                            padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
+                                                                                                    border-radius: 10px;
+                                                                                                    padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
                     </div>
                     <div class="col">
                         <img @click="openImg(DetailProductData.img_url[1], 1)" :src="DetailProductData.img_url[1]" class="img-thumbnail img_introduce" alt="..." width="319" height="444" style="    border: 1px solid #ccc;object-fit:contain;
-                                                                            border-radius: 10px;
-                                                                            padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
+                                                                                                    border-radius: 10px;
+                                                                                                    padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
                     </div>
                     <div class="col">
                         <img @click="openImg(DetailProductData.img_url[2], 2)" :src="DetailProductData.img_url[2]" class="img-thumbnail img_introduce" alt="..." width="319" height="444" style="    border: 1px solid #ccc;object-fit:contain;
-                                                                            border-radius: 10px;
-                                                                            padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
+                                                                                                    border-radius: 10px;
+                                                                                                    padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
                     </div>
                 </div>
             </div>
@@ -213,7 +215,7 @@ export default {
                 </div>
 
                 <div class="row">
-                    <p @click="addtoCart(DetailProductData._id)" id="cart_btn" style="cursor:pointer"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ hàng</p>
+                    <p @click="addtoCart(DetailProductData.title)" id="cart_btn" style="cursor:pointer"><i class="fa-solid fa-cart-shopping"></i> Thêm vào giỏ hàng</p>
                 </div>
             </div>
         </div>

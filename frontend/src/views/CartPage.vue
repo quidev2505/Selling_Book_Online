@@ -1,10 +1,56 @@
 <script>
-export default{
+export default {
     beforeRouteEnter: (to) => {
-        if (!localStorage.getItem('isloggin') && to.name!=='HomePage') {
+        if (!localStorage.getItem('isloggin') && to.name !== 'HomePage') {
             alert("Bạn cần phải đăng nhập để vào giỏ hàng !")
             return '/'
         }
+    },
+    data() {
+        return {
+            data_show_product_cart: [],
+        }
+    },
+    methods: {
+        async loadCart() {
+            let cart_localStorage = JSON.parse(localStorage.getItem("productCart"));
+            this.data_show_product_cart = cart_localStorage
+
+        },
+        async DecreaseNumber(titleProduct) {
+            let cartLocalStorage = JSON.parse(localStorage.getItem('productCart'));
+            for (let i = 0; i < cartLocalStorage.length; i++) {
+                if (cartLocalStorage[i].title_product === titleProduct) {
+                    if (cartLocalStorage[i].quantity_product == 1) {
+                        cartLocalStorage[i].quantity_product = 1;
+                        break;
+                    } else {
+                        cartLocalStorage[i].quantity_product = cartLocalStorage[i].quantity_product - 1;
+                        localStorage.setItem('productCart', JSON.stringify(cartLocalStorage));
+                        break;
+                    }
+                }
+            }
+            setTimeout(() => {
+                window.location.reload();
+            }, 100)
+        },
+        async IncreaseNumber(titleProduct) {
+            let cartLocalStorage = JSON.parse(localStorage.getItem('productCart'));
+            for (let i = 0; i < cartLocalStorage.length; i++) {
+                if (cartLocalStorage[i].title_product === titleProduct) {
+                    cartLocalStorage[i].quantity_product = cartLocalStorage[i].quantity_product + 1;
+                    localStorage.setItem('productCart', JSON.stringify(cartLocalStorage));
+                    break;
+                }
+            }
+            setTimeout(() => {
+                window.location.reload();
+            }, 100)
+        }
+    },
+    mounted() {
+        this.loadCart();
     }
 }
 </script>
@@ -12,12 +58,92 @@ export default{
 <template>
     <div class="container" id="cartPage">
         <h4>GIỎ HÀNG</h4>
+        <div class="col-lg-8">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Mô tả sản phẩm</th>
+                        <th scope="col">Số Lượng</th>
+                        <th scope="col">Thành Tiền</th>
+                        <th scope="col">Xóa Sản Phẩm</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, index) in data_show_product_cart">
+                        <td>
+                            {{ ++index }}
+                        </td>
+                        <td class="d-flex">
+                            <div class="col-lg-6">
+                                <img :src="item.img_product" class="img-thumbnail" alt="..." width="76" height="110">
+                            </div>
+                            <div class="col-lg">
+                                <p> {{ item.title_product }}</p>
+                                <p style="font-weight:bold">{{ item.price_product.toLocaleString() }} đ</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex">
+                                <button id="btn_decrease" @click="DecreaseNumber(item.title_product)">-</button>
+                                <input type="text" v-model="item.quantity_product" class="fw-bold" id="input_quantity">
+                                <button id="btn_increase" @click="IncreaseNumber(item.title_product)">+</button>
+                            </div>
+                        </td>
+                        <td style="font-weight:bold;color:red;">
+                            {{ (item.price_product * item.quantity_product).toLocaleString() }} đ
+                        </td>
+                        <td>
+                            <i class="fa-solid fa-trash"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-4"></div>
     </div>
 </template>
 
 <style>
-#cartPage{
+#cartPage {
     margin-left: 160px;
     margin-top: 50px;
+}
+
+
+#btn_decrease {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    border: none;
+}
+
+#btn_increase {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    border: none;
+}
+
+#input_quantity {
+    width: 50px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    text-align: center;
+}
+
+
+#btn_decrease:hover {
+    background-color: #62ab00;
+}
+
+
+#btn_increase:hover {
+    background-color: #62ab00;
+}
+
+.input_quantity {
+    width: 100px;
+    text-align: center;
 }
 </style>
