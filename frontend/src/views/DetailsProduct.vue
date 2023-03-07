@@ -83,6 +83,7 @@ export default {
                 if (!checkExitCart) {
                     checkExitCart = [
                         {
+                            id_product: this.DetailProductData._id,
                             img_product: this.DetailProductData.img_url[0],
                             title_product: this.DetailProductData.title,
                             price_product: this.DetailProductData.price,
@@ -102,6 +103,7 @@ export default {
                     }
 
                     let new_object = {
+                        id_product: this.DetailProductData._id,
                         img_product: this.DetailProductData.img_url[0],
                         title_product: this.DetailProductData.title,
                         price_product: this.DetailProductData.price,

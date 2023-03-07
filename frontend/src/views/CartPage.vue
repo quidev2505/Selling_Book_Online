@@ -9,13 +9,18 @@ export default {
     data() {
         return {
             data_show_product_cart: [],
+            totalCart: 0
         }
     },
     methods: {
         async loadCart() {
             let cart_localStorage = JSON.parse(localStorage.getItem("productCart"));
             this.data_show_product_cart = cart_localStorage
-
+            var totalCartSum = 0;
+            cart_localStorage.forEach((item, index)=>{
+                totalCartSum+= item.quantity_product * item.price_product;
+            })
+            this.totalCart = totalCartSum
         },
         async DecreaseNumber(titleProduct) {
             let cartLocalStorage = JSON.parse(localStorage.getItem('productCart'));
@@ -31,6 +36,14 @@ export default {
                     }
                 }
             }
+            setTimeout(() => {
+                window.location.reload();
+            }, 100)
+        },
+        removeItem(index) {
+            let cartLocalStorage = JSON.parse(localStorage.getItem('productCart'));
+            cartLocalStorage.splice(index, 1)
+            localStorage.setItem('productCart', JSON.stringify(cartLocalStorage));
             setTimeout(() => {
                 window.location.reload();
             }, 100)
@@ -57,50 +70,66 @@ export default {
 
 <template>
     <div class="container" id="cartPage">
-        <h4>GIỎ HÀNG</h4>
-        <div class="col-lg-8">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">STT</th>
-                        <th scope="col">Mô tả sản phẩm</th>
-                        <th scope="col">Số Lượng</th>
-                        <th scope="col">Thành Tiền</th>
-                        <th scope="col">Xóa Sản Phẩm</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(item, index) in data_show_product_cart">
-                        <td>
-                            {{ ++index }}
-                        </td>
-                        <td class="d-flex">
-                            <div class="col-lg-6">
-                                <img :src="item.img_product" class="img-thumbnail" alt="..." width="76" height="110">
-                            </div>
-                            <div class="col-lg">
-                                <p> {{ item.title_product }}</p>
-                                <p style="font-weight:bold">{{ item.price_product.toLocaleString() }} đ</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="d-flex">
-                                <button id="btn_decrease" @click="DecreaseNumber(item.title_product)">-</button>
-                                <input type="text" v-model="item.quantity_product" class="fw-bold" id="input_quantity">
-                                <button id="btn_increase" @click="IncreaseNumber(item.title_product)">+</button>
-                            </div>
-                        </td>
-                        <td style="font-weight:bold;color:red;">
-                            {{ (item.price_product * item.quantity_product).toLocaleString() }} đ
-                        </td>
-                        <td>
-                            <i class="fa-solid fa-trash"></i>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <h4>GIỎ HÀNG ({{ data_show_product_cart.length }} sản phẩm)</h4>
+        <div class="row">
+            <div class="col-lg-8">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Mô tả sản phẩm</th>
+                            <th scope="col">Số Lượng</th>
+                            <th scope="col text-center">Thành Tiền</th>
+                            <th scope="col">Xóa Sản Phẩm</th>
+                        </tr>
+                    </thead>
+                    <tbody style="border:1px solid #ccc;border-radius:5px;">
+                        <tr v-if="data_show_product_cart.length == 0">
+                            <h5 style="color:#62ab00;border:1px solid #ccc;border-radius:5px;">Không có sản phẩm nào trong giỏ hàng !</h5>
+                        </tr>
+                        <tr v-for="(item, index) in data_show_product_cart" v-if="data_show_product_cart.length != 0">
+                            <td>
+                                {{ ++index }}
+                            </td>
+                            <td class="d-flex">
+                                <div class="col-lg-6">
+                                    <img :src="item.img_product" class="img-thumbnail" alt="..." width="76" height="110">
+                                </div>
+                                <div class="col-lg" style="margin-left:-50px;">
+                                    <p> {{ item.title_product }}</p>
+                                    <p style="font-weight:bold">{{ item.price_product.toLocaleString() }} đ</p>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex">
+                                    <button id="btn_decrease" @click="DecreaseNumber(item.title_product)">-</button>
+                                    <input type="text" v-model="item.quantity_product" class="fw-bold" id="input_quantity">
+                                    <button id="btn_increase" @click="IncreaseNumber(item.title_product)">+</button>
+                                </div>
+                            </td>
+                            <td style="font-weight:bold;color:red;">
+                                {{ (item.price_product * item.quantity_product).toLocaleString() }} đ
+                            </td>
+                            <td class="text-center">
+                                <i @click="removeItem(index - 1)" class="fa-solid fa-trash" id="btn_delete"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-4">
+                <div style="border:1px solid #ccc;padding:10px;border-radius:10px;">
+                    <div class="row d-flex" style="flex-wrap:nowrap">
+                        <h5>Tổng Số Tiền (Gồm VAT)</h5>
+                        <span style="margin-left:-400px;font-size:30px;color:red;font-weight:bold;margin-top:50px;">{{totalCart.toLocaleString()}} đ</span>
+                    </div>
+                    <br>
+                    <br>
+                    <button type="button" class="btn btn-info text-white fw-bold" style="width:100%;">THANH TOÁN</button>
+                </div>
+            </div>
         </div>
-        <div class="col-lg-4"></div>
+
     </div>
 </template>
 
@@ -145,5 +174,10 @@ export default {
 .input_quantity {
     width: 100px;
     text-align: center;
+}
+
+#btn_delete:hover {
+    color: #62ab00;
+    cursor: pointer;
 }
 </style>
