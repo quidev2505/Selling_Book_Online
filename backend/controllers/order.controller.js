@@ -17,7 +17,7 @@ module.exports = class API {
       const createNewOrder = await orderInput.save();
       res.status(200).json(createNewOrder);
     } catch (err) {
-      // console.log(err)
+      console.log(err)
       res.status(501).json(err);
     }
   }

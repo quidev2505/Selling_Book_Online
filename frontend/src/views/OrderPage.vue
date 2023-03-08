@@ -9,18 +9,15 @@ export default {
                 phonenumber: "",
                 address: "",
                 payment: "",
-                detail_order: [],
+                detail_cart: [],
                 statusOrder: "",
                 totalOrder: ""
             },
-            dataLocalStorage:{
-                img_url,
-                quantity: "",
-                title: "",
-                totalCart:""
-            },
+            methodPaymentCOD: 'Thanh toán khi nhận hàng(COD)',
+            methodPaymentOnline: 'Thanh toán trực tuyến (Online)',
+
             dataShowFromCart: [],
-            id_user:'',
+            id_user: '',
             totalCart: 0
         }
     },
@@ -33,6 +30,7 @@ export default {
                 totalCartSum += item.quantity_product * item.price_product;
             })
             this.totalCart = totalCartSum
+            this.dataOrderInput.totalOrder = totalCartSum;
         },
         async loadDataUserInfo() {
             let UserLocalStorage = JSON.parse(localStorage.getItem('isloggin'));
@@ -41,16 +39,20 @@ export default {
             this.dataOrderInput.phonenumber = UserLocalStorage.phonenumber;
             this.id_user = UserLocalStorage._id;
         },
-        changeOptionpayment() {
-            this.dataOrderInput.payment = document.querySelector("#choosepayment").value;
+        async changeOptionpayment() {
+            this.dataOrderInput.payment = await document.querySelector("#choosepayment").value;
         },
-        async handleOrder(){
-            let objectRightContent = {
-                id_account : this.id_user,
-                data_cart: JSON.parse(localStorage.getItem('isloggin'))
+        async handleOrder() {
+            let cartLocalStorage = JSON.parse(localStorage.getItem('productCart'));
+            this.dataOrderInput.statusOrder = 'Chưa xử lý';
+            this.dataOrderInput.payment = 'Thanh toán trực tuyến(Online)'
+            
+            for(let i=0; i < cartLocalStorage.length; i++){
+                this.dataOrderInput.detail_cart[i] = cartLocalStorage[i];
             }
-            let array
-            this.dataOrderInput.detail_order = 
+
+            let dataReturn = await OrderService.create(this.dataOrderInput);
+            console.log(dataReturn)
         }
     },
     mounted() {
@@ -103,7 +105,7 @@ export default {
                     <!-- Address Input -->
                     <div class="mb-3">
                         <label for="inputaddress" class="form-label fw-bold">Địa chỉ: </label>
-                        <input type="text" class="form-control" id="inputaddress" minlength="10" maxlength="11" placeholder="Vui lòng nhập vào địa chỉ..." v-model="dataOrderInput.address" required>
+                        <input type="text" class="form-control" id="inputaddress" minlength="12" placeholder="Vui lòng nhập vào địa chỉ..." v-model="dataOrderInput.address" required>
                     </div>
 
 
@@ -111,8 +113,8 @@ export default {
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label fw-bold">Chọn hình thức thanh toán: </label>
                         <select class="form-control" :required="true" @change="changeOptionpayment" id="choosepayment">
-                            <option v-bind:value="'Thanh toán khi nhận hàng(COD)'">Thanh toán khi nhận hàng (COD)</option>
-                            <option v-bind:value="'Thanh toán trực tuyến(Chuyển Khoản)'">Thanh toán trực tuyến(Chuyển Khoản)</option>
+                            <option v-bind:value="this.methodPaymentCOD">{{ this.methodPaymentCOD }}</option>
+                            <option v-bind:value="this.methodPaymentOnline">{{ this.methodPaymentOnline }}</option>
                         </select>
                     </div>
 
@@ -128,7 +130,7 @@ export default {
                         <span style="color:#62ab00">(SL: {{ item.quantity_product }})</span>
                     </div>
                     <div style="margin-left:-100px;    margin-left: -85px;font-weight:bold;
-            line-height: 71px;">
+                        line-height: 71px;">
                         <span>{{ (item.price_product * item.quantity_product).toLocaleString() }} đ</span>
                     </div>
                 </div>

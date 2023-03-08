@@ -5,17 +5,14 @@ const OrderSchema = new mongoose.Schema(
         username: {
             type: String,
             required: true,
-            unique: true,
         },
         email: {
             type: String,
             required: true,
-            unique: true,
         },
         phonenumber: {
-            type: Number,
+            type: String,
             required: true,
-            unique: true,
         },
         address: {
             type: String,
@@ -25,7 +22,6 @@ const OrderSchema = new mongoose.Schema(
         payment:{
             type: String,
             required: true,
-            default: 'Thanh toán khi nhận hàng (COD)'
         },
         detail_cart:{
             type: Array,
@@ -34,7 +30,6 @@ const OrderSchema = new mongoose.Schema(
         statusOrder:{
             type: String,
             required: true,
-            default: 'Chưa xử lý'
         },
         totalOrder: {
             type: Number,
