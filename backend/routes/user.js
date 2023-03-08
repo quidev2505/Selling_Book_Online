@@ -15,6 +15,9 @@ router.delete("/:id", API_user.deleteUser);
 //Get All author
 router.get("/", API_user.getAllUser);
 
+//Get user with ID
+router.get("/infoUser/:id", API_user.getUserWithID);
+
 //Get author with ID
 // router.get("/edituser/:id", API_user.getuserwithID);
 

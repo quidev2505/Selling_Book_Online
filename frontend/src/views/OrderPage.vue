@@ -1,6 +1,12 @@
 <script>
 import OrderService from '../services/Order.service';
 export default {
+    beforeRouteEnter: (to) => {
+        if (JSON.parse(localStorage.getItem('productCart')).length == 0 && to.name !== 'HomePage') {
+            alert("Hãy thêm sản phẩm vào giỏ hàng để thực hiện thanh toán !")
+            return '/'
+        }
+    },
     data() {
         return {
             dataOrderInput: {
@@ -29,7 +35,7 @@ export default {
             cartLocalStorage.forEach((item, index) => {
                 totalCartSum += item.quantity_product * item.price_product;
             })
-            this.totalCart = totalCartSum
+            this.totalCart = totalCartSum + 35000;
             this.dataOrderInput.totalOrder = totalCartSum;
         },
         async loadDataUserInfo() {
@@ -52,6 +58,8 @@ export default {
             }
 
             let dataReturn = await OrderService.create(this.dataOrderInput);
+
+            this.$router.push(`/order_complete/${dataReturn._id}`)
             console.log(dataReturn)
         }
     },
@@ -76,7 +84,8 @@ export default {
                         <li class="breadcrumb-item">
                             <router-link to="/cartStore" style="color:#62ab00">Giỏ hàng </router-link>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Thông tin giao hàng </li>
+                        <li class="breadcrumb-item active" aria-current="page" style="color:red;font-weight:bold
+                        ">Thông tin giao hàng </li>
                         <li class="breadcrumb-item active" aria-current="page">Xác nhận thành công đơn hàng</li>
                     </ol>
                 </nav>
@@ -126,8 +135,9 @@ export default {
                 <div class="row" style="display:flex;flex-wrap:nowrap;padding:20px;" v-for="item in dataShowFromCart">
                     <div>
                         <img :src="item.img_product" class="img-thumbnail" alt="..." width="76" height="110">
+                        <br>
                         <span>{{ item.title_product }}</span>
-                        <span style="color:#62ab00">(SL: {{ item.quantity_product }})</span>
+                        <span style="color:#62ab00">&nbsp;(SL: {{ item.quantity_product }})</span>
                     </div>
                     <div style="margin-left:-100px;    margin-left: -85px;font-weight:bold;
                         line-height: 71px;">

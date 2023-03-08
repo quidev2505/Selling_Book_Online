@@ -7,13 +7,13 @@ module.exports = class API {
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
-      phonenumber: req.body.phonenumber
+      phonenumber: req.body.phonenumber,
     });
     try {
       const createNewUser = await userInput.save();
       res.status(200).json(createNewUser);
     } catch (err) {
-      console.log(err)
+      console.log(err);
       res.status(501).json(err);
     }
   }
@@ -47,14 +47,14 @@ module.exports = class API {
   }
 
   //Get Category With id
-//   static async getauthortwithID(req, res) {
-//     try {
-//       const result = await AuthorModel.findOne({ _id: req.params.id });
-//       res.status(201).json(result);
-//     } catch (err) {
-//       res.status(501).json(err);
-//     }
-//   }
+  //   static async getauthortwithID(req, res) {
+  //     try {
+  //       const result = await AuthorModel.findOne({ _id: req.params.id });
+  //       res.status(201).json(result);
+  //     } catch (err) {
+  //       res.status(501).json(err);
+  //     }
+  //   }
 
   //Find Category with name
   static async finduserwithName(req, res) {
@@ -76,6 +76,17 @@ module.exports = class API {
       const arrayUser = await UserModel.find();
       res.status(200).json(arrayUser);
     } catch (err) {
+      res.status(501).json(err);
+    }
+  }
+
+  //Get User with ID
+  static async getUserWithID(req, res){
+    const id = req.params.id;
+    try{
+      const data = await UserModel.findById(id);
+      res.status(200).json(data)
+    }catch(err){
       res.status(501).json(err);
     }
   }

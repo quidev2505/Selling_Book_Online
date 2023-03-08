@@ -36,6 +36,10 @@ class UserService {
   async getuser(name) {
     return (await this.http.get(`/user/${name}`)).data;
   }
+
+  async getuserwithid(id) {
+    return (await this.http.get(`/infoUser/${id}`)).data;
+  }
 }
 
 export default new UserService();

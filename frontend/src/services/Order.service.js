@@ -5,7 +5,6 @@ class ProductService {
     this.http = createHttp("/api/order");
   }
 
-  
   async getAllOrder() {
     return (await this.http.get("/")).data;
   }
@@ -15,6 +14,10 @@ class ProductService {
   }
 
   async get(id) {
+    return (await this.http.get(`/${id}`)).data;
+  }
+
+  async getOrderWithID(id) {
     return (await this.http.get(`/${id}`)).data;
   }
 }

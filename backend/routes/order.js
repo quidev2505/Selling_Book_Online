@@ -13,6 +13,9 @@ router.get("/", API_order.getAllOrder);
 router.put("/:id", API_order.updateOrder);
 
 
+//Get Data Order with ID send
+router.get("/:id", API_order.getDataOrderWithID);
+
 
 
 // //Get One Product

@@ -80,6 +80,16 @@ const routes = [
     path: "/order",
     name: "OrderPage",
     component: () => import("@/views/OrderPage.vue"),
+  },
+  {
+    path: "/order_complete/:id",
+    name: "OrderCompletPage",
+    component: ()=> import("@/views/OrderComplete.vue"),
+  },
+  {
+    path: "/infoUser/:id",
+    name: "infoUser",
+    component: ()=>import("@/views/InfoUser.vue"),
   }
 ];
 
