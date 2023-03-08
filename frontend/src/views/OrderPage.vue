@@ -2,7 +2,7 @@
 import OrderService from '../services/Order.service';
 export default {
     beforeRouteEnter: (to) => {
-        if (JSON.parse(localStorage.getItem('productCart')).length == 0 && to.name !== 'HomePage') {
+        if(typeof (JSON.parse(localStorage.getItem('productCart'))) === 'object' && to.name !== 'HomePage'){
             alert("Hãy thêm sản phẩm vào giỏ hàng để thực hiện thanh toán !")
             return '/'
         }
