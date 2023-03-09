@@ -18,7 +18,7 @@ class OrderService {
   }
 
   async getOrderWithID(id) {
-    return (await this.http.get(`/${id}`)).data;
+    return (await this.http.get(`/detailorder/${id}`)).data;
   }
 
   async getDataOrderWithIDUser(id){

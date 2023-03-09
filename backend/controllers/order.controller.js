@@ -43,8 +43,9 @@ module.exports = class API {
   //Get dataOrder with ID
   static async getDataOrderWithID(req, res) {
     const id_order = req.params.id;
+    console.log(id_order)
     try {
-      const dataOrder = await OrderModel.findById({ _id: id_order });
+      const dataOrder = await OrderModel.findById(id_order);
       res.status(200).json(dataOrder);
     } catch (err) {
       console.log(err);

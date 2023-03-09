@@ -14,7 +14,7 @@ router.put("/:id", API_order.updateOrder);
 
 
 //Get Data Order with ID send
-router.get("/:id", API_order.getDataOrderWithID);
+router.get("/detailorder/:id", API_order.getDataOrderWithID);
 
 //Get Data Order with ID user
 router.get("/infoUser/:id", API_order.getDataOrderWithIDUser);

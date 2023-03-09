@@ -3,22 +3,23 @@ import OrderService from '../services/Order.service';
 export default {
     data() {
         return {
-            detailOrder: []
+            detailOrder: '',
+            dataShow:{
+                title: '',
+                img_url:'',
+                price:'',
+
+            }
         }
     },
     methods: {
-        loadData() {
-            const data = await OrderService.getOrderWithID(this.$router.params.id)
-            console.log(data)
+        async loadDataOrderDetail() {
+            const data = await OrderService.getOrderWithID(this.$route.params.id)
+            this.detailOrder = data.detail_cart;
         }
-        // backPage() {
-        //     setTimeout(() => {
-        //         this.$router.push(`/infoUser/${this.$route.params.id}`)
-        //     }, 100)
-        // },
     },
-    created(){
-        this.loadData();
+    created() {
+        this.loadDataOrderDetail()
     }
 }
 </script>
@@ -41,14 +42,16 @@ export default {
                 </tr>
             </thead>
             <tbody>
-                <!-- <tr v-for="(item, index) in detailOrder">
+                <tr v-for="(item, index) in detailOrder">
                     <td>{{ ++index }}</td>
                     <td>{{ item.title_product }}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> -->
+                    <td>
+                        <img v-bind:src="item.img_product" alt="">
+                    </td>
+                    <td>{{item.price_product}}</td>
+                    <td>{{item.quantity_product}}</td>
+                    <td>{{(item.price_product*item.quantity_product).toLocaleString()}} dd</td>
+                </tr>
             </tbody>
         </table>
     </div>

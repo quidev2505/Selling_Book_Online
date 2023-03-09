@@ -53,10 +53,10 @@ export default {
                     <td>
                         <router-link :to="{
                             name:'DetailOrder',
-                            params: {id: JSON.stringify(item._id) }
+                            params: {id: item._id}
                         }">
                         <p>{{ item._id }}</p> 
-                       </router-link></td>
+                    </router-link></td>
                     <td>
                         <p>{{ item.createdAt.substring(0,item.createdAt.search("T")) }}</p>
                     </td>
