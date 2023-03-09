@@ -84,12 +84,22 @@ const routes = [
   {
     path: "/order_complete/:id",
     name: "OrderCompletPage",
-    component: ()=> import("@/views/OrderComplete.vue"),
+    component: () => import("@/views/OrderComplete.vue"),
   },
   {
     path: "/infoUser/:id",
     name: "infoUser",
-    component: ()=>import("@/views/InfoUser.vue"),
+    component: () => import("@/views/InfoUser.vue"),
+  },
+  {
+    path: "/editinfoUser/:id",
+    name: "editInfoUser",
+    component: ()=> import("@/views/EditUser.vue")
+  },
+  {
+    path: "/detailorder/:id",
+    name: "DetailOrder",
+    component: () => import("@/views/DetailOrder.vue")
   }
 ];
 

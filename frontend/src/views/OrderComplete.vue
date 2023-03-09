@@ -13,9 +13,9 @@ export default {
         },
         continueShopping() {
             localStorage.removeItem('productCart');
-            setTimeout(()=>{
+            setTimeout(() => {
                 window.location.reload();
-            },100)
+            }, 100)
         }
     },
     created() {
@@ -77,7 +77,7 @@ export default {
                         <span style="color:#62ab00">&nbsp;(SL: {{ item.quantity_product }})</span>
                     </div>
                     <div style="margin-left:-100px;    margin-left: -85px;font-weight:bold;
-                                                        line-height: 71px;">
+                                                                    line-height: 71px;">
                         <span>{{ (item.price_product * item.quantity_product).toLocaleString() }} đ</span>
                     </div>
                 </div>

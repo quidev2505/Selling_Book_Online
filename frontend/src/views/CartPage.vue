@@ -38,18 +38,18 @@ export default {
                 }
             }
 
+            this.loadCart();
+
     
-            setTimeout(() => {
-                window.location.reload();
-            }, 100)
+    
         },
         removeItem(index) {
             let cartLocalStorage = JSON.parse(localStorage.getItem('productCart'));
             cartLocalStorage.splice(index, 1)
             localStorage.setItem('productCart', JSON.stringify(cartLocalStorage));
-            setTimeout(() => {
-                window.location.reload();
-            }, 100)
+            this.loadCart();
+
+
         },
         async IncreaseNumber(titleProduct) {
             let cartLocalStorage = JSON.parse(localStorage.getItem('productCart'));
@@ -60,9 +60,8 @@ export default {
                     break;
                 }
             }
-            setTimeout(() => {
-                window.location.reload();
-            }, 100)
+            this.loadCart();
+
         }
     },
     mounted() {

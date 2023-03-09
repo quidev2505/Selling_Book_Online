@@ -4,6 +4,7 @@ module.exports = class API {
   //Create Product
   static async createOrder(req, res) {
     const orderInput = new OrderModel({
+      iduser: req.body.iduser,
       username: req.body.username,
       email: req.body.email,
       phonenumber: req.body.phonenumber,
@@ -40,17 +41,28 @@ module.exports = class API {
   }
 
   //Get dataOrder with ID
-  static async getDataOrderWithID(req, res){
+  static async getDataOrderWithID(req, res) {
     const id_order = req.params.id;
-    try{
-      const dataOrder = await OrderModel.findById({_id: id_order});
+    try {
+      const dataOrder = await OrderModel.findById({ _id: id_order });
       res.status(200).json(dataOrder);
-    }
-    catch(err){
+    } catch (err) {
+      console.log(err);
       res.status(501).json(err);
     }
   }
-  
+
+  //Get dataOrder with ID
+  static async getDataOrderWithIDUser(req, res) {
+    const id_user = req.params.id;
+    try {
+      const dataOrder = await OrderModel.find({iduser: id_user });
+      res.status(200).json(dataOrder);
+    } catch (err) {
+      console.log(err);
+      res.status(501).json(err);
+    }
+  }
 
   //Delete Product
   //   static async deleteOrder(req, res) {

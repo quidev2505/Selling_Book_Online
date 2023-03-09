@@ -1,8 +1,9 @@
 <script>
 import OrderService from '../services/Order.service';
 export default {
+    // || (typeof (JSON.parse(localStorage.getItem('productCart'))) === 'object'
     beforeRouteEnter: (to) => {
-        if(typeof (JSON.parse(localStorage.getItem('productCart'))) === 'object' && to.name !== 'HomePage'){
+        if((to.name !== 'HomePage') && (localStorage.getItem("productCart") === null)){
             alert("Hãy thêm sản phẩm vào giỏ hàng để thực hiện thanh toán !")
             return '/'
         }
@@ -10,6 +11,7 @@ export default {
     data() {
         return {
             dataOrderInput: {
+                iduser:"",
                 username: "",
                 email: "",
                 phonenumber: "",
@@ -40,6 +42,7 @@ export default {
         },
         async loadDataUserInfo() {
             let UserLocalStorage = JSON.parse(localStorage.getItem('isloggin'));
+            this.dataOrderInput.iduser = UserLocalStorage._id,
             this.dataOrderInput.username = UserLocalStorage.username;
             this.dataOrderInput.email = UserLocalStorage.email;
             this.dataOrderInput.phonenumber = UserLocalStorage.phonenumber;
@@ -57,6 +60,7 @@ export default {
                 this.dataOrderInput.detail_cart[i] = cartLocalStorage[i];
             }
 
+    
             let dataReturn = await OrderService.create(this.dataOrderInput);
 
             this.$router.push(`/order_complete/${dataReturn._id}`)

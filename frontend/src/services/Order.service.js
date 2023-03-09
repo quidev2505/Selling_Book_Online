@@ -1,6 +1,6 @@
 import createHttp from "./http.service";
 
-class ProductService {
+class OrderService {
   constructor() {
     this.http = createHttp("/api/order");
   }
@@ -20,6 +20,10 @@ class ProductService {
   async getOrderWithID(id) {
     return (await this.http.get(`/${id}`)).data;
   }
+
+  async getDataOrderWithIDUser(id){
+    return (await this.http.get(`/infoUser/${id}`)).data;
+  }
 }
 
-export default new ProductService();
+export default new OrderService();
