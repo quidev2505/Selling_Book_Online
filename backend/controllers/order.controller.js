@@ -40,10 +40,27 @@ module.exports = class API {
     }
   }
 
+  //Update Order Admin
+  static async updateOrderAdmin(req, res) {
+    const id_order = req.params.id;
+    try {
+      const updateOrder = await OrderModel.findByIdAndUpdate(
+        id_order,
+        {
+          statusOrder: req.body
+        },
+        { new: true }
+      );
+      res.status(200).json(updateOrder);
+    } catch (err) {
+      res.status(501).json(err);
+    }
+  }
+
   //Get dataOrder with ID
   static async getDataOrderWithID(req, res) {
     const id_order = req.params.id;
-    console.log(id_order)
+    console.log(id_order);
     try {
       const dataOrder = await OrderModel.findById(id_order);
       res.status(200).json(dataOrder);
@@ -57,7 +74,7 @@ module.exports = class API {
   static async getDataOrderWithIDUser(req, res) {
     const id_user = req.params.id;
     try {
-      const dataOrder = await OrderModel.find({iduser: id_user });
+      const dataOrder = await OrderModel.find({ iduser: id_user });
       res.status(200).json(dataOrder);
     } catch (err) {
       console.log(err);

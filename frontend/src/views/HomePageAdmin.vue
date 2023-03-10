@@ -4,13 +4,15 @@ import Category from '../components/Category.vue';
 import Author from '../components/Author.vue';
 import Account from '../components/Account.vue';
 import BookType from '../components/BookType.vue';
+import Order from '../components/Order.vue';
 export default {
     components: {
         ManageBook,
         Category,
         Author,
         Account,
-        BookType
+        BookType,
+        Order
     },
     beforeRouteEnter: (to) => {
         if (!localStorage.getItem('isloggin') && to.name !== 'HomePage') {
@@ -48,7 +50,7 @@ export default {
                     <button class="nav-link" id="pills-chon-2" data-bs-toggle="pill" data-bs-target="#pills-chon" type="button" role="tab" aria-controls="pills-chon" aria-selected="false"><i class="fa-solid fa-users"></i> Quản Lý Tài Khoản</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-chinh-2" data-bs-toggle="pill" data-bs-target="#pills-chinh" type="button" role="tab" aria-controls="pills-chinh" aria-selected="false">Quản Lý Đơn
+                    <button class="nav-link" id="pills-chinh-2" data-bs-toggle="pill" data-bs-target="#pills-chinh" type="button" role="tab" aria-controls="pills-chinh" aria-selected="false"><i class="fa-solid fa-boxes-stacked"></i> &nbsp;Quản Lý Đơn
                         Hàng</button>
                 </li>
             </ul>
@@ -73,7 +75,10 @@ export default {
                     <!-- Quản lý tài khoản -->
                     <Account></Account>
                 </div>
-                <div class="tab-pane fade" id="pills-chinh" role="tabpanel" aria-labelledby="pills-chinh-2">sotest 3</div>
+                <div class="tab-pane fade" id="pills-chinh" role="tabpanel" aria-labelledby="pills-chinh-2">
+                    <!-- Quản lý đơn hàng -->
+                    <Order></Order>
+                </div>
             </div>
         </div>
     </div>

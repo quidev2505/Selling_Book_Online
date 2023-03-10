@@ -25,8 +25,13 @@ class OrderService {
     return (await this.http.get(`/infoUser/${id}`)).data;
   }
 
+
   async updateOrder(id, data){
     return (await this.http.put(`/infoUser/${id}`, data)).data;
+  }
+
+  async updateOrderAdmin(id, data){
+    return (await this.http.put(`/editorder/${id}`, data)).data;
   }
 }
 

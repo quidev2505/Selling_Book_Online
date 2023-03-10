@@ -41,8 +41,8 @@ class UserService {
     return (await this.http.get(`/infoUser/${id}`)).data;
   }
 
-  async getuserwithidChangePass(id) {
-    return (await this.http.get(`/changepassword/${id}`)).data;
+  async getuserwithidChangePass(id,data) {
+    return (await this.http.put(`/changepassword/${id}`, data)).data;
   }
 }
 

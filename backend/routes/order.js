@@ -12,6 +12,9 @@ router.get("/", API_order.getAllOrder);
 //Update Order
 router.put("/infoUser/:id", API_order.updateOrder);
 
+//Update order admin
+router.put("/editorder/:id", API_order.updateOrderAdmin);
+
 
 //Get Data Order with ID send
 router.get("/detailorder/:id", API_order.getDataOrderWithID);

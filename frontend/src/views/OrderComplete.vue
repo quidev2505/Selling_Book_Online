@@ -93,8 +93,8 @@ export default {
                 <hr>
                 <div class="row" style="display:flex;flex-wrap:nowrap;padding:20px;">
                     <h4>Tổng Cộng:</h4>
-                    <div style="margin-left:-200px;">
-                        <span style="font-size: 20px;opacity:0.6">VND &nbsp</span>
+                    <div style="margin-left:-252px;">
+                        <span style="font-size: 20px;opacity:0.6">VND &nbsp; </span>
                         <span style="font-size: 30px;">{{ dataCompleteOrder.totalOrder.toLocaleString() }} đ</span>
                     </div>
                 </div>

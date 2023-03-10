@@ -94,18 +94,23 @@ const routes = [
   {
     path: "/editinfoUser/:id",
     name: "editInfoUser",
-    component: ()=> import("@/views/EditUser.vue")
+    component: () => import("@/views/EditUser.vue"),
   },
   {
     path: "/detailorder/:id",
     name: "DetailOrder",
-    component: () => import("@/views/DetailOrder.vue")
+    component: () => import("@/views/DetailOrder.vue"),
   },
   {
     path: "/changepassword/:id",
     name: "ChangePassword",
-    component: () => import("@/views/changePassword.vue")
-  }
+    component: () => import("@/views/changePassword.vue"),
+  },
+  {
+    path: "/editorder/:id",
+    name: "editOrder",
+    component: () => import("@/views/EditOrder.vue"),
+  },
 ];
 
 const router = createRouter({

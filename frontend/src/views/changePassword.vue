@@ -16,61 +16,54 @@ export default {
             },
             userDataInput: {
                 old_password: "",
-                new_password:"",
+                new_password: "",
                 renew_password: ""
             },
         }
     },
     methods: {
         toast,
-        async handleChangePassword(){
-            let data = await UserService.getuserwithidChangePass(this.$router.params.id);
+        backPage(){
+            setTimeout(() => {
+                this.$router.push(`/infoUser/${this.$route.params.id}`)
+            }, 100)
+        },
+        async handleChangePassword() {
+            if (this.userDataInput.new_password === this.userDataInput.renew_password) {
+                try {
+                    await UserService.getuserwithidChangePass(this.$route.params.id, this.userDataInput);
+                    this.toasts.title = "Success",
+                    this.toasts.msg = "Đổi mật khẩu thành công !"
+                    this.toasts.type = "success",
+                    this.toasts.duration = 2000
+                    document.querySelector("#toast").style.display = 'block'
+                    this.toast();
+                    alert("Vui lòng đăng nhập lại !")
+                    setTimeout(() => {
+                        this.$router.push(`/infoUser/${this.$route.params.id}`)
+                        localStorage.removeItem("isloggin");
+                        this.$router.push('/login')
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 700)
+                    }, 100)
+                } catch (err) {
+                    this.toasts.title = "Failed",
+                    this.toasts.msg = "Đổi mật khẩu thất bại !"
+                    this.toasts.type = "error",
+                    this.toasts.duration = 2000
+                    document.querySelector("#toast").style.display = 'block'
+                    this.toast()
+                }
+            } else {
+                this.toasts.title = "Failed",
+                this.toasts.msg = "Mật khẩu không trùng khớp !"
+                this.toasts.type = "error",
+                this.toasts.duration = 2000
+                document.querySelector("#toast").style.display = 'block'
+                this.toast()
+            }
         }
-        // async getDataUser() {
-        //     const dataReturn = await UserService.getuserwithid(this.$route.params.id);
-        //     this.userDataInput.username = dataReturn.username;
-        //     this.userDataInput.email = dataReturn.email;
-        //     this.userDataInput.phonenumber = dataReturn.phonenumber;
-        // },
-        // async handleEditUser() {
-        //     try {
-        //         let dataUpdate = await UserService.update(this.$route.params.id, this.userDataInput)
-        //         this.userDataupdate._id = dataUpdate._id;
-        //         this.userDataupdate.username = dataUpdate.username;
-        //         this.userDataupdate.email = dataUpdate.email;
-        //         this.userDataupdate.phonenumber = dataUpdate.phonenumber;
-
-        //         localStorage.setItem("isloggin", JSON.stringify(this.userDataupdate))
-
-        //         this.toasts.title = "Success",
-        //             this.toasts.msg = "Cập nhật thông tin người dùng thành công !"
-        //         this.toasts.type = "success",
-        //             this.toasts.duration = 2000
-        //         document.querySelector("#toast").style.display = 'block'
-        //         this.toast();
-        //         setTimeout(() => {
-        //             document.querySelector("#toast").style.display = 'none'
-        //             this.$router.push(`/infoUser/${this.$route.params.id}`)
-        //         }, 1500)
-        //     }
-        //     catch (err) {
-        //         console.log(err)
-        //         this.toasts.title = "Failed",
-        //             this.toasts.msg = "Cập nhật thông tin người dùng thất bại !"
-        //         this.toasts.type = "error",
-        //             this.toasts.duration = 2000
-        //         document.querySelector("#toast").style.display = 'block'
-        //         this.toast()
-        //         setTimeout(() => {
-        //             document.querySelector("#toast").style.display = 'none'
-        //         }, 700)
-        //     }
-        // },
-        // backPage() {
-        //     setTimeout(() => {
-        //         this.$router.push(`/infoUser/${this.$route.params.id}`)
-        //     }, 100)
-        // },
     }
 }
 </script>
@@ -86,22 +79,24 @@ export default {
             <!-- Title Input -->
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label fw-bold">Nhập mật khẩu cũ: </label>
-                <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Vui lòng nhập vào tên người dùng..." v-model="userDataInput.old_password" required>
+                <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Vui lòng nhập vào mật khẩu cũ" name="old_password"
+                    v-model="userDataInput.old_password" required>
             </div>
 
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label fw-bold">Nhập mật khẩu mới: </label>
-                <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Vui lòng nhập vào tên người dùng..." v-model="userDataInput.new_password" required>
+                <label for="exampleInputEmail2" class="form-label fw-bold">Nhập mật khẩu mới: </label>
+                <input type="password" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp" placeholder="Vui lòng nhập vào mật khẩu mới" name="new_password"
+                    v-model="userDataInput.new_password" required>
             </div>
 
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label fw-bold">Nhập lại mật khẩu mới: </label>
-                <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Vui lòng nhập vào tên người dùng..." v-model="userDataInput.renew_password" required>
+                <label for="exampleInputEmail3" class="form-label fw-bold">Nhập lại mật khẩu mới: </label>
+                <input type="password" class="form-control" id="exampleInputEmail3" aria-describedby="emailHelp" placeholder="Vui lòng nhập lại mật khẩu mới" v-model="userDataInput.renew_password"
+                    required>
             </div>
 
 
 
             <button @click="handleChangePassword()" type="submit" class="btn btn-light fw-bold" style="padding: 10px;border:1px solid #ccc">Xác Nhận</button>
         </form>
-    </div>
-</template>
+</div></template>

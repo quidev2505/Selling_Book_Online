@@ -107,17 +107,27 @@ module.exports = class API {
 
       const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
 
-      const inputPassword = req.body.password;
+      const inputPassword = req.body.old_password;
 
       //So sánh 2 mật khẩu
       if (originalPassword !== inputPassword) {
         res.status(401).json("Sai mật khẩu");
       } else {
-        res.status(200).json(userData);
+        //Đúng mật khẩu
+        const updateUser = await UserModel.findByIdAndUpdate(
+          id,
+          {
+            password: CryptoJS.AES.encrypt(
+              req.body.new_password,
+              process.env.PASS_SECRET
+            ).toString(),
+          },
+          { new: true }
+        );
+        res.status(200).json(updateUser);
       }
-
-      res.status(200).json(data);
     } catch (err) {
+      console.log(err)
       res.status(501).json(err);
     }
   }
