@@ -100,6 +100,11 @@ const routes = [
     path: "/detailorder/:id",
     name: "DetailOrder",
     component: () => import("@/views/DetailOrder.vue")
+  },
+  {
+    path: "/changepassword/:id",
+    name: "ChangePassword",
+    component: () => import("@/views/changePassword.vue")
   }
 ];
 

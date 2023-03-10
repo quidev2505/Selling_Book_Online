@@ -10,7 +10,7 @@ router.post("/", API_order.createOrder);
 router.get("/", API_order.getAllOrder);
 
 //Update Order
-router.put("/:id", API_order.updateOrder);
+router.put("/infoUser/:id", API_order.updateOrder);
 
 
 //Get Data Order with ID send
@@ -18,6 +18,7 @@ router.get("/detailorder/:id", API_order.getDataOrderWithID);
 
 //Get Data Order with ID user
 router.get("/infoUser/:id", API_order.getDataOrderWithIDUser);
+
 
 
 // //Get One Product

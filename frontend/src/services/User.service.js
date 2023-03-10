@@ -40,6 +40,10 @@ class UserService {
   async getuserwithid(id) {
     return (await this.http.get(`/infoUser/${id}`)).data;
   }
+
+  async getuserwithidChangePass(id) {
+    return (await this.http.get(`/changepassword/${id}`)).data;
+  }
 }
 
 export default new UserService();

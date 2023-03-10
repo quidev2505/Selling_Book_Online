@@ -1,4 +1,5 @@
 const UserModel = require("../models/User");
+const CryptoJS = require("crypto-js");
 
 module.exports = class API {
   //Create Author
@@ -81,12 +82,42 @@ module.exports = class API {
   }
 
   //Get User with ID
-  static async getUserWithID(req, res){
+  static async getUserWithID(req, res) {
     const id = req.params.id;
-    try{
+    try {
       const data = await UserModel.findById(id);
-      res.status(200).json(data)
-    }catch(err){
+      res.status(200).json(data);
+    } catch (err) {
+      res.status(501).json(err);
+    }
+  }
+
+  //Get user with id change pass
+  //Get User with ID
+  static async getUserWithIDChangepass(req, res) {
+    const id = req.params.id;
+    try {
+      const data = await UserModel.findById(id);
+
+      //Mã hóa mật khẩu từ DB
+      const hashedPassword = CryptoJS.AES.decrypt(
+        data.password,
+        process.env.PASS_SECRET
+      );
+
+      const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
+
+      const inputPassword = req.body.password;
+
+      //So sánh 2 mật khẩu
+      if (originalPassword !== inputPassword) {
+        res.status(401).json("Sai mật khẩu");
+      } else {
+        res.status(200).json(userData);
+      }
+
+      res.status(200).json(data);
+    } catch (err) {
       res.status(501).json(err);
     }
   }

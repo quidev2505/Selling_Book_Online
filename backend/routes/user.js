@@ -24,4 +24,7 @@ router.get("/infoUser/:id", API_user.getUserWithID);
 //Find author with name of author
 router.get("/finduser/:nameuser", API_user.finduserwithName);
 
+//Get user with id change pass
+router.get("/changepassword/:id", API_user.getUserWithIDChangepass);
+
 module.exports = router;

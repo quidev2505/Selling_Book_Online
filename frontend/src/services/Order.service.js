@@ -24,6 +24,10 @@ class OrderService {
   async getDataOrderWithIDUser(id){
     return (await this.http.get(`/infoUser/${id}`)).data;
   }
+
+  async updateOrder(id, data){
+    return (await this.http.put(`/infoUser/${id}`, data)).data;
+  }
 }
 
 export default new OrderService();

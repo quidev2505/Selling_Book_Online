@@ -40,8 +40,10 @@ export default {
         logout_Btn() {
             localStorage.removeItem("isloggin");
             localStorage.removeItem("productCart");
-            this.$router.push({ name: "Login" })
-            window.location.reload();
+            this.$router.push('/login')
+            setTimeout(()=>{
+                window.location.reload();
+            },700)
         },
         loadPage() {
             setTimeout(() => {
@@ -56,7 +58,7 @@ export default {
     },
     mounted() {
         this.showUserAlreadyLogin(),
-            this.showCategory()
+        this.showCategory()
     },
 
 }

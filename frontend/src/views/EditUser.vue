@@ -18,6 +18,12 @@ export default {
                 username: "",
                 email: "",
                 phonenumber: ""
+            },
+            userDataupdate:{
+                _id:"",
+                username: "",
+                email: "",
+                phonenumber: ""
             }
         }
     },
@@ -31,17 +37,24 @@ export default {
         },
         async handleEditUser(){
             try {
-                await UserService.update(this.$route.params.id, this.userDataInput)
+                let dataUpdate = await UserService.update(this.$route.params.id, this.userDataInput)
+                this.userDataupdate._id = dataUpdate._id;
+                this.userDataupdate.username = dataUpdate.username;
+                this.userDataupdate.email = dataUpdate.email;
+                this.userDataupdate.phonenumber = dataUpdate.phonenumber;
+
+                localStorage.setItem("isloggin", JSON.stringify(this.userDataupdate))
+            
                 this.toasts.title = "Success",
                 this.toasts.msg = "Cập nhật thông tin người dùng thành công !"
                 this.toasts.type = "success",
                 this.toasts.duration = 2000
                 document.querySelector("#toast").style.display = 'block'
                 this.toast();
-                // setTimeout(() => {
-                //     document.querySelector("#toast").style.display = 'none'
-                //     this.$router.push(`/infoUser/${this.$route.params.id}`)
-                // }, 1500)
+                setTimeout(() => {
+                    document.querySelector("#toast").style.display = 'none'
+                    this.$router.push(`/infoUser/${this.$route.params.id}`)
+                }, 1500)
             }
             catch (err) {
                 console.log(err)

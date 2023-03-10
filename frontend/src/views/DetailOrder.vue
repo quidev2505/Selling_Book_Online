@@ -8,14 +8,19 @@ export default {
                 title: '',
                 img_url:'',
                 price:'',
-
-            }
+            },
+            idOrder: ''
         }
     },
     methods: {
         async loadDataOrderDetail() {
-            const data = await OrderService.getOrderWithID(this.$route.params.id)
+            const data = await OrderService.getOrderWithID(this.$route.params.id) 
+            this.idOrder = this.$route.params.id;
             this.detailOrder = data.detail_cart;
+        },
+        backPage(){
+            let idUser = JSON.parse(localStorage.getItem("isloggin"));
+            this.$router.push(`/infoUser/${idUser._id}`)
         }
     },
     created() {
@@ -24,11 +29,13 @@ export default {
 }
 </script>
 <template>
-    <div class="container">
-        <h2>ĐƠN HÀNG:</h2>
-        <!-- <button @click="backPage()" type="button" class="btn btn-primary"><i class="fa-solid fa-arrow-left"></i> Trở về</button> -->
-
-        <h1>CHI TIẾT ĐƠN HÀNG</h1>
+    <div class="container" id="orderDetail">
+        <button @click="backPage()" type="button" class="btn btn-primary"><i class="fa-solid fa-arrow-left"></i> Trở về</button>
+        <br>
+        <br>
+        <h5 style="color:#62ab00;">ĐƠN HÀNG: {{ idOrder }}</h5>
+        <br>
+        <h5>CHI TIẾT ĐƠN HÀNG</h5>
         <br>
         <table class="table">
             <thead>
@@ -46,13 +53,20 @@ export default {
                     <td>{{ ++index }}</td>
                     <td>{{ item.title_product }}</td>
                     <td>
-                        <img v-bind:src="item.img_product" alt="">
+                        <img v-bind:src="item.img_product" alt="" width="100" height="100">
                     </td>
                     <td>{{item.price_product}}</td>
                     <td>{{item.quantity_product}}</td>
-                    <td>{{(item.price_product*item.quantity_product).toLocaleString()}} dd</td>
+                    <td>{{(item.price_product*item.quantity_product).toLocaleString()}} đ</td>
                 </tr>
             </tbody>
         </table>
     </div>
 </template>
+
+<style>
+    #orderDetail{
+        margin-left: 150px;
+        margin-top: 50px;
+    }
+</style>
