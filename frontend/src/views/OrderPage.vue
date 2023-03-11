@@ -65,20 +65,19 @@ export default {
         async handleOrder() {
             let cartLocalStorage = JSON.parse(localStorage.getItem('productCart'));
             this.dataOrderInput.statusOrder = 'Chưa xử lý';
-            this.dataOrderInput.payment = 'Thanh toán trực tuyến(Online)'
+            this.dataOrderInput.payment = 'Thanh toán trực tuyến(Online)';
             
             for(let i=0; i < cartLocalStorage.length; i++){
                 this.dataOrderInput.detail_cart[i] = cartLocalStorage[i];
             }
-
     
             let dataReturn = await OrderService.create(this.dataOrderInput);
 
-            for(let i = 0;i< cartLocalStorage.length;i++){
+            for(let i = 0;i< cartLocalStorage.length; i++){
                 let data = await ProductService.getproductwithID(cartLocalStorage[i].id_product);
-                this.BookDataInput.img_url[0] = data.img_url[0]
-                this.BookDataInput.img_url[1] = data.img_url[1]
-                this.BookDataInput.img_url[2] = data.img_url[2]
+                this.BookDataInput.img_url[0] = data.img_url[0];
+                this.BookDataInput.img_url[1] = data.img_url[1];
+                this.BookDataInput.img_url[2] = data.img_url[2];
                 this.BookDataInput.title = data.title;
                 this.BookDataInput.author = data.author;
                 this.BookDataInput.categories = data.categories;
@@ -86,7 +85,7 @@ export default {
                 this.BookDataInput.price = data.price;
                 this.BookDataInput.bookType = data.bookType;
                 this.BookDataInput.quantityonhand = data.quantityonhand - cartLocalStorage[i].quantity_product;
-                await ProductService.update(cartLocalStorage[i].id_product, this.BookDataInputs)
+                await ProductService.update(cartLocalStorage[i].id_product, this.BookDataInput);
             }
 
 

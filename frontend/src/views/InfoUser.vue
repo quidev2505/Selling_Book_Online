@@ -19,6 +19,16 @@ export default {
                 statusOrder: "",
                 totalOrder: ""
             },
+            BookDataInput: {
+                img_url: [],
+                title: "",
+                author: "",
+                categories: "",
+                description: "",
+                price: "",
+                bookType: "",
+                quantityonhand: ""
+            },
             totalAllOrder: '',
             dataOrder: '',
             id_order: ''
@@ -50,10 +60,33 @@ export default {
         async cancelOrder(IDORDER) {
             let check = confirm('Bạn có chắc chắn muốn hủy đơn hàng ?');
             if (check) {
-                this.dataOrderInput.statusOrder = 'Hủy đơn hàng';
-                await OrderService.updateOrder(IDORDER, this.dataOrderInput);
-                this.getDataOrder();
-                this.getDataUser();
+                try{
+                    this.dataOrderInput.statusOrder = 'Hủy đơn hàng';
+                    await OrderService.updateOrder(IDORDER, this.dataOrderInput);
+
+                    let cartLocalStorage = await OrderService.get(IDORDER);
+                    var arrayDataCart = cartLocalStorage.detail_cart;
+                    for (let i = 0; i < arrayDataCart.length; i++) {
+                        let data = await ProductService.getproductwithID(IDORDER);
+                        this.BookDataInput.img_url[0] = data.img_url[0];
+                        this.BookDataInput.img_url[1] = data.img_url[1];
+                        this.BookDataInput.img_url[2] = data.img_url[2];
+                        this.BookDataInput.title = data.title;
+                        this.BookDataInput.author = data.author;
+                        this.BookDataInput.categories = data.categories;
+                        this.BookDataInput.description = data.description;
+                        this.BookDataInput.price = data.price;
+                        this.BookDataInput.bookType = data.bookType;
+                        this.BookDataInput.quantityonhand = data.quantityonhand + arrayDataCart[i].quantity_product;
+                        await ProductService.update(arrayDataCart.id_product, this.BookDataInput);
+                    }
+
+
+                    this.getDataOrder();
+                    this.getDataUser();
+                }catch(err){
+                    console.log(err)
+                }
             }
         }
     },

@@ -71,7 +71,13 @@ export default {
             }
         },
         async IncreaseNumber() {
-            this.quantity_item += 1
+            if(this.quantity_item === this.DetailProductData.quantityonhand){
+                this.quantity_item = this.DetailProductData.quantityonhand;
+                alert('Đã đạt số lượng giới hạn cần thêm vào!')
+            }else{
+                this.quantity_item += 1
+            }
+
         },
         addtoCart(title_product_input) {
             if (!localStorage.getItem('isloggin')) {
