@@ -37,6 +37,10 @@ class ProductService {
     return (await this.http.put(`/${id}`, data)).data;
   }
 
+  // async updateproductafterorder(id, data) {
+  //   return (await this.http.put(`/${id}`, data)).data;
+  // }
+
   async delete(id) {
     return (await this.http.delete(`/${id}`)).data;
   }

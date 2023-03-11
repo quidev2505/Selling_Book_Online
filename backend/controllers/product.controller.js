@@ -39,6 +39,23 @@ module.exports = class API {
     }
   }
 
+  //update product after order
+  static async updateproductafterorder(req, res) {
+    const id_product = req.params.id;
+    try {
+      const updateProduct = await ProductModel.findByIdAndUpdate(
+        id_product,
+        {
+          quantityonhand: req.body.quantity_update,
+        },
+        { new: true }
+      );
+      res.status(200).json(updateProduct);
+    } catch (err) {
+      res.status(501).json(err);
+    }
+  }
+
   //Delete Product
   static async deleteProduct(req, res) {
     const id_product = req.params.id;

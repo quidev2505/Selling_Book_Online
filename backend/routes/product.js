@@ -10,6 +10,9 @@ router.post("/", API_product.createProduct);
 //Update Product
 router.put("/:id", API_product.updateProduct);
 
+//Update product after order
+router.put("/:id", API_product.updateproductafterorder);
+
 //Delete Product
 router.delete("/:id", API_product.deleteProduct);
 

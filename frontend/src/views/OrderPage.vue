@@ -1,5 +1,6 @@
 <script>
 import OrderService from '../services/Order.service';
+import ProductService from '../services/Product.service';
 export default {
     // || (typeof (JSON.parse(localStorage.getItem('productCart'))) === 'object'
     beforeRouteEnter: (to) => {
@@ -20,6 +21,16 @@ export default {
                 detail_cart: [],
                 statusOrder: "",
                 totalOrder: ""
+            },
+            BookDataInput: {
+                img_url: [],
+                title: "",
+                author: "",
+                categories: "",
+                description: "",
+                price: "",
+                bookType: "",
+                quantityonhand: ""
             },
             methodPaymentCOD: 'Thanh toán khi nhận hàng(COD)',
             methodPaymentOnline: 'Thanh toán trực tuyến (Online)',
@@ -62,6 +73,22 @@ export default {
 
     
             let dataReturn = await OrderService.create(this.dataOrderInput);
+
+            for(let i = 0;i< cartLocalStorage.length;i++){
+                let data = await ProductService.getproductwithID(cartLocalStorage[i].id_product);
+                this.BookDataInput.img_url[0] = data.img_url[0]
+                this.BookDataInput.img_url[1] = data.img_url[1]
+                this.BookDataInput.img_url[2] = data.img_url[2]
+                this.BookDataInput.title = data.title;
+                this.BookDataInput.author = data.author;
+                this.BookDataInput.categories = data.categories;
+                this.BookDataInput.description = data.description;
+                this.BookDataInput.price = data.price;
+                this.BookDataInput.bookType = data.bookType;
+                this.BookDataInput.quantityonhand = data.quantityonhand - cartLocalStorage[i].quantity_product;
+                await ProductService.update(cartLocalStorage[i].id_product, this.BookDataInputs)
+            }
+
 
             this.$router.push(`/order_complete/${dataReturn._id}`)
             console.log(dataReturn)
