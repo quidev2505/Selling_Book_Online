@@ -18,6 +18,7 @@ export default {
             setTimeout(()=>{
                 window.location.reload();
             },100)
+            
         },
         async showCategory() {
             try {

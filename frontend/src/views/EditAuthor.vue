@@ -31,6 +31,7 @@ export default {
         },
         backPage() {
             setTimeout(() => {
+                localStorage.setItem('backPage', 'quanlitacgia')
                 this.$router.push("/admin")
             }, 100)
         },

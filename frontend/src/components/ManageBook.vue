@@ -134,6 +134,10 @@ export default {
             } else {
                 try {
                     this.ManageBooks = await ProductService.findproductwithName(inputKeyWord);
+                    if (this.ManageBooks.length == 0) {
+                        alert('Không có sách tương ứng với khóa tìm kiếm !');
+                        this.ManageBooks = await ProductService.getAllProduct();
+                    }
                 } catch (err) {
                     console.log(err)
                 }

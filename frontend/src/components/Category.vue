@@ -85,6 +85,10 @@ export default {
             } else {
                 try {
                     this.ManageCategory = await CategoryService.findcategorywithName(inputKeyWord);
+                    if (this.ManageCategory.length == 0) {
+                        alert('Không có danh mục ứng với khóa tìm kiếm !');
+                        this.ManageCategory = await CategoryService.getAllCategory();
+                    }
                 } catch (err) {
                     console.log(err)
                 }

@@ -47,7 +47,7 @@ module.exports = class API {
       const updateOrder = await OrderModel.findByIdAndUpdate(
         id_order,
         {
-          statusOrder: req.body
+          statusOrder: req.body,
         },
         { new: true }
       );
@@ -190,4 +190,18 @@ module.exports = class API {
   //       res.status(501).json(err);
   //     }
   //   }
+
+  //Find Order with id
+  static async findorderwithID(req, res) {
+    try {
+      const id_order = await req.params.id;
+      const OrderData = await OrderModel.find({
+          phonenumber : { $regex: `${id_order}`, $options: "i" },
+      });
+
+      res.status(201).json(OrderData);
+    } catch (err) {
+      res.status(501).json(err);
+    }
+  }
 };

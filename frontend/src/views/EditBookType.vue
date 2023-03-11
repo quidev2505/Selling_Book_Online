@@ -38,6 +38,7 @@ export default {
         },
         backPage() {
             setTimeout(() => {
+                localStorage.setItem('backPage', 'quanlitheloai')
                 this.$router.push("/admin")
             }, 100)
         },

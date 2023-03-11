@@ -86,6 +86,10 @@ export default {
             } else {
                 try {
                     this.ManageAuthor = await AuthorService.findauthorwithName(inputKeyWord);
+                    if (this.ManageAuthor.length == 0) {
+                        alert('Không có tác giả ứng với khóa tìm kiếm !');
+                        this.ManageAuthor = await AuthorService.getAllAuthor();
+                    }
                 } catch (err) {
                     console.log(err)
                 }

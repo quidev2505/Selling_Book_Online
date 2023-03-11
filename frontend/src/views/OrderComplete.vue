@@ -1,5 +1,6 @@
 <script>
 import OrderService from '../services/Order.service';
+import ProductService from '../services/Product.service';
 export default {
     data() {
         return {

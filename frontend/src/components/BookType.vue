@@ -94,6 +94,10 @@ export default {
             } else {
                 try {
                     this.ManageBookType = await BookTypeService.findbooktypewithName(inputKeyWord);
+                    if (this.ManageBookType.length == 0) {
+                        alert('Không có thể loại ứng với khóa tìm kiếm !');
+                        this.ManageBookType = await  BookTypeService.getAllBookType();
+                    }
                 } catch (err) {
                     console.log(err)
                 }

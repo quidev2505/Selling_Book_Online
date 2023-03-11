@@ -21,17 +21,20 @@ class OrderService {
     return (await this.http.get(`/detailorder/${id}`)).data;
   }
 
-  async getDataOrderWithIDUser(id){
+  async getDataOrderWithIDUser(id) {
     return (await this.http.get(`/infoUser/${id}`)).data;
   }
 
-
-  async updateOrder(id, data){
+  async updateOrder(id, data) {
     return (await this.http.put(`/infoUser/${id}`, data)).data;
   }
 
-  async updateOrderAdmin(id, data){
+  async updateOrderAdmin(id, data) {
     return (await this.http.put(`/editorder/${id}`, data)).data;
+  }
+
+  async findorderwithID(id) {
+    return (await this.http.get(`/findOrder/${id}`)).data;
   }
 }
 

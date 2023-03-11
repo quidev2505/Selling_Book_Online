@@ -43,11 +43,6 @@ export default {
             document.querySelector("#pills-tabContent").style.width = '100%'
             document.querySelector("#pills-tabContent").style.padding = '40px'
         },
-        backPage() {
-            setTimeout(() => {
-                window.location.reload();
-            }, 100)
-        },
         async handleAddAuthor() {
             try {
                 console.log(this.AuthorInput)
@@ -68,17 +63,20 @@ export default {
         async editOrder(Id_order) {
             this.$router.push(`/editorder/${Id_order}`)
         },
-        async FindUser(inputKeyWord) {
+        async FindOrder(inputKeyWord) {
             if (inputKeyWord === '') {
-                this.ManageUser = await UserService.getAllUser();
+                this.ManageOrder = await OrderService.getAllOrder();
             } else {
                 try {
-                    this.ManageUser = await UserService.finduserwithName(inputKeyWord);
+                    this.ManageOrder = await OrderService.findorderwithID(inputKeyWord);
+                    if(this.ManageOrder.length == 0){
+                        alert('Không có đơn hàng tương ứng với khóa tìm kiếm !');
+                        this.ManageOrder = await OrderService.getAllOrder();
+                    }
                 } catch (err) {
                     console.log(err)
                 }
             }
-
         }
     },
     mounted() {
@@ -91,9 +89,9 @@ export default {
     <!-- <button type="button" id="btn_addAuthor" class="btn btn-success" @click="addAuthor()"><i class="fa-solid fa-plus"></i> Thêm Tài Khoản </button> -->
 
 
-    <form action="/" class="d-flex" style="width:500px;margin:0 auto" id="inputSearchKeyWord" @submit.prevent>
-        <input type="text" class="form-control" placeholder="Nhập vào tên người dùng..." aria-label="Recipient's username" aria-describedby="basic-addon2" style="border-radius:6px;" v-model="inputSearch">
-        <button id="btn_search" type="submit" style="width:120px;height:50px;border-radius:0 6px 6px 0" @click="FindUser(inputSearch)">Tìm Kiếm</button>
+    <form action="/" class="d-flex mt-3" style="width:500px;margin:0 auto" id="inputSearchKeyWord" @submit.prevent>
+        <input type="text" class="form-control" placeholder="Nhập vào số điện thoại khách hàng... " aria-label="Recipient's username" aria-describedby="basic-addon2" style="border-radius:6px;" v-model="inputSearch">
+        <button id="btn_search" type="submit" style="width:120px;height:50px;border-radius:0 6px 6px 0" @click="FindOrder(inputSearch)">Tìm Kiếm</button>
     </form>
     <br>
     <br>
@@ -121,6 +119,8 @@ export default {
                 <th scope="col">STT</th>
                 <th scope="col">Mã đơn hàng</th>
                 <th scope="col">Tên khách hàng</th>
+                <th scope="col">Email</th>
+                <th scope="col">Số điện thoại</th>
                 <th scope="col">Ngày đặt hàng</th>
                 <th scope="col">Tổng tiền</th>
                 <th scope="col">Phương thức thanh toán</th>
@@ -135,13 +135,18 @@ export default {
                 </td>
                 <td>{{ item._id }}</td>
                 <td>{{ item.username }}</td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.phonenumber}}</td>
                 <td>
                     <p>{{ item.createdAt.substring(0, item.createdAt.search("T")) }}</p> - Time:
                     <p>{{ item.createdAt.substring(item.createdAt.search("T") + 1, item.createdAt.length - 5) }}</p>
                 </td>
                 <td>{{ item.totalOrder.toLocaleString() }} đ</td>
-                <td>{{ item.payment }}</td>
-                <td style="color:#62ab00;font-weight:bold;">{{ item.statusOrder}}</td>
+                <td >{{ item.payment }}</td>
+                <td v-if="item.statusOrder === 'Chưa xử lý' || item.statusOrder === 'Đã xử lý'" style="color:blue;font-weight:bold">{{ item.statusOrder}}</td>
+                <td v-else-if="item.statusOrder === 'Đang vận chuyển'" style="color:orange;font-weight:bold">{{ item.statusOrder }}</td>
+                <td v-else-if="item.statusOrder === 'Hủy đơn hàng'" style="color:red;font-weight:bold">{{ item.statusOrder }}</td>
+                <td v-else style="color:#62ab00;font-weight:bold">{{ item.statusOrder }}</td>
                 <td>
                     
                 

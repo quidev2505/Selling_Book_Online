@@ -19,7 +19,29 @@ export default {
             alert("Bạn cần phải đăng nhập để vào trang quản trị !")
             return '/'
         }
-    }
+    },
+    methods:{
+        async loadfirst(){
+            setTimeout(()=>{
+                if(localStorage.getItem('backPage') != null){
+                    let page = localStorage.getItem('backPage');
+                    document.querySelector(`#${page} > button`).setAttribute('class', 'nav-link active')
+                    document.querySelector(`#${page} > button`).setAttribute('aria-selected', 'true')
+                    document.querySelector(`.${page}`).setAttribute('class', 'tab-pane fade active show')
+
+                    document.querySelector("#quanlisach > button").setAttribute('class', 'nav-link');
+                    document.querySelector("#quanlisach > button").setAttribute('aria-selected', 'false');
+                    document.querySelector(".quanlisach").setAttribute('class', 'tab-pane fade')
+
+                    localStorage.removeItem('backPage')
+                }
+
+            },1)
+        }
+    },
+    mounted(){
+        this.loadfirst();
+    } 
 }
 </script>
 
@@ -30,52 +52,52 @@ export default {
 
             <!-- Tab quản lí -->
             <ul class="nav nav-pills mb-3 mt-4 cọntainer-fluid" id="pills-tab" role="tablist" style="border:1px solid #ccc;width:fit-content;border-radius:10px;">
-                <li class="nav-item" role="presentation">
+                <li class="nav-item" role="presentation" id="quanlisach">
                     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true"><i class="fa-solid fa-book"></i> Quản Lý
                         Sách </button>
                 </li>
-                <li class="nav-item" role="presentation">
+                <li class="nav-item" role="presentation" id="quanlidanhmuc">
                     <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="fa-solid fa-tag"></i> Quản
                         Lý Danh Mục</button>
                 </li>
-                <li class="nav-item" role="presentation">
+                <li class="nav-item" role="presentation" id="quanlitacgia">
                     <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false"><i class="fa-solid fa-book-open-reader"></i> Quản
                         Lý Tác Giả</button>
                 </li>
-                <li class="nav-item" role="presentation">
+                <li class="nav-item" role="presentation" id="quanlitheloai">
                     <button class="nav-link" id="pills-test-2" data-bs-toggle="pill" data-bs-target="#pills-test" type="button" role="tab" aria-controls="pills-test" aria-selected="false"><i class="fa-regular fa-font-awesome"></i> Quản Lý Thể
                         Loại</button>
                 </li>
-                <li class="nav-item" role="presentation">
+                <li class="nav-item" role="presentation" id="quanlitaikhoan">
                     <button class="nav-link" id="pills-chon-2" data-bs-toggle="pill" data-bs-target="#pills-chon" type="button" role="tab" aria-controls="pills-chon" aria-selected="false"><i class="fa-solid fa-users"></i> Quản Lý Tài Khoản</button>
                 </li>
-                <li class="nav-item" role="presentation">
+                <li class="nav-item" role="presentation" id="quanlidonhang">
                     <button class="nav-link" id="pills-chinh-2" data-bs-toggle="pill" data-bs-target="#pills-chinh" type="button" role="tab" aria-controls="pills-chinh" aria-selected="false"><i class="fa-solid fa-boxes-stacked"></i> &nbsp;Quản Lý Đơn
                         Hàng</button>
                 </li>
             </ul>
             <div class="tab-content" id="pills-tabContent" style="border:1px solid #ccc;width:fit-content;border-radius:10px;">
-                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="tab-pane fade show active quanlisach" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                     <!-- Quản Lý Sách -->
                     <ManageBook></ManageBook>
                 </div>
-                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="tab-pane fade quanlidanhmuc" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                     <!-- Quản lý danh mục -->
                     <Category></Category>
                 </div>
-                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                <div class="tab-pane fade quanlitacgia" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                     <!-- Quản lý tác giả -->
                     <Author></Author>
                 </div>
-                <div class="tab-pane fade" id="pills-test" role="tabpanel" aria-labelledby="pills-test-2">
+                <div class="tab-pane fade quanlitheloai" id="pills-test" role="tabpanel" aria-labelledby="pills-test-2">
                     <!-- Quản lý thể loại -->
                     <BookType></BookType>
                 </div>
-                <div class="tab-pane fade" id="pills-chon" role="tabpanel" aria-labelledby="pills-chon-2">
+                <div class="tab-pane fade quanlitaikhoan" id="pills-chon" role="tabpanel" aria-labelledby="pills-chon-2">
                     <!-- Quản lý tài khoản -->
                     <Account></Account>
                 </div>
-                <div class="tab-pane fade" id="pills-chinh" role="tabpanel" aria-labelledby="pills-chinh-2">
+                <div class="tab-pane fade quanlidonhang" id="pills-chinh" role="tabpanel" aria-labelledby="pills-chinh-2">
                     <!-- Quản lý đơn hàng -->
                     <Order></Order>
                 </div>

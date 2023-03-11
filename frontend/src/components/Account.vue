@@ -86,6 +86,10 @@ export default {
             } else {
                 try {
                     this.ManageUser = await UserService.finduserwithName(inputKeyWord);
+                    if (this.ManageUser.length == 0) {
+                        alert('Không có tài khoản ứng với khóa tìm kiếm !');
+                        this.ManageUser = await UserService.getAllUser();
+                    }
                 } catch (err) {
                     console.log(err)
                 }

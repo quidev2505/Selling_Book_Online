@@ -44,12 +44,15 @@ export default {
     
         },
         removeItem(index) {
-            let cartLocalStorage = JSON.parse(localStorage.getItem('productCart'));
-            cartLocalStorage.splice(index, 1)
-            localStorage.setItem('productCart', JSON.stringify(cartLocalStorage));
-            this.loadCart();
-
-
+            var cartLocalStorage = JSON.parse(localStorage.getItem('productCart'));
+                window.location.reload()
+                cartLocalStorage.splice(index, 1)
+                if(cartLocalStorage.length == 0){
+                    localStorage.removeItem("productCart");
+                }else{
+                    localStorage.setItem('productCart', JSON.stringify(cartLocalStorage));
+                }
+                this.loadCart();
         },
         async IncreaseNumber(titleProduct) {
             let cartLocalStorage = JSON.parse(localStorage.getItem('productCart'));

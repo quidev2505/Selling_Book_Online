@@ -34,7 +34,10 @@ export default {
             this.detailOrder = data.detail_cart;
         },
         backPage() {
-            this.$router.push(`/admin`)
+            setTimeout(()=>{
+                localStorage.setItem('backPage', 'quanlidonhang')
+                this.$router.push(`/admin`)
+            },100)
         },
         changeOptionTG(){
             this.dataOrderInput.statusOrder = document.querySelector("#chooseDO").value;
@@ -77,7 +80,7 @@ export default {
         <br>
         <form @submit.prevent>
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label fw-bold">Tác giả: </label>
+                <label for="exampleInputEmail1" class="form-label fw-bold">Trạng thái đơn hàng: </label>
                 <select class="form-control" :required="true" @change="changeOptionTG" id="chooseDO">
                     <option v-bind:value="statusChoose[0]">Chưa xử lý</option>
                     <option v-bind:value="statusChoose[1]">Đã xử lý</option>

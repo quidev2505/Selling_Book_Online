@@ -31,6 +31,11 @@ const ProductSchema = new mongoose.Schema(
             type: Number,
             required: true,
         },
+        quantityonhand:{
+            type: Number,
+            required: true,
+            default: 20,
+        }
     },
     {   timestamps: true  }
 );
