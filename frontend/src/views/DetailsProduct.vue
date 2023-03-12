@@ -98,6 +98,7 @@ export default {
                     ]
 
                     localStorage.setItem('productCart', JSON.stringify(checkExitCart));
+                    alert('Thêm vào giỏ hàng thành công !')
                 } else {
                     for (let i = 0; i < checkExitCart.length; i++) {
                         if (title_product_input === checkExitCart[i].title_product) {

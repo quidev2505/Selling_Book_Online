@@ -82,6 +82,18 @@ module.exports = class API {
     }
   }
 
+  //Get dataOrder with order
+  static async getDataOrderWithIDOrder(req, res) {
+    const id_order = req.params.id;
+    try {
+      const dataOrder = await OrderModel.find({ _id: id_order });
+      res.status(200).json(dataOrder);
+    } catch (err) {
+      console.log(err);
+      res.status(501).json(err);
+    }
+  }
+
   //Delete Product
   //   static async deleteOrder(req, res) {
   //     const id_product = req.params.id;
@@ -196,7 +208,7 @@ module.exports = class API {
     try {
       const id_order = await req.params.id;
       const OrderData = await OrderModel.find({
-          phonenumber : { $regex: `${id_order}`, $options: "i" },
+        phonenumber: { $regex: `${id_order}`, $options: "i" },
       });
 
       res.status(201).json(OrderData);

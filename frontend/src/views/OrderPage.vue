@@ -49,7 +49,7 @@ export default {
                 totalCartSum += item.quantity_product * item.price_product;
             })
             this.totalCart = totalCartSum + 35000;
-            this.dataOrderInput.totalOrder = totalCartSum;
+            this.dataOrderInput.totalOrder = totalCartSum + 35000;
         },
         async loadDataUserInfo() {
             let UserLocalStorage = JSON.parse(localStorage.getItem('isloggin'));

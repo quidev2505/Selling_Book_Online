@@ -22,6 +22,10 @@ router.get("/detailorder/:id", API_order.getDataOrderWithID);
 //Get Data Order with ID user
 router.get("/infoUser/:id", API_order.getDataOrderWithIDUser);
 
+
+//Get Data Order with ID order
+router.get("/:id", API_order.getDataOrderWithIDOrder);
+
 //Find order with id
 router.get("/findOrder/:id", API_order.findorderwithID);
 
