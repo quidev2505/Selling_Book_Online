@@ -5,6 +5,7 @@ import Author from '../components/Author.vue';
 import Account from '../components/Account.vue';
 import BookType from '../components/BookType.vue';
 import Order from '../components/Order.vue';
+import Store from '../components/Store.vue';
 export default {
     components: {
         ManageBook,
@@ -12,7 +13,8 @@ export default {
         Author,
         Account,
         BookType,
-        Order
+        Order,
+        Store
     },
     beforeRouteEnter: (to) => {
         if (!localStorage.getItem('isloggin') && to.name !== 'HomePage') {
@@ -75,6 +77,9 @@ export default {
                     <button class="nav-link" id="pills-chinh-2" data-bs-toggle="pill" data-bs-target="#pills-chinh" type="button" role="tab" aria-controls="pills-chinh" aria-selected="false"><i class="fa-solid fa-boxes-stacked"></i> &nbsp;Quản Lý Đơn
                         Hàng</button>
                 </li>
+                <li class="nav-item" role="presentation" id="quanlikho">
+                    <button class="nav-link" id="pills-kho-2" data-bs-toggle="pill" data-bs-target="#pills-kho" type="button" role="tab" aria-controls="pills-kho" aria-selected="false"><i class="fa-sharp fa-solid fa-shop"></i> &nbsp;Quản Lý Kho</button>
+                </li>
             </ul>
             <div class="tab-content" id="pills-tabContent" style="border:1px solid #ccc;width:fit-content;border-radius:10px;">
                 <div class="tab-pane fade show active quanlisach" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
@@ -100,6 +105,10 @@ export default {
                 <div class="tab-pane fade quanlidonhang" id="pills-chinh" role="tabpanel" aria-labelledby="pills-chinh-2">
                     <!-- Quản lý đơn hàng -->
                     <Order></Order>
+                </div>
+                <div class="tab-pane fade quanlikho" id="pills-kho" role="tabpanel" aria-labelledby="pills-chinh-2">
+                    <!-- Quản lý kho -->
+                    <Store></Store>
                 </div>
             </div>
         </div>

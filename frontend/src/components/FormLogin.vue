@@ -38,7 +38,7 @@ export default {
                     setTimeout(() => {
                         document.querySelector("#toast").style.display = 'none'
                         this.$router.push('/admin');
-                    }, 1500)
+                    }, 1000)
                 } else {
                     const userDataLogin = await AuthService.createlogin(this.userDataInput);
                     localStorage.setItem('isloggin', JSON.stringify(userDataLogin));

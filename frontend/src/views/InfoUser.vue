@@ -89,8 +89,8 @@ export default {
                     console.log(err)
                 }
 
-                // this.getDataOrder();
-                // this.getDataUser();
+                this.getDataOrder();
+                this.getDataUser();
             }
         }
     },

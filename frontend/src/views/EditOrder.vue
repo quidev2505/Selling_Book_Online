@@ -1,5 +1,6 @@
 <script>
 import OrderService from '../services/Order.service';
+import StoreService from '../services/Store.service';
 
 export default {
     data() {
@@ -20,6 +21,10 @@ export default {
                 detail_cart: [],
                 statusOrder: "",
                 totalOrder: ""
+            },
+            StoreInput: {
+                id_product : "",
+                sellquantity: ""
             },
             idOrder: '',
             statusOrder: '',
@@ -44,7 +49,7 @@ export default {
         },
         async editOrder(){
             try{
-                let dataValue = await OrderService.getDataOrderWithIDUser(this.$route.params.id);
+                let dataValue = await OrderService.getDataOrderWithIDOrder(this.$route.params.id);
                 this.dataOrderInput.iduser = dataValue.iduser;
                 this.dataOrderInput.username = dataValue.username;
                 this.dataOrderInput.email = dataValue.email;
@@ -53,6 +58,30 @@ export default {
                 this.dataOrderInput.payment = dataValue.payment;
                 this.dataOrderInput.detail_cart = dataValue.detail_cart;
                 this.dataOrderInput.totalOrder = dataValue.totalOrder;
+
+               
+
+                if(this.dataOrderInput.statusOrder === "Đã giao hàng"){
+                    //Kiểm tra và cập nhật số lượng sản phẩm bán ra khi đã chọn Đã vận chuyển
+                    const data = await OrderService.getOrderWithID(this.$route.params.id)
+                    let cartOrder = data.detail_cart;
+                    console.log(cartOrder)
+
+                    for (let i = 0; i < cartOrder.length; i++) {
+                        let id_productInCartDetail = cartOrder[i].id_product;
+                        let sellquantity_productInCartDetail = cartOrder[i].quantity_product;
+                        let dataStoreCheck = await StoreService.getStorewithID(id_productInCartDetail);
+
+                        if (! dataStoreCheck) {
+                            this.StoreInput.id_product = id_productInCartDetail;
+                            this.StoreInput.sellquantity = sellquantity_productInCartDetail;
+                            await StoreService.create(this.StoreInput)
+                        } else {
+                            this.StoreInput.sellquantity = dataStoreCheck.sellquantity + sellquantity_productInCartDetail;
+                            await StoreService.update(id_productInCartDetail, this.StoreInput);
+                        }
+                    }
+                }
 
                 await OrderService.updateOrder(this.$route.params.id, this.dataOrderInput);
                 alert("Cập nhật đơn hàng thành công!")

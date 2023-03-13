@@ -111,6 +111,11 @@ const routes = [
     name: "editOrder",
     component: () => import("@/views/EditOrder.vue"),
   },
+  {
+    path: "/editStore/:id",
+    name: "EditStore",
+    component: () => import("@/views/EditStore.vue"),
+  }
 ];
 
 const router = createRouter({
