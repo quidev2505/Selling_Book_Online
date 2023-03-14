@@ -137,6 +137,10 @@ module.exports = class API {
             categories: req.params.name,
           });
         }
+
+        if(arrayProduct.length == 0){
+          arrayProduct = await ProductModel.find({author: req.params.name});
+        }
       }
 
       res.status(200).json(arrayProduct);

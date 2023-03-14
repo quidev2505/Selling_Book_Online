@@ -48,7 +48,7 @@ module.exports = class API {
   }
 
   //Get All Product
-  static async getAllProduct(req, res) {
+  static async getAllStore(req, res) {
     try {
       const arrayStore = await StoreModel.find();
       res.status(200).json(arrayStore);

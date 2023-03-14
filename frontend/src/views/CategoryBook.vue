@@ -2,6 +2,7 @@
 import ProductService from '../services/Product.service';
 import CategoryService from '../services/Category.service';
 import BookTypeService from '../services/BookType.service';
+import AuthorService from '../services/Author.service';
 export default {
     data() {
         return {
@@ -9,6 +10,7 @@ export default {
             booktypeProduct:[],
             ManageCategory: [],
             ManageBookType: [],
+            ManageAuthor : [],
             nameCategory: '',
             nameBooktype: '',
         }
@@ -34,6 +36,13 @@ export default {
                 console.log(error)
             }
         },
+        async showAuthor(){
+            try{
+                this.ManageAuthor = await AuthorService.getAllAuthor();
+            }catch(error){
+                console.log(error)
+            }
+        },
         async getDetailDataProduct() {
             try {
                 this.categoryProduct = await ProductService.getcategoryProduct(JSON.parse(this.$route.params.name));
@@ -49,6 +58,7 @@ export default {
     mounted(){
         this.showCategory();
         this.showBookType();
+        this.showAuthor();
     }
 }
 
@@ -131,6 +141,18 @@ export default {
                         }">
                             <li>Sách Giáo Khoa</li>
                         </router-link> -->
+                </ul>
+
+                <br>
+                <h4 style="color:red;">Phân loại theo tác giả</h4>
+                <ul>
+                    <router-link @click="navigationCategory()" :to="{
+                        name: 'CategoryBook',
+                        params: { name: JSON.stringify(`${item3.author_name}`) },
+                    }"  v-for="item3 in ManageAuthor">
+                        <li>{{item3.author_name}}</li>
+                    </router-link>
+
                 </ul>
             </div>
             <!-- Right_content -->

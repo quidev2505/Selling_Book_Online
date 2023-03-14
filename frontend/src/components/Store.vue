@@ -62,6 +62,7 @@ export default {
         async getStoreData(){
             try{
                 this.StoreData = await StoreService.getAllStore();
+                console.log(this.StoreData)
                 
             }catch(err){
                 console.log(err)
