@@ -1,5 +1,6 @@
 <script>
 import ProductService from '../services/Product.service';
+import StoreService from '../services/Store.service';
 import SliderIProduct from '../components/SliderProduct.vue'
 export default {
     components: {
@@ -8,6 +9,7 @@ export default {
     data() {
         return {
             ProductData: [],
+            ProductDataSort:[]
         }
     },
     methods: {
@@ -17,10 +19,19 @@ export default {
             } catch (error) {
                 console.log(error)
             }
+        },
+        async getProductDataSort(){
+            try{
+                this.ProductDataSort = await StoreService.getStoreSort();
+                console.log(this.ProductDataSort)
+            }catch(err){
+                console.log(err);
+            }
         }
     },
     mounted() {
         this.getDataProduct();
+        this.getProductDataSort();
     },
 
 }
@@ -33,8 +44,8 @@ export default {
 
         <!-- Main_Content_Product-->
         <div class="row mt-5 item_product">
-            <h4> <i class="fa-solid fa-fire"></i> XU HƯỚNG MUA SẮM</h4>
-            <div class="col-lg-3" v-for="item in ProductData"  v-show="item.categories === 'Văn Học'">
+            <h4> <i class="fa-solid fa-fire"></i> XU HƯỚNG MUA SẮM - SẢN PHẨM BÁN CHẠY CỦA THÁNG 3</h4>
+            <div class="col-lg-3" v-for="item in ProductDataSort">
                 <div class="card" style="width: 18rem;">
                     <img :src="item.img_url[0]" class="card-img-top" alt="..." width="190" height="190" style="object-fit: contain;">
                     <div class="card-body">
@@ -48,6 +59,7 @@ export default {
                         </router-link>
                     </div>
                 </div>
+                <p>{{item.id_product}}</p>
             </div>
         </div>
 

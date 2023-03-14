@@ -13,7 +13,9 @@ router.put("/:id", API_store.updateStore);
 router.get("/:id", API_store.getStorewithID);
 
 //Get All Product
-router.get("/", API_store.getAllProduct);
+// router.get("/", API_store.getAllProduct);
 
+//Get Store Sort
+router.get("/", API_store.getStoreSort);
 
 module.exports = router;

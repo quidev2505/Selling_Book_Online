@@ -157,6 +157,7 @@ export default {
     },
     mounted() {
         this.getBookData();
+        this.getStoreData();
     },
 
 }
@@ -265,11 +266,12 @@ export default {
                 </td>
                 <td>{{ item.price.toLocaleString() }} đ</td>
                 <td>{{ item.quantityonhand }}</td>
-                <td v-for="item2 in StoreData">
-                  <p v-if="item._id === item2.id_product">  {{item2.sellquantity}}</p>
-                </td>
                 <td>
-
+                    <p  v-for="item2 in StoreData" >   
+                        <span v-if="item2.id_product === item._id"> 
+                            {{ item2.sellquantity }}
+                        </span>
+                    </p>
                 </td>
                 <td>
                     <router-link :to="{

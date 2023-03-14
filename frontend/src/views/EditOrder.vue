@@ -65,18 +65,19 @@ export default {
                     //Kiểm tra và cập nhật số lượng sản phẩm bán ra khi đã chọn Đã vận chuyển
                     const data = await OrderService.getOrderWithID(this.$route.params.id)
                     let cartOrder = data.detail_cart;
-                    console.log(cartOrder)
 
                     for (let i = 0; i < cartOrder.length; i++) {
                         let id_productInCartDetail = cartOrder[i].id_product;
                         let sellquantity_productInCartDetail = cartOrder[i].quantity_product;
                         let dataStoreCheck = await StoreService.getStorewithID(id_productInCartDetail);
+                        console.log(dataStoreCheck)
 
-                        if (! dataStoreCheck) {
+                        if (!dataStoreCheck) {
                             this.StoreInput.id_product = id_productInCartDetail;
                             this.StoreInput.sellquantity = sellquantity_productInCartDetail;
                             await StoreService.create(this.StoreInput)
                         } else {
+                            console.log('da trung ')
                             this.StoreInput.sellquantity = dataStoreCheck.sellquantity + sellquantity_productInCartDetail;
                             await StoreService.update(id_productInCartDetail, this.StoreInput);
                         }

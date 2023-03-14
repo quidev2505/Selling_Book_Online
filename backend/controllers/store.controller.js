@@ -1,4 +1,5 @@
 const StoreModel = require("../models/Store");
+const ProductModel = require("../models/Product");
 
 module.exports = class API {
   //Create Product
@@ -37,9 +38,9 @@ module.exports = class API {
 
   //Get Store with ID
   static async getStorewithID(req, res){
-    const id_product = req.params.id;
+    const id_product_store = req.params.id;
     try{
-      const dataStore = await StoreModel.findById(id_product);
+      const dataStore = await StoreModel.findOne({id_product: id_product_store});
       res.status(200).json(dataStore);
     }catch(err){
       res.status(501).json(err);
@@ -49,9 +50,25 @@ module.exports = class API {
   //Get All Product
   static async getAllProduct(req, res) {
     try {
-      const arrayProduct = await ProductModel.find();
-      res.status(200).json(arrayProduct);
+      const arrayStore = await StoreModel.find();
+      res.status(200).json(arrayStore);
     } catch (err) {
+      res.status(501).json(err);
+    }
+  }
+
+  //Get Store Sort
+  static async getStoreSort(req, res){
+    try{
+      const data = await StoreModel.find().sort( { sellquantity: -1 } ).limit(8);
+      var dataArray = []
+      for(let i=0; i< data.length; i++){
+        const resultProduct = await ProductModel.findOne({ _id: data[i].id_product });
+        dataArray.push(resultProduct)
+      }
+      res.status(200).json(dataArray);
+    }catch(err){
+      console.log(err)
       res.status(501).json(err);
     }
   }

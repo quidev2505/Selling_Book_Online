@@ -5,9 +5,9 @@ class StoreService {
     this.http = createHttp("/api/store");
   }
 
-  async getAllStore() {
-    return (await this.http.get("/")).data;
-  }
+  // async getAllStore() {
+  //   return (await this.http.get("/")).data;
+  // }
 
   async create(data) {
     return (await this.http.post("/", data)).data;
@@ -24,6 +24,9 @@ class StoreService {
   // async updateproductafterorder(id, data) {
   //   return (await this.http.put(`/${id}`, data)).data;
   // }
+  async getStoreSort(){
+    return (await this.http.get("/")).data;
+  }
 }
 
 export default new StoreService();
