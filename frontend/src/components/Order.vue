@@ -77,6 +77,13 @@ export default {
                     console.log(err)
                 }
             }
+        },
+        async filterOrder(statusOrderInput){
+            try{
+                this.ManageOrder = await OrderService.getorderwithstatusorder(statusOrderInput);
+            }catch(err){
+                console.log(err);
+            }
         }
     },
     mounted() {
@@ -111,6 +118,21 @@ export default {
         <button @click="handleAddAuthor()" type="submit" class="btn btn-light fw-bold" style="padding: 10px;;border:1px solid #ccc">Xác Nhận</button>
     </form>
 
+
+    <h2>Lọc theo trạng thái đơn hàng</h2>
+    <button type="button" class="btn btn-primary" @click="filterOrder('Chưa xử lý')">Chưa xử lý</button>
+    &nbsp;
+    <button  type="button" class="btn btn-primary" @click="filterOrder('Đã xử lý')">Đã xử lý</button>
+    &nbsp;
+    <button type="button" class="btn btn-primary" @click="filterOrder('Đang vận chuyển')">Đang vận chuyển</button>
+    &nbsp;
+    <button  type="button" class="btn btn-primary" @click="filterOrder('Đã giao hàng')">Đã giao hàng</button>
+    &nbsp;
+    <button type="button" class="btn btn-primary" @click="filterOrder('Hủy đơn hàng')">Hủy đơn hàng</button>
+    &nbsp;
+    
+    <br>
+    <br>
 
     <!-- Giao diện bảng Show Sách -->
     <table class="table" border="1px" style="with:90vw;" id="table_manageAuthor">

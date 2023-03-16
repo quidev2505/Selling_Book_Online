@@ -40,6 +40,10 @@ class OrderService {
   async findorderwithID(id) {
     return (await this.http.get(`/findOrder/${id}`)).data;
   }
+
+  async getorderwithstatusorder(name){
+    return (await this.http.get(`/filterStatusOrder/${name}`)).data;
+  }
 }
 
 export default new OrderService();

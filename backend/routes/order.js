@@ -29,6 +29,9 @@ router.get("/:id", API_order.getDataOrderWithIDOrder);
 //Find order with id
 router.get("/findOrder/:id", API_order.findorderwithID);
 
+//Get data order with status order
+router.get("/filterStatusOrder/:name", API_order.getorderwithstatusorder);
+
 // //Get One Product
 // router.get("/find/:id", API_product.findoneProduct);
 

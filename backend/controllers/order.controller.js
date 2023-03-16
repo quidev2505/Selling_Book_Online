@@ -216,4 +216,16 @@ module.exports = class API {
       res.status(501).json(err);
     }
   }
+
+
+  //Get order with status order
+  static async getorderwithstatusorder(req, res){
+    try{
+      const statusInput = req.params.name;
+      const dataOrder = await OrderModel.find({statusOrder: statusInput});
+      res.status(201).json(dataOrder);
+    }catch(err){
+      res.stats(501).json(err);
+    }
+  }
 };

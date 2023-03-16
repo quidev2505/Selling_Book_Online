@@ -64,7 +64,12 @@ module.exports = class API {
       var dataArray = []
       for(let i=0; i< data.length; i++){
         const resultProduct = await ProductModel.findOne({ _id: data[i].id_product });
-        dataArray.push(resultProduct)
+        let soluong = data[i].sellquantity;
+        let objectData = {
+            sanphamdata: resultProduct,
+            soluongSP: soluong
+        }
+        dataArray.push(objectData);
       }
       res.status(200).json(dataArray);
     }catch(err){
