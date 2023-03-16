@@ -29,7 +29,7 @@ export default {
         <h4>Từ khóa:  <span style="color:#62ab00;font-size:30px">{{ keyword }}</span> </h4>
         <div class="d-flex row">
             <div class="col-lg-3 mt-4" v-for="item in productfind">
-                <div class="card" style="width: 18rem;">
+                <div class="card" style="width: 18rem;" data-aos="flip-up">
                     <img :src="item.img_url[0]" class="card-img-top" alt="..." width="190" height="190" style="object-fit: contain;">
                     <div class="card-body">
                         <span class="card-title" style="height:48px">{{ item.title }}</span>

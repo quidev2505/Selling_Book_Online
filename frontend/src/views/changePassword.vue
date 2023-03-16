@@ -23,45 +23,63 @@ export default {
     },
     methods: {
         toast,
-        backPage(){
+        backPage() {
             setTimeout(() => {
                 this.$router.push(`/infoUser/${this.$route.params.id}`)
             }, 100)
         },
         async handleChangePassword() {
-            if (this.userDataInput.new_password === this.userDataInput.renew_password) {
-                try {
-                    await UserService.getuserwithidChangePass(this.$route.params.id, this.userDataInput);
-                    this.toasts.title = "Success",
-                    this.toasts.msg = "Đổi mật khẩu thành công !"
-                    this.toasts.type = "success",
+            if (this.userDataInput.new_password == '' || this.userDataInput.renew_password == '' || this.userDataInput.old_password == '') {
+                this.toasts.title = "Thất bại",
+                    this.toasts.msg = "Vui lòng nhập đầy đủ thông tin !"
+                this.toasts.type = "success",
                     this.toasts.duration = 2000
-                    document.querySelector("#toast").style.display = 'block'
-                    this.toast();
-                    alert("Vui lòng đăng nhập lại !")
-                    setTimeout(() => {
-                        this.$router.push(`/infoUser/${this.$route.params.id}`)
-                        localStorage.removeItem("isloggin");
-                        this.$router.push('/login')
+                document.querySelector("#toast").style.display = 'block'
+                this.toast();
+                setTimeout(() => {
+                    document.querySelector("#toast").style.display = 'none'
+                }, 1000)
+            } else {
+                if (this.userDataInput.new_password === this.userDataInput.renew_password) {
+                    try {
+                        await UserService.getuserwithidChangePass(this.$route.params.id, this.userDataInput);
+                        this.toasts.title = "Success",
+                            this.toasts.msg = "Đổi mật khẩu thành công !"
+                        this.toasts.type = "success",
+                            this.toasts.duration = 2000
+                        document.querySelector("#toast").style.display = 'block'
+                        this.toast();
+                        alert("Vui lòng đăng nhập lại !")
                         setTimeout(() => {
-                            window.location.reload();
-                        }, 700)
-                    }, 100)
-                } catch (err) {
-                    this.toasts.title = "Failed",
-                    this.toasts.msg = "Đổi mật khẩu thất bại !"
+                            this.$router.push(`/infoUser/${this.$route.params.id}`)
+                            localStorage.removeItem("isloggin");
+                            this.$router.push('/login')
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 700)
+                        }, 100)
+                    } catch (err) {
+                        this.toasts.title = "Thất bại",
+                            this.toasts.msg = "Đổi mật khẩu thất bại !"
+                        this.toasts.type = "error",
+                            this.toasts.duration = 2000
+                        document.querySelector("#toast").style.display = 'block'
+                        this.toast()
+                        setTimeout(() => {
+                            document.querySelector("#toast").style.display = 'none'
+                        }, 1000)
+                    }
+                } else {
+                    this.toasts.title = "Thất bại",
+                        this.toasts.msg = "Mật khẩu không trùng khớp !"
                     this.toasts.type = "error",
-                    this.toasts.duration = 2000
+                        this.toasts.duration = 2000
                     document.querySelector("#toast").style.display = 'block'
                     this.toast()
+                    setTimeout(() => {
+                        document.querySelector("#toast").style.display = 'none'
+                    }, 1000)
                 }
-            } else {
-                this.toasts.title = "Failed",
-                this.toasts.msg = "Mật khẩu không trùng khớp !"
-                this.toasts.type = "error",
-                this.toasts.duration = 2000
-                document.querySelector("#toast").style.display = 'block'
-                this.toast()
             }
         }
     }
@@ -99,4 +117,5 @@ export default {
 
             <button @click="handleChangePassword()" type="submit" class="btn btn-light fw-bold" style="padding: 10px;border:1px solid #ccc">Xác Nhận</button>
         </form>
-</div></template>
+    </div>
+</template>

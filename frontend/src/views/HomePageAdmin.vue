@@ -17,7 +17,7 @@ export default {
         Store
     },
     beforeRouteEnter: (to) => {
-        if (!localStorage.getItem('isloggin') && to.name !== 'HomePage') {
+        if (!localStorage.getItem('adminlogin') && to.name !== 'HomePage') {
             alert("Bạn cần phải đăng nhập để vào trang quản trị !")
             return '/'
         }

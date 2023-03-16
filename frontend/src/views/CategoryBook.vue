@@ -15,13 +15,10 @@ export default {
             nameBooktype: '',
         }
     },
+    watch: {
+        '$route': 'getDetailDataProduct'
+    },
     methods: {
-        navigationCategory(vara) {
-            setTimeout(()=>{
-                window.location.reload();
-            },100)
-            
-        },
         async showCategory() {
             try {
                 this.ManageCategory = await CategoryService.getAllCategory();
@@ -160,7 +157,7 @@ export default {
             <div class="col-lg right_content" id="danhmuc">
                 <h3 style="color:#62ab00;margin:10px;">{{ nameCategory }}</h3>
                 <div class="container row">
-                    <div class="col-lg-4 mt-3 mb-3" v-for="item in categoryProduct">
+                    <div class="col-lg-4 mt-3 mb-3" v-for="item in categoryProduct" data-aos="fade-left">
                         <div class="card" style="width: 18rem;">
                             <img :src="item.img_url[0]" class="card-img-top" alt="..." width="190" height="190" style="object-fit: contain;">
                             <div class="card-body">

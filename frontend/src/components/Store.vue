@@ -266,8 +266,8 @@ export default {
                     <img :src="item.img_url[2]" class="img-fluid" alt="..." style="width:70px;height:70px;border:1px solid #ccc;border-radius:5px;">
                 </td>
                 <td>{{ item.price.toLocaleString() }} đ</td>
-                <td>{{ item.quantityonhand }}</td>
-                <td>
+                <td style="color: blue;">{{ item.quantityonhand }}</td>
+                <td style="color: green;font-weight:bold">
                     <p  v-for="item2 in StoreData" >   
                         <span v-if="item2.id_product === item._id"> 
                             {{ item2.sellquantity }}

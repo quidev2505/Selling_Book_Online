@@ -22,23 +22,27 @@ export default {
             }
         },
         showUserAlreadyLogin() {
-            if (!localStorage.getItem('isloggin')) {
-                //Trường hợp chưa đăng nhập
-                document.querySelector("#not_login").style.display = 'block';
-                document.querySelector("#login_complete").style.display = 'none';
-            } else {
-                //Trường hợp đã đăng nhập      
+            if (localStorage.getItem('adminlogin') != null) {
+                this.checkLogAdmin = 'adminlogin';
                 document.querySelector("#login_complete").style.display = 'block';
-                document.querySelector("#not_login").style.display = 'none';
-                this.userLoginname = JSON.parse(localStorage.getItem("isloggin")).username;
-                this.userLoginID = JSON.parse(localStorage.getItem("isloggin"))._id;
-            }
-            if (localStorage.getItem('isloggin') != null) {
-                this.checkLogAdmin = JSON.parse(localStorage.getItem('isloggin')).username;
+                this.userLoginname = 'Tài khoản Admin'
+            } else {
+                if (!localStorage.getItem('isloggin')) {
+                    //Trường hợp chưa đăng nhập
+                    document.querySelector("#not_login").style.display = 'block';
+                    document.querySelector("#login_complete").style.display = 'none';
+                } else {
+                    //Trường hợp đã đăng nhập      
+                    document.querySelector("#login_complete").style.display = 'block';
+                    document.querySelector("#not_login").style.display = 'none';
+                    this.userLoginname = JSON.parse(localStorage.getItem("isloggin")).username;
+                    this.userLoginID = JSON.parse(localStorage.getItem("isloggin"))._id;
+                }
             }
         },
         logout_Btn() {
             localStorage.removeItem("isloggin");
+            localStorage.removeItem("adminlogin");
             localStorage.removeItem("productCart");
             this.$router.push('/login')
             setTimeout(() => {
@@ -76,7 +80,7 @@ export default {
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <div class="input-group mb-3" v-if="checkLogAdmin !== 'TK Admin'">
+                <div class="input-group mb-3" v-if="checkLogAdmin !== 'adminlogin'">
                     <form action="/" class="d-flex" style="width:500px;" @submit.prevent>
                         <input type="text" class="form-control" placeholder="Nhập vào tên sách hoặc mô tả..." aria-label="Recipient's username" aria-describedby="basic-addon2" style="border-radius:6px;"
                             v-model="inputSearch">
@@ -103,12 +107,12 @@ export default {
 
                         <span>
                             <button @click="logout_Btn()" class="btn btn-danger text-white text-decoration-none text-dark" style="    width: fit-content;
-                                                                                                            height: 35px;
-                                                                                                            display: flex;
-                                                                                                            align-items: center;
-                                                                                                            margin-top: 3px;
-                                                                                                            justify-content: center;
-                                                                                                        }">Đăng xuất</button>
+                                                                                                                        height: 35px;
+                                                                                                                        display: flex;
+                                                                                                                        align-items: center;
+                                                                                                                        margin-top: 3px;
+                                                                                                                        justify-content: center;
+                                                                                                                    }">Đăng xuất</button>
 
                         </span>
                     </div>
@@ -122,8 +126,8 @@ export default {
                         <span class="fw-bold mb-1">
                             <a href="#" class="text-decoration-none text-dark">
                                 <router-link to="/login" class="text-decoration-none text-dark"> Đăng Nhập</router-link>
-                            </a>
-                        </span>
+                        </a>
+                    </span>
 
                     <span>
                         <a href="#" class="text-decoration-none text-dark">
@@ -135,7 +139,7 @@ export default {
 
 
             <!-- cart_icon -->
-            <div id="icon_cart" style="margin-right:141px" v-if="checkLogAdmin !== 'TK Admin'">
+            <div id="icon_cart" style="margin-right:141px" v-if="checkLogAdmin !== 'adminlogin'">
                 <router-link to="/cartStore">
                     <i class="fa-solid fa-cart-shopping" style="color:#62ab00;position:relative">
                         <span style="    position: absolute;
@@ -158,14 +162,14 @@ export default {
                 <p style="font-size:8px;">Giỏ hàng</p>
             </div>
         </div>
-    </div>
-</nav>
+        </div>
+    </nav>
 
     <!-- Header 2 -->
-    <nav class="navbar navbar-expand-lg navbar-light" id="nav_bottom" v-if="checkLogAdmin !== 'TK Admin'">
+    <nav class="navbar navbar-expand-lg navbar-light" id="nav_bottom" v-if="checkLogAdmin !== 'adminlogin'">
         <div class="container" style="height: 82px;">
             <div class="navbar-brand" href="#" style="    margin-right: 50px;
-                                                                                                    margin-left: 61px;">
+                                                                                                                margin-left: 61px;">
                 <div class="dropdown">
                     <button class="btn dropdown-toggle text-light fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
                         style="border:2px solid white;padding:10px;z-index:10">
@@ -191,42 +195,42 @@ export default {
                             </router-link>
 
                             <!-- 
-                                                        <router-link @click="navigationCategory()" :to="{
-                                                            name: 'CategoryBook',
-                                                            params: { name: JSON.stringify('Văn Học') },
-                                                        }">
-                                                            <li>Văn Học</li>
-                                                        </router-link>
-                                                        <router-link @click="navigationCategory()" :to="{
-                                                            name: 'CategoryBook',
-                                                            params: { name: JSON.stringify('Kinh Tế') },
-                                                        }">
-                                                            <li>Kinh Tế</li>
-                                                        </router-link>
-                                                        <router-link @click="navigationCategory()" :to="{
-                                                            name: 'CategoryBook',
-                                                            params: { name: JSON.stringify('Tiểu Sử Hồi Ký') },
-                                                        }">
-                                                            <li>Tiểu Sử Hồi Ký</li>
-                                                        </router-link>
-                                                        <router-link @click="navigationCategory()" :to="{
-                                                            name: 'CategoryBook',
-                                                            params: { name: JSON.stringify('Tâm Lý - Kỹ Năng Sống') },
-                                                        }">
-                                                            <li>Tâm Lý - Kỹ Năng Sống</li>
-                                                        </router-link>
-                                                        <router-link @click="navigationCategory()" :to="{
-                                                            name: 'CategoryBook',
-                                                            params: { name: JSON.stringify('Sách Thiếu Nhi') },
-                                                        }">
-                                                            <li>Sách Thiếu Nhi</li>
-                                                        </router-link>
-                                                        <router-link @click="navigationCategory()" :to="{
-                                                            name: 'CategoryBook',
-                                                            params: { name: JSON.stringify('Sách Giáo Khoa - Tham Khảo') },
-                                                        }">
-                                                            <li>Sách Giáo Khoa</li>
-                                                        </router-link> -->
+                                                                    <router-link @click="navigationCategory()" :to="{
+                                                                        name: 'CategoryBook',
+                                                                        params: { name: JSON.stringify('Văn Học') },
+                                                                    }">
+                                                                        <li>Văn Học</li>
+                                                                    </router-link>
+                                                                    <router-link @click="navigationCategory()" :to="{
+                                                                        name: 'CategoryBook',
+                                                                        params: { name: JSON.stringify('Kinh Tế') },
+                                                                    }">
+                                                                        <li>Kinh Tế</li>
+                                                                    </router-link>
+                                                                    <router-link @click="navigationCategory()" :to="{
+                                                                        name: 'CategoryBook',
+                                                                        params: { name: JSON.stringify('Tiểu Sử Hồi Ký') },
+                                                                    }">
+                                                                        <li>Tiểu Sử Hồi Ký</li>
+                                                                    </router-link>
+                                                                    <router-link @click="navigationCategory()" :to="{
+                                                                        name: 'CategoryBook',
+                                                                        params: { name: JSON.stringify('Tâm Lý - Kỹ Năng Sống') },
+                                                                    }">
+                                                                        <li>Tâm Lý - Kỹ Năng Sống</li>
+                                                                    </router-link>
+                                                                    <router-link @click="navigationCategory()" :to="{
+                                                                        name: 'CategoryBook',
+                                                                        params: { name: JSON.stringify('Sách Thiếu Nhi') },
+                                                                    }">
+                                                                        <li>Sách Thiếu Nhi</li>
+                                                                    </router-link>
+                                                                    <router-link @click="navigationCategory()" :to="{
+                                                                        name: 'CategoryBook',
+                                                                        params: { name: JSON.stringify('Sách Giáo Khoa - Tham Khảo') },
+                                                                    }">
+                                                                        <li>Sách Giáo Khoa</li>
+                                                                    </router-link> -->
 
                         </div>
 
@@ -239,7 +243,7 @@ export default {
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="input-group mb-3 text-light" style="    align-items: center;
-                                                                                                                                        margin-bottom: 0 !important;">
+                                                                                                                                                    margin-bottom: 0 !important;">
                     <div class="col-lg-1" style="font-size:35px ;margin-right: -23px;">
                         <i class="fa-solid fa-headphones-simple"></i>
                     </div>

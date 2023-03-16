@@ -55,8 +55,8 @@ export default {
                     }, 1000)
                 } else {
                     if (this.userDataInput.email === 'admin@gmail.com') {
-                        const userDataLogin = await AuthService.createlogin(this.userDataInput);
-                        localStorage.setItem('isloggin', JSON.stringify(userDataLogin));
+                        await AuthService.createlogin(this.userDataInput);
+                        localStorage.setItem('adminlogin',true);
                         this.toasts.title = "Thành công",
                             this.toasts.msg = "Đăng Nhập Thành Công !"
                         this.toasts.type = "success",
@@ -143,5 +143,8 @@ export default {
 <style scoped>
 span {
     display: block;
+}
+.form-control-lg{
+    font-size: 15px;
 }
 </style>

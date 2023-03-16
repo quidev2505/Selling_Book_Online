@@ -54,7 +54,9 @@ export default {
             this.dataOrder = dataValue;
             var total = 0
             dataValue.forEach((item, index) => {
-                total += item.totalOrder;
+                if(item.statusOrder !== 'Hủy đơn hàng'){
+                    total += item.totalOrder;
+                }
             })
             this.totalAllOrder = total
         },
@@ -66,7 +68,7 @@ export default {
                     await OrderService.updateOrder(IDORDER, this.dataOrderInput);
 
                     let cartLocalStorage = await OrderService.getDataOrderWithIDOrder(IDORDER);
-                  
+                
                     var arrayDataCart = cartLocalStorage[0].detail_cart;
                     console.log(arrayDataCart)
                     for (let i = 0; i < arrayDataCart.length; i++) {
@@ -119,6 +121,7 @@ export default {
             </tr>
         </thead>
         <tbody>
+            <tr v-if="dataOrder.length == 0" style="color:red;font-weight:bold;">Bạn chưa có đơn hàng nào !</tr>
             <tr v-for="(item, index) in dataOrder">
                 <td>{{ ++index }}</td>
                 <td style="font-weight:bold;">
@@ -136,7 +139,8 @@ export default {
                 <td>{{ item.payment }}</td>
                 <td>{{ item.address }}</td>
                 <td>{{ item.totalOrder.toLocaleString() }} đ</td>
-                <td style="color:#62ab00;font-weight:bold;">{{ item.statusOrder }}</td>
+                <td style="color:red;font-weight:bold;" v-if="item.statusOrder == 'Hủy đơn hàng'">{{ item.statusOrder }}</td>
+                <td v-else style="color:#62ab00;font-weight:bold;">{{ item.statusOrder}}</td>
                 <td style="color:blue;font-weight:bold;cursor:pointer;" v-if="item.statusOrder === 'Chưa xử lý'">
                     <div @click="cancelOrder(item._id)" style="text-align: center;
                                 background-color: papayawhip;
@@ -153,8 +157,7 @@ export default {
                 <td></td>
                 <td></td>
                 <td></td>
-                <td colspan="3"></td>
-                <td style="font-weight:bold">{{ totalAllOrder.toLocaleString() }} đ</td>
+                <td  colspan="4" style="font-weight:bold;color:blue">Tổng tất cả đơn hàng: {{ totalAllOrder.toLocaleString() }} đ</td>
                 <td></td>
             </tr>
         </tbody>

@@ -26,9 +26,10 @@ export default {
                 .email("Email không đúng định dạng")
                 .max(30, "Email tối đa 30 ký tự."),
             phonenumber: yup
-                .string()
-                .min(10, "Số điện thoại phải có ít nhất 10 kí tự")
-                .required("Số điện thoại không được bỏ trống"),
+                .number()
+                .required("Số điện thoại không được bỏ trống")
+                .typeError("Số điện thoại chưa đúng định dạng ! - Nhập đủ 10 kí tự")
+                .min(10, "Số điện thoại phải có ít nhất 10 kí tự"),
             password: yup
                 .string()
                 .min(6, "Mật khẩu phải có ít nhất 6 kí tự")
@@ -118,7 +119,7 @@ export default {
         <!-- PhoneNumber Input -->
         <div class="mb-3">
             <label for="inputphonenumber" class="form-label fw-bold">Số điện thoại: </label>
-            <Field id="inputphonenumber" placeholder="Vui lòng nhập vào số điện thoại" name="phonenumber" type="text" class="form-control form-control-lg" v-model="userDataInput.phonenumber" required />
+            <Field id="inputphonenumber" placeholder="Vui lòng nhập vào số điện thoại" name="phonenumber" type="text" class="form-control form-control-lg"  v-model="userDataInput.phonenumber" required />
             <ErrorMessage name="phonenumber" class="text-danger" />
         </div>
 
@@ -147,5 +148,9 @@ export default {
 <style scoped>
 span {
     display: block;
+}
+
+.form-control-lg{
+    font-size: 15px;
 }
 </style>
