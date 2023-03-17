@@ -59,7 +59,6 @@ export default {
                 this.dataOrderInput.detail_cart = dataValue.detail_cart;
                 this.dataOrderInput.totalOrder = dataValue.totalOrder;
 
-               
 
                 if(this.dataOrderInput.statusOrder === "Đã giao hàng"){
                     //Kiểm tra và cập nhật số lượng sản phẩm bán ra khi đã chọn Đã vận chuyển
@@ -78,7 +77,8 @@ export default {
                             await StoreService.create(this.StoreInput)
                         } else {
                             console.log('da trung ')
-                            this.StoreInput.sellquantity = dataStoreCheck.sellquantity + sellquantity_productInCartDetail;
+                            this.StoreInput.sellquantity = parseInt(dataStoreCheck.sellquantity) + parseInt(sellquantity_productInCartDetail);
+                            console.log(this.StoreInput.sellquantity)
                             await StoreService.update(id_productInCartDetail, this.StoreInput);
                         }
                     }

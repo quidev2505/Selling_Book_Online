@@ -20,10 +20,10 @@ module.exports = class API {
 
   //Update Product
   static async updateStore(req, res) {
-    const id_product = req.params.id;
+    const id_product_input = req.params.id;
     try {
-      const updateStore = await StoreModel.findByIdAndUpdate(
-        id_product,
+      const updateStore = await StoreModel.findOneAndUpdate(
+        {id_product: id_product_input},
         {
           sellquantity: req.body.sellquantity
         },
@@ -31,6 +31,7 @@ module.exports = class API {
       );
       res.status(200).json(updateStore);
     } catch (err) {
+      console.log(err)
       res.status(501).json(err);
     }
   }

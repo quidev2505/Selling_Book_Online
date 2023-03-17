@@ -115,6 +115,11 @@ const routes = [
     path: "/editStore/:id",
     name: "EditStore",
     component: () => import("@/views/EditStore.vue"),
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name:"PageNotFound",
+    component: () => import("@/views/404page.vue"),
   }
 ];
 
