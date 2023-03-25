@@ -26,10 +26,9 @@ export default {
                 .email("Email không đúng định dạng")
                 .max(30, "Email tối đa 30 ký tự."),
             phonenumber: yup
-                .number()
-                .required("Số điện thoại không được bỏ trống")
-                .typeError("Số điện thoại chưa đúng định dạng ! - Nhập đủ 10 kí tự")
-                .min(10, "Số điện thoại phải có ít nhất 10 kí tự"),
+		.string()
+		.matches(/((09|03|07|08|05)+([0-9]{8})\b)/g,"Số điện thoại không hợp lệ.")
+                .required("Số điện thoại không được bỏ trống"),
             password: yup
                 .string()
                 .min(6, "Mật khẩu phải có ít nhất 6 kí tự")

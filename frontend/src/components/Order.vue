@@ -161,8 +161,7 @@ export default {
                 <td>{{ item.email }}</td>
                 <td>{{ item.phonenumber }}</td>
                 <td>
-                    <p>{{ item.createdAt.substring(0, item.createdAt.search("T")) }}</p> - Time:
-                    <p>{{ item.createdAt.substring(item.createdAt.search("T") + 1, item.createdAt.length - 5) }}</p>
+                    <p>{{ item.timecreateOrder }}</p>
                 </td>
                 <td>{{ item.totalOrder.toLocaleString() }} đ</td>
                 <td>{{ item.payment }}</td>

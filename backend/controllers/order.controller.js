@@ -13,6 +13,9 @@ module.exports = class API {
       detail_cart: req.body.detail_cart,
       statusOrder: req.body.statusOrder,
       totalOrder: req.body.totalOrder,
+      timecreateOrder: new Date().toLocaleString('en-GB', {
+                  hour12: false,
+                }),
     });
     try {
       const createNewOrder = await orderInput.save();

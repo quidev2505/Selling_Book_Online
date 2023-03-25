@@ -38,6 +38,10 @@ const OrderSchema = new mongoose.Schema(
         totalOrder: {
             type: Number,
             required: true
+        },
+        timecreateOrder: {
+            type: String,
+            required: true
         }
     },
     {
