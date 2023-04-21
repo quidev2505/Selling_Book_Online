@@ -94,6 +94,21 @@ export default {
                 this.getDataOrder();
                 this.getDataUser();
             }
+        },
+        async filterOrder(statusOrderInput) {
+            try {
+                let data_return = await OrderService.getorderwithstatusorder(statusOrderInput);
+                let arrayData_filter = [];
+                let id_user = this.$route.params.id;
+                data_return.forEach((item, index)=>{
+                    if(item.iduser == id_user){
+                        arrayData_filter.push(item);
+                    }
+                })
+                this.dataOrder = arrayData_filter;
+            } catch (err) {
+                console.log(err);
+            }
         }
     },
     created() {
@@ -107,6 +122,21 @@ export default {
     <p style="font-weight:bold;opacity:0.6">TÀI KHOẢN CỦA BẠN</p>
     <hr>
     <h5>QUẢN LÍ ĐƠN HÀNG</h5>
+
+    <button type="button" class="btn btn-secondary" @click="filterOrder('Chưa xử lý')">Chưa xử lý</button>
+    &nbsp;
+    <button type="button" class="btn btn-primary" @click="filterOrder('Đã xử lý')">Đã xử lý</button>
+    &nbsp;
+    <button type="button" class="btn btn-info text-white" @click="filterOrder('Đang vận chuyển')">Đang vận chuyển</button>
+    &nbsp;
+    <button type="button" class="btn btn-success" @click="filterOrder('Đã giao hàng')">Đã giao hàng</button>
+    &nbsp;
+    <button type="button" class="btn btn-danger" @click="filterOrder('Hủy đơn hàng')">Hủy đơn hàng</button>
+    &nbsp;
+
+    <br>
+
+
     <table class="table">
         <thead>
             <tr>

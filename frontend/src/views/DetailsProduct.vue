@@ -17,7 +17,7 @@ export default {
     },
     methods: {
         redirectPage(vara) {
-            this.$router.push(`/${vara}`);
+            this.$router.push(`/${JSON.parse(vara)}`);
         },
         openImg(variable, index) {
             this.img_click = variable;
@@ -125,7 +125,7 @@ export default {
             }
             setTimeout(() => {
                 window.location.reload();
-            }, 100)
+            }, 1)
         }
     },
     created() {
@@ -161,13 +161,13 @@ export default {
                 <span class="visually-hidden">Next</span>
             </button>
             <i @click="exit()" class="fa-solid fa-xmark" style="position: absolute;
-                                                                top: 11px;
-                                                                right: 25px;
-                                                                color: white;
-                                                                font-size: 50px;
-                                                                opacity: 0.6;
-                                                                z-index:999999999999;
-                                                                cursor:pointer;"></i>
+                                                                                                top: 11px;
+                                                                                                right: 25px;
+                                                                                                color: white;
+                                                                                                font-size: 50px;
+                                                                                                opacity: 0.6;
+                                                                                                z-index:999999999999;
+                                                                                                cursor:pointer;"></i>
         </div>
 
 
@@ -175,23 +175,26 @@ export default {
         <div class="row">
             <div class="col-6">
                 <img :src="DetailProductData.img_url[0]" class="img-fluid" alt="..." width="319" height="444" style="    border: 1px solid #ccc;
-                                                                                                        border-radius: 10px;
-                                                                                                        padding: 10px;box-shadow: 1px 2px 13px 0px;margin-left:130px;">
+                                                                                                                                        border-radius: 10px;
+                                                                                                                                        padding: 10px;box-shadow: 1px 2px 13px 0px;margin-left:130px;">
                 <div class="row d-flex mt-5 text-center">
                     <div class="col">
-                        <img @click="openImg(DetailProductData.img_url[0], 0)" :src="DetailProductData.img_url[0]" class="img-thumbnail img_introduce" alt="..." width="319" height="444" style="    border: 1px solid #ccc;object-fit:contain;
-                                                                                                            border-radius: 10px;
-                                                                                                            padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
+                        <img @click="openImg(DetailProductData.img_url[0], 0)" :src="DetailProductData.img_url[0]" class="img-thumbnail img_introduce" alt="..." width="319" height="444"
+                            style="    border: 1px solid #ccc;object-fit:contain;
+                                                                                                                                            border-radius: 10px;
+                                                                                                                                            padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
                     </div>
                     <div class="col">
-                        <img @click="openImg(DetailProductData.img_url[1], 1)" :src="DetailProductData.img_url[1]" class="img-thumbnail img_introduce" alt="..." width="319" height="444" style="    border: 1px solid #ccc;object-fit:contain;
-                                                                                                            border-radius: 10px;
-                                                                                                            padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
+                        <img @click="openImg(DetailProductData.img_url[1], 1)" :src="DetailProductData.img_url[1]" class="img-thumbnail img_introduce" alt="..." width="319" height="444"
+                            style="    border: 1px solid #ccc;object-fit:contain;
+                                                                                                                                            border-radius: 10px;
+                                                                                                                                            padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
                     </div>
                     <div class="col">
-                        <img @click="openImg(DetailProductData.img_url[2], 2)" :src="DetailProductData.img_url[2]" class="img-thumbnail img_introduce" alt="..." width="319" height="444" style="    border: 1px solid #ccc;object-fit:contain;
-                                                                                                            border-radius: 10px;
-                                                                                                            padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
+                        <img @click="openImg(DetailProductData.img_url[2], 2)" :src="DetailProductData.img_url[2]" class="img-thumbnail img_introduce" alt="..." width="319" height="444"
+                            style="    border: 1px solid #ccc;object-fit:contain;
+                                                                                                                                            border-radius: 10px;
+                                                                                                                                            padding: 10px;box-shadow: 1px 2px 13px 0px; width:150px;height:150px;">
                     </div>
                 </div>
             </div>
@@ -262,7 +265,7 @@ export default {
                                 name: 'Details',
                                 params: { id: item._id },
                             }">
-                                <button type="button" class="btn" id="btn_detail" @click="redirectPage(item._id)">Xem chi tiết</button>
+                                <button type="button" class="btn" id="btn_detail" @click="redirectPage(JSON.stringify(item._id))">Xem chi tiết</button>
                             </router-link>
                         </div>
                     </div>

@@ -44,6 +44,8 @@ export default {
             try {
                 this.categoryProduct = await ProductService.getcategoryProduct(JSON.parse(this.$route.params.name));
                 this.nameCategory = JSON.parse(this.$route.params.name);
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
             } catch (error) {
                 console.log(error)
             }

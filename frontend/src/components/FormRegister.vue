@@ -26,8 +26,8 @@ export default {
                 .email("Email không đúng định dạng")
                 .max(30, "Email tối đa 30 ký tự."),
             phonenumber: yup
-		.string()
-		.matches(/((09|03|07|08|05)+([0-9]{8})\b)/g,"Số điện thoại không hợp lệ.")
+                .string()
+                .matches(/((09|03|07|08|05)+([0-9]{8})\b)/g,"Số điện thoại không hợp lệ.")
                 .required("Số điện thoại không được bỏ trống"),
             password: yup
                 .string()
